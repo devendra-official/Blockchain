@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const CropValidation = () => {
   const [crops, setCrops] = useState([]);
   const { getCrops } = useCrop();
-  const [state, setState] = useState();
+  const [state,setState] = useState("Approve");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,10 +30,13 @@ const CropValidation = () => {
           <thead className=" text-white text-xl bg-black border-green-800 border-2">
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>From</th>
-              <th>Applied</th>
-              <th>Action</th>
+              <th>Crop Name</th>
+              <th>ETH Address</th>
+              <th>Address</th>
+              <th>Cultivation Area</th>
+              <th>Time Till Harvest</th>
+              <th>Expected Yield</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
@@ -42,10 +45,13 @@ const CropValidation = () => {
                 <td>{crop.id}</td>
                 <td>{crop.cropName}</td>
                 <td>{crop.ETHAddress}</td>
-                <td>{crop.timeofApplied}</td>
+                <td>{crop.location}</td>
+                <td>{(crop.acre).toString()} acre</td>
+                <td>{(crop.months).toString()} months</td>
+                <td>{(crop.yieldperacre).toString()} /acre</td>
                 <td>
                   {crop.isApproved ? (
-                    <button disabled>Approved</button>
+                    <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Approved</button>
                   ) : (
                     <button onClick={async () => {
                       const date = new Date();
@@ -55,7 +61,12 @@ const CropValidation = () => {
                         setState("Approved")
                         toast.success("Crop approved successfully");
                       });
-                    }}>{state}</button>
+                    }}
+                      className={`${state === "Approved"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                        } rounded-lg my-2 p-2`}
+                    >{state}</button>
                   )}
                 </td>
               </tr>

@@ -9,9 +9,7 @@ const useCrop = () => {
     async function cropRegister(cropname, area, cultivation, timeforharvest, yieldperacre) {
         try {
             const identifiers = [];
-            console.log(cropname);
             const data = await productContract.getAllCropIds();
-            console.log(data);
             if (data.length !== 0) {
                 data.map((element)=>{
                     identifiers.push(element);
@@ -31,7 +29,6 @@ const useCrop = () => {
 
     async function getCrops() {
         const cropList = await productContract.getCrops();
-        console.log("LENGTH",cropList.length);
         return cropList;
     }
 

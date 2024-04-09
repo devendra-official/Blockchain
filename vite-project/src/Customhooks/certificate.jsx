@@ -6,7 +6,6 @@ function Certificate() {
 
     async function reqCertificate(id,quality,quantity,category,price,description) {
         try {
-            console.log(id,quality,quantity,category,price,description);
             const date = new Date();
             const timeofApplied = date.toLocaleString();
             await productContract.reqCertificate(id,quality,quantity,category,price,description,timeofApplied);

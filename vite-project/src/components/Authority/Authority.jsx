@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import SideBar from "./SideBar";
 
-const Farmer = () => {
+const Authority = () => {
   return (
     <div>
       <Header />
@@ -19,4 +19,4 @@ const Farmer = () => {
   );
 };
 
-export default Farmer;
+export default Authority;

@@ -1,58 +1,59 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useCart from "./carts";
 
 const useGetusers = () => {
     const userContract = useSelector(state => state.addContract.userContract);
     const navigate = useNavigate();
+    const { getCarts } = useCart();
 
-    function getCustomer(password) {
-        return new Promise((resolve, reject) => {
-            userContract.getCustomer(password)
-                .then((data) => {
-                    window.localStorage.setItem("userData", JSON.stringify({ name: data["name"], email: data["email"], role: data["role"] }));
-                    toast.success("Login success");
-                    navigate("/")
-                    resolve();
-                })
-                .catch(error => {
-                    toast.error(error.reason);
-                    reject(error);
-                });
-        });
+    async function getCustomer(password) {
+        try {
+            const data = await userContract.getCustomer(password);
+            window.localStorage.setItem("userData", JSON.stringify({ name: data["name"], email: data["email"], role: data["role"] }));
+            toast.success("Login success");
+            await getCarts();
+            navigate("/");
+        } catch (error) {
+            if (error.reason === null) {
+                toast.error("An Error occured");
+            } else {
+                toast.error(error.reason);
+            }
+        }
     }
 
-    function getFarmer(password) {
-        return new Promise((resolve, reject) => {
-            userContract.getFarmer(password)
-                .then((data) => {
-                    window.localStorage.setItem("userData", JSON.stringify({ name: data["name"], email: data["email"], role: data["role"] }));
-                    toast.success("Login success");
-                    navigate("/farmer");
-                    resolve();
-                })
-                .catch(error => {
-                    toast.error(error.reason);
-                    reject(error);
-                });
-        });
+    async function getFarmer(password) {
+        try {
+            const data = await userContract.getFarmer(password)
+            window.localStorage.setItem("userData", JSON.stringify({ name: data["name"], email: data["email"], role: data["role"] }));
+            toast.success("Login success");
+            navigate("/farmer");
+        } catch (error) {
+            if (error.reason === null) {
+                toast.error("An Error occured");
+            } else {
+                toast.error(error.reason);
+            }
+        }
     }
 
-    function getAuthority(password) {
-        return new Promise((resolve, reject) => {
-            userContract.getAuthority(password)
-                .then((data) => {
-                    window.localStorage.setItem("userData", JSON.stringify({ name: data["name"], email: data["email"], role: data["role"] }));
-                    toast.success("Login success");
-                    navigate("/authority")
-                    resolve();
-                })
-                .catch(error => {
-                    toast.error(error.reason);
-                    reject(error);
-                });
-        });
+    async function getAuthority(password) {
+        try {
+            const data = await userContract.getAuthority(password)
+            window.localStorage.setItem("userData", JSON.stringify({ name: data["name"], email: data["email"], role: data["role"] }));
+            toast.success("Login success");
+            navigate("/authority");
+        } catch (error) {
+            if (error.reason === null) {
+                toast.error("An Error occured");
+            } else {
+                toast.error(error.reason);
+            }
+        }
     }
+
     return [getCustomer, getFarmer, getAuthority];
 }
 

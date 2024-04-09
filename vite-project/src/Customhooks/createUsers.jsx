@@ -7,29 +7,34 @@ const useCreate = () => {
     const navigate = useNavigate();
 
     async function createCustomer(role, name, email, password) {
-        await userContract.createCustomer(name, email, password, role);
-        userContract.on("createCustomerEvent", (name, email, role) => {
-            window.localStorage.setItem("userData", JSON.stringify({ name, email, role }));
-            toast.success(`Customer ${name} created successfully`);
-            navigate("/");
-        });
+        try {
+            await userContract.createCustomer(name, email, password, role);
+            userContract.on("createCustomerEvent", (name, email, password, role) => {
+                window.localStorage.setItem("userData", JSON.stringify({ name, email, role }));
+                toast.success(`Customer ${name} created successfully`);
+                navigate("/");
+            });
+        } catch (error) {
+            // This is entered if the status of the receipt is failure
+            toast.error("An error occured");
+        }
     }
 
     async function createFarmer(role, name, email, password) {
         await userContract.createFarmer(name, email, password, role);
-        userContract.on("createFarmerEvent", (name, email, role) => {
-            window.localStorage.setItem("userData", JSON.stringify({ name, email, role }));
+        userContract.on("createFarmerEvent", (name, email, password, role) => {
+            window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
             toast.success(`Farmer ${name} created successfully`);
-            navigate("/farmer");
+            navigate(`/${role}`);
         });
     }
 
     async function createAuthority(role, name, email, password) {
         await userContract.createAuthority(name, email, password, role)
-        userContract.on("createAuthorityEvent", (name, email, role) => {
-            window.localStorage.setItem("userData", JSON.stringify({ name, email, role }));
+        userContract.on("createAuthorityEvent", (name, email, password, role) => {
+            window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
             toast.success(`Authority ${name} created successfully`);
-            navigate("/authority");
+            navigate(`/${role}`);
         });
     }
 

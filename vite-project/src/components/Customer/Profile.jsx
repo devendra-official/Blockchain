@@ -8,7 +8,6 @@ import Button from "../Button.jsx";
 const Profile = () => {
   const { register, handleSubmit } = useForm();
   const update = async (data) => {
-    console.log(data);
   };
 
   return (

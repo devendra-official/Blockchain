@@ -15,6 +15,7 @@ import {
   Profile,
   ProductDetails,
   ProductList,
+  OrderDetails,
 } from "./components/Customer/index.js";
 import {
   Farmer,
@@ -31,7 +32,6 @@ import {
   CropValidation,
   FinalCertification,
   MidtermVerification,
-  NewApplication,
 } from "./components/Authority/index.js";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -93,6 +93,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout requiredRole="customer" authentication={true}>
             <Orders />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/OrderDetails/:id",
+        element: (
+          <AuthLayout requiredRole="customer" authentication={true}>
+            <OrderDetails />
           </AuthLayout>
         ),
       },
@@ -168,7 +176,6 @@ const router = createBrowserRouter([
       },
 
       // here starts authority routes
-
       {
         path: "/authority",
         element: (

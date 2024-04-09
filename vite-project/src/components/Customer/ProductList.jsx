@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
+import { Header, Footer } from "../index.js";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
 
-const ProductList = () => {
+function ProductList  ()  {
   const { fetchProducts } = FinalProduct();
   const [products, setProducts] = useState([]);
 
@@ -56,6 +57,7 @@ const ProductList = () => {
                 <div className=" h-fit w-full flex flex-col m-2">
                   <div className="font-bold p-2">{product.productName}</div>
                   <div className="p-2"> {product.description}</div>
+                  <div className="p-2">{(product.quantity).toString()}</div>
                   <div className="p-2 flex items-center flex-row">
                     <FaRupeeSign className="text-sm" />
                     <div className="text-lg"> {(product.price).toString()}</div>

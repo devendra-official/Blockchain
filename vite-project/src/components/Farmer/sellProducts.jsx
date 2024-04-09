@@ -15,7 +15,6 @@ const SellProducts = () => {
   } = useForm();
 
   const onSubmit = async ({ product_name, description, price, category ,image}) => {
-    console.log(image);
     await productRegister(product_name, description, price, category);
   };
 

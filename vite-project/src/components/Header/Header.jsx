@@ -9,7 +9,7 @@ export default function Header() {
   const navigate = useNavigate();
   const userData = JSON.parse(window.localStorage.getItem("userData"));
   const authStatus = userData !== null ? true : false;
-  const authRole = userData !== null ? userData[2] : null;
+  const authRole = userData !== null ? userData["role"] : null;
   const [localeData, setLocalData] = useState(userData);
 
   function logout(){
@@ -22,21 +22,23 @@ export default function Header() {
     dispatch(Section(sectionId));
   };
 
+
+  const handleClickProduct = (sectionId) => {
+    if (authRole === "customer") navigate("/productList");
+    else handleClick(sectionId);
+  };
+
   return (
     <header className="shadow sticky z-50 top-0">
       <nav className="bg-[#D8F3DC] border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="#" className="flex items-center">
-            <img
-              src="/images/logo.png"
-              className="mr-3 h-12"
-              alt="Logo"
-            />
+            <img src="/images/logo.png" className="mr-3 h-12" alt="Logo" />
           </Link>
 
           <div className="flex items-center lg:order-2">
             {authStatus && (
-              <Button onClick={logout} className="mx-3">
+              <Button onClick={() => dispatch(logout())} className="mx-3">
                 Logout
               </Button>
             )}
@@ -101,20 +103,21 @@ export default function Header() {
                   <Link
                     to="/"
                     className=" block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700"
-                    onClick={() => handleClick("how-it-works")}
+                    onClick={() => handleClick("about-us")}
                   >
-                    How it works
+                    About us
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/"
                     className=" block py-2 pr-4 pl-3 duration-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700"
-                    onClick={() => handleClick("about-us")}
+                    onClick={() => handleClick("how-it-works")}
                   >
-                    About us
+                    How it works
                   </Link>
                 </li>
+
                 <li>
                   <Link
                     to="/"

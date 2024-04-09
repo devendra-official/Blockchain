@@ -1,20 +1,20 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Certificate from "../../Customhooks/certificate";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const FinalCertification = () => {
-  const [certificate,setCertificate] = useState([]);
-  const [state,setState] = useState();
-  const {getCertificate} = Certificate();
-  useEffect(()=>{
-    const fetchData = async ()=>{
+  const [certificate, setCertificate] = useState([]);
+  const [state, setState] = useState("Approve");
+  const { getCertificate } = Certificate();
+  useEffect(() => {
+    const fetchData = async () => {
       const certificate = await getCertificate();
       setCertificate(certificate);
     }
 
     fetchData();
-  },[]);
+  }, []);
   const productContract = useSelector(state => state.addContract.productContract);
   return (
     <>
@@ -29,6 +29,7 @@ const FinalCertification = () => {
           <thead className=" text-white text-xl bg-black border-green-800 border-2">
             <tr>
               <th>ID</th>
+              <th>Crop</th>
               <th>Quantity</th>
               <th>Price</th>
               <th>Category</th>
@@ -39,12 +40,13 @@ const FinalCertification = () => {
             {certificate.map((element) => (
               <tr key={element.id} className="border-2 border-green-800">
                 <td>{element.id}</td>
+                <td>{element.cropName}</td>
                 <td>{(element.quantity).toString()}</td>
                 <td>{(element.price).toString()}</td>
                 <td>{element.category}</td>
                 <td>
                   {element.isApproved ? (
-                    <button disabled>Approved</button>
+                    <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Approved</button>
                   ) : (
                     <button onClick={async () => {
                       const date = new Date();
@@ -54,7 +56,12 @@ const FinalCertification = () => {
                         setState("Approved")
                         toast.success("certificate approved successfully");
                       });
-                    }}>{state}</button>
+                    }}
+                      className={`${state === "Approved"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                        } rounded-lg my-2 p-2`}
+                    >{state}</button>
                   )}
                 </td>
               </tr>

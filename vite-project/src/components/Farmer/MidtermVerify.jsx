@@ -32,47 +32,48 @@ const MidtermVerify = () => {
             <div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                    <label htmlFor="Id" className="font-bold">
+                  <div className="flex flex-col space-y-1.5">
+                    <label htmlFor="id" className="font-bold">
                       Crop ID
                     </label>
                     <Input
                       className="bg-green-100"
                       id="id"
-                      placeholder="Enter Progress"
+                      placeholder="Enter Crop ID"
                       {...register("id", {
                         required: true,
                       })}
                     />
                     {errors.id && (
                       <span className="text-red-500">
-                        Pls enter all details
+                        Please enter the farmer's name
                       </span>
                     )}
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <label htmlFor="cultivation" className="font-bold">
+                    <label htmlFor="Progress" className="font-bold">
                       Progress
                     </label>
                     <Input
                       className="bg-green-100"
                       id="progress"
-                      placeholder="Enter Progress"
+                      placeholder="Enter Progress of your Crop"
                       {...register("progress", {
                         required: true,
                       })}
                     />
                     {errors.progress && (
                       <span className="text-red-500">
-                        Pls enter all details
+                        Please enter the area in acres
                       </span>
                     )}
                   </div>
                   <div className="flex flex-col space-y-1.5">
                     <label htmlFor="timeforharvest" className="font-bold">
-                      Months remaining till harvest
+                      Expected month of harvest
                     </label>
                     <Input
+                      type="month"
                       className="bg-green-100"
                       id="months"
                       placeholder="Enter here"
@@ -82,7 +83,7 @@ const MidtermVerify = () => {
                     />
                     {errors.months && (
                       <span className="text-red-500">
-                        Pls enter all details
+                        Please enter the expected month
                       </span>
                     )}
                   </div>

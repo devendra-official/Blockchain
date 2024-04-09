@@ -2,25 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Header, Footer, Button } from "../index.js";
 import { FaRupeeSign } from "react-icons/fa";
-// import useProduct from "../../Customhooks/products.jsx";
 import Timeline from "./Timeline.jsx";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
+import useCart from "../../Customhooks/carts.jsx";
 
 const ProductDetail = () => {
+
   const { fetchProducts } = FinalProduct();
   const [products, setProducts] = useState([]);
-  const { id } = useParams(); // Extracting the product id from URL params
+  const { id } = useParams();
+  const { addCart } = useCart();
 
-  const fetchData = async ()=>{
+  const fetchData = async () => {
     const result = await fetchProducts();
     setProducts(result);
   }
 
   useEffect(() => {
     fetchData();
-  },[])
+  }, [])
 
   const product = products.find(p => p.id === id);
+
+  const handleAddToCart = async (product) => {
+    await addCart(product.id, 1);
+  };
 
   if (!product) {
     return (
@@ -64,11 +70,16 @@ const ProductDetail = () => {
               <FaRupeeSign className="text-sm relative top-[1px]" />
               <div className="text-xl ">{(product.price).toString()}</div>
             </div>
-            {/* <div className="flex gap-1">
-              <div className="font-medium">{product.quantity} </div>
+            <div className="flex gap-1">
+              <div className="font-medium">{(product.quantity).toString()} </div>
               <div>items available</div>
-            </div> */}
-            <Button>Add to Cart</Button>
+            </div>
+            <Button
+              className="hover:bg-blue-400"
+              onClick={() => handleAddToCart(product)}
+            >
+              Add to Cart
+            </Button>
           </div>
         </div>
       </div>

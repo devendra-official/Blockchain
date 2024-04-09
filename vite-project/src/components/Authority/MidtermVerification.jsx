@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const MidtermVerification = () => {
   const [midTerms, setmidTerms] = useState([]);
-  const [state, setState] = useState([]);
+  const [state, setState] = useState("Approve");
   const { getMidTerms } = Midterm();
 
   useEffect(() => {
@@ -30,20 +30,24 @@ const MidtermVerification = () => {
           <thead className=" text-white text-xl bg-black border-green-800 border-2">
             <tr>
               <th>ID</th>
-              <th>Progress</th>
-              <th>Months</th>
-              <th>Applied</th>
+              <th>Crop Name</th>
+              {/* <th>ETH Address</th> */}
+              <th>Time Till Harvest</th>
+              <th>Time of Applied</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
             {midTerms.map((midTerm) => (
               <tr key={midTerm.id} className="border-2 border-green-800">
                 <td>{midTerm.id}</td>
-                <td>{midTerm.progress}</td>
+                <td>{midTerm.cropName}</td>
+                {/* <td>{midTerm.ETHAddress}</td> */}
+                <td>{(midTerm.months).toString()} months</td>
                 <td>{midTerm.timeofApplied}</td>
                 <td>
                   {midTerm.isApproved ? (
-                    <button disabled>Approved</button>
+                    <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Approved</button>
                   ) : (
                     <button onClick={async () => {
                       const date = new Date();
@@ -53,7 +57,12 @@ const MidtermVerification = () => {
                         setState("Approved")
                         toast.success("MidTerm approved successfully");
                       });
-                    }}>{state}</button>
+                    }}
+                      className={`${state === "Approved"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                        } rounded-lg my-2 p-2`}
+                    >{state}</button>
                   )}
                 </td>
               </tr>

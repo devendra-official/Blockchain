@@ -2,6 +2,7 @@
 
 pragma solidity >=0.8.2 <0.9.0;
 
+
 contract UserManager {
     
     // USERS FUNCTIONS AND EVENTS
@@ -76,5 +77,61 @@ contract UserManager {
         require(keccak256(abi.encodePacked(authority[msg.sender].ETHAddress)) == keccak256(abi.encodePacked(msg.sender)),"Authority Not exist!");
         require(keccak256(abi.encodePacked(authority[msg.sender].password)) == keccak256(abi.encodePacked(password)),"Wrong password,Please Try Again!");
         return authority[msg.sender];
+    }
+
+    struct Item{
+        string id;
+        uint quantity;
+    }
+
+    struct Cart{
+        Item[] items;
+        address ETHAddress;
+    }
+
+    mapping (address => Cart) carts;
+    event addCartEvent();
+    event updateCartEvent();
+    event removeProductEvent();
+
+    function addCart(string memory id,uint quantity) public {
+        bool isAdded = false;
+        for(uint i=0;i<carts[msg.sender].items.length;i++){
+            if(keccak256(abi.encodePacked(carts[msg.sender].items[i].id)) == keccak256(abi.encodePacked(id))){
+                isAdded = true;
+                break;
+            }
+        }
+        require(!isAdded,"product already in cart");
+        carts[msg.sender].items.push(Item(id,quantity));
+        carts[msg.sender].ETHAddress = msg.sender;
+        emit addCartEvent();
+    }
+
+    function getCart() public view returns (Cart memory){
+        return carts[msg.sender];
+    }
+
+    function updateCart(string memory id,uint quantity) public {
+        for(uint i=0;i<carts[msg.sender].items.length;i++){
+            if(keccak256(abi.encodePacked(carts[msg.sender].items[i].id)) == keccak256(abi.encodePacked(id))){
+                carts[msg.sender].items[i].quantity = quantity;
+                break;
+            }
+        }
+        emit updateCartEvent();
+    }
+
+    function removeProduct(string memory id) public {
+        for (uint i = 0; i < carts[msg.sender].items.length; i++) {
+            if (keccak256(abi.encodePacked(carts[msg.sender].items[i].id)) == keccak256(abi.encodePacked(id))) {
+                for (uint j = i; j < carts[msg.sender].items.length - 1; j++) {
+                    carts[msg.sender].items[j] = carts[msg.sender].items[j + 1];
+                }
+                carts[msg.sender].items.pop();
+                break;
+            }
+        }
+        emit removeProductEvent();
     }
 }

@@ -55,7 +55,6 @@ const Home = () => {
   };
 
   const onSubmit = async (data) => {
-    // console.log(data);
   };
 
   useEffect(() => {
