@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Section } from "../../store/scrollSlice.js";
 import Button from "../Button.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -11,6 +11,8 @@ export default function Header() {
   const authStatus = userData !== null ? true : false;
   const authRole = userData !== null ? userData["role"] : null;
   const [localeData, setLocalData] = useState(userData);
+  const cart = useSelector((state) => state.cart.items);
+  const items = cart.length;
 
   function logout(){
     window.localStorage.removeItem("userData");
@@ -58,12 +60,25 @@ export default function Header() {
                 >
                   Profile
                 </Link>
-                <Link
-                  to="/cart"
-                  className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
-                >
-                  Cart
-                </Link>
+                {items === 0 ? (
+                  <Link
+                    to="/cart"
+                    className="text-white bg-orange-700 relative hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+                  >
+                    Cart
+                  </Link>
+                ) : (
+                  <Link
+                    to="/cart"
+                    className="text-white bg-orange-700 relative hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-3 lg:px-4 py-2 lg:py-2.5 mr-2 focus:outline-none"
+                  >
+                    <span>Cart </span>
+                    <span>({items})</span>
+                    <span className="rounded-full   bg-sky-500  w-3 h-3 absolute -right-1 -top-1">
+                      <span className="absolute rounded-full h-4 w-4 animate-ping bg-green-500"></span>
+                    </span>
+                  </Link>
+                )}
                 <Link
                   to="/orders"
                   className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
