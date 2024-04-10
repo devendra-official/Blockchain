@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { ethers, Contract } from "ethers";
 import { setWallet } from "../store/walletSlice";
 import { abi as userAbi } from "../assets/UserManager.json";
-import {abi as productAbi } from "../assets/ProductManager.json";
+import { abi as productAbi } from "../assets/ProductManager.json";
 import { toast } from "react-toastify";
 
 function useWallet() {
@@ -21,8 +21,8 @@ function useWallet() {
                 provider = new ethers.BrowserProvider(window.ethereum)
                 provider.getSigner().then((data) => {
                     signer = data;
-                    const userContract = new Contract("0xFd840ee907F71A265f133a0Ef220688e28b66321", userAbi, signer);
-                    const productContract = new Contract("0xaA46Fb9BF64F9518d1df450274faA5bB6Ead8287", productAbi, signer);
+                    const userContract = new Contract("0xcC068a290B64c723B9EE6313B784221Bc19C2D0C", userAbi, signer);
+                    const productContract = new Contract("0x4a3bf4e75f713F577fc02C290e904a1099088E1d", productAbi, signer);
                     const address = signer.address;
                     dispatch(setWallet({ userContract, productContract, address }));
                     resolve();

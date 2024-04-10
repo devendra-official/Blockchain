@@ -13,19 +13,18 @@ const ProductDetail = () => {
   const { id } = useParams();
   const { addCart } = useCart();
 
-  const fetchData = async () => {
-    const result = await fetchProducts();
-    setProducts(result);
-  }
-
   useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchProducts();
+      setProducts(result);
+    }
     fetchData();
-  }, [])
+  })
 
   const product = products.find(p => p.id === id);
 
   const handleAddToCart = async (product) => {
-    await addCart(product.id, 1);
+    await addCart(product.id);
   };
 
   if (!product) {

@@ -90,6 +90,7 @@ contract UserManager {
     }
 
     mapping (address => Cart) carts;
+
     event addCartEvent();
     event updateCartEvent();
     event removeProductEvent();
@@ -108,18 +109,19 @@ contract UserManager {
         emit addCartEvent();
     }
 
-    function getCart() public view returns (Cart memory){
-        return carts[msg.sender];
+    function getCart() public view returns (Item[] memory){
+        return carts[msg.sender].items;
     }
 
-    function updateCart(string memory id,uint quantity) public {
-        for(uint i=0;i<carts[msg.sender].items.length;i++){
-            if(keccak256(abi.encodePacked(carts[msg.sender].items[i].id)) == keccak256(abi.encodePacked(id))){
-                carts[msg.sender].items[i].quantity = quantity;
-                break;
+    function updateCart(Item[] calldata items) public {
+        for(uint i = 0; i < items.length; i++) {
+            for(uint j=0;j<carts[msg.sender].items.length;j++){
+                if(keccak256(abi.encodePacked(carts[msg.sender].items[j].id)) == keccak256(abi.encodePacked(items[i].id))){
+                    carts[msg.sender].items[j].quantity = items[i].quantity;
+                    break;
+                }
             }
         }
-        emit updateCartEvent();
     }
 
     function removeProduct(string memory id) public {

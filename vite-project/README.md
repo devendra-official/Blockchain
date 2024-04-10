@@ -9,8 +9,11 @@
 npm i
 ```
 
+> [!TIP]
+> Replace the ` Blockchain/vite-project/src/assets/Supply.json ` file with ` Blockchain/artifacts/contracts/Supply.sol/Supply.json `file.
+
 > [!CAUTION]
-> Make sure to replace the deployed address in ` /vite-project/src/Customhooks/connectWallet.jsx ` at ` const userContract = new Contract("REPLACE WITH DEPLOYED userContract ADDRESS", abi, signer); ` and ` const productContract = new Contract("REPLACE WITH DEPLOYED productContract ADDRESS", abi, signer); `.
+> Make sure to replace the deployed address in ` /vite-project/src/Customhooks/connectWallet.jsx ` at ` const contract = new Contract("REPLACE WITH DEPLOYED ADDRESS", abi, signer); `.
 
 > [!IMPORTANT]
 > Before running below command make sure that ganache is running in the background.
