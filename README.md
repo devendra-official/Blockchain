@@ -16,7 +16,12 @@ npm i
 npx hardhat compile
 ```
 
-#### To deploy the contract run.
+#### To deploy the UserManager contract run.
 ```
-npx hardhat ignition deploy ignition/modules/Supply.js
+npx hardhat ignition deploy ignition/modules/UserManager.js
+```
+
+#### To deploy the ProductManager contract run.
+```
+npx hardhat ignition deploy ignition/modules/ProductManager.js
 ```
