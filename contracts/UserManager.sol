@@ -2,8 +2,9 @@
 
 pragma solidity >=0.8.2 <0.9.0;
 
+import "./PaymentContract.sol";
 
-contract UserManager {
+contract UserManager is PaymentContract {
     
     // USERS FUNCTIONS AND EVENTS
     struct Customer {
@@ -77,6 +78,31 @@ contract UserManager {
         require(keccak256(abi.encodePacked(authority[msg.sender].ETHAddress)) == keccak256(abi.encodePacked(msg.sender)),"Authority Not exist!");
         require(keccak256(abi.encodePacked(authority[msg.sender].password)) == keccak256(abi.encodePacked(password)),"Wrong password,Please Try Again!");
         return authority[msg.sender];
+    }
+
+    // COURIER FUNCTIONS AND EVENTS
+
+    struct Courier {
+        string name;
+        string email;
+        string password;
+        string role;
+        address ETHAddress;
+    }
+
+    mapping(address => Courier) couriers;
+    event createCourierEvent(string name,string email,string password,string role);
+
+    function createCourier(string memory name,string memory email,string memory password,string memory role) public {
+        require(keccak256(abi.encodePacked(couriers[msg.sender].ETHAddress)) != keccak256(abi.encodePacked(msg.sender)),"Authority already exist!");
+        couriers[msg.sender] = Courier(name,email,password,role,msg.sender);
+        emit createCourierEvent(name, email, password, role);
+    }
+
+    function getCourier(string memory password) public view returns (Courier memory) {
+        require(keccak256(abi.encodePacked(couriers[msg.sender].ETHAddress)) == keccak256(abi.encodePacked(msg.sender)),"Courier Not exist!");
+        require(keccak256(abi.encodePacked(couriers[msg.sender].password)) == keccak256(abi.encodePacked(password)),"Wrong password,Please Try Again!");
+        return couriers[msg.sender];
     }
 
     struct Item{

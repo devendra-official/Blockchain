@@ -19,7 +19,7 @@ const ProductDetail = () => {
       setProducts(result);
     }
     fetchData();
-  })
+  },[])
 
   const product = products.find(p => p.id === id);
 
@@ -66,8 +66,7 @@ const ProductDetail = () => {
             </div>
             <div className="flex items-center ">
               <div className="font-medium">Price : </div>
-              <FaRupeeSign className="text-sm relative top-[1px]" />
-              <div className="text-xl ">{(product.price).toString()}</div>
+              <div className="text-xl ">{(product.price).toString()} ETH</div>
             </div>
             <div className="flex gap-1">
               <div className="font-medium">{(product.quantity).toString()} </div>

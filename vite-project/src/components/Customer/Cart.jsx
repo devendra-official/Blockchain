@@ -4,8 +4,8 @@ import Footer from "../Footer/Footer.jsx";
 import { MdDelete } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { adjustQuantity } from "../../store/cartSlice.js";
-import { FaRupeeSign } from "react-icons/fa";
 import useCart from "../../Customhooks/carts.jsx";
+import usePayment from "../../Customhooks/usePayment.jsx";
 
 const Cart = () => {
   useEffect(() => {
@@ -15,6 +15,7 @@ const Cart = () => {
   const { getCarts, updateCart, deleteCart } = useCart();
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const { orderProduct } = usePayment();
 
   const fetchData = async () => {
     await getCarts();
@@ -39,6 +40,10 @@ const Cart = () => {
   const handleDeleteCart = async (item) => {
     await deleteCart(item);
   };
+
+  const purchaseProduct = async (item) => {
+    await orderProduct(item);
+  }
 
   const totalQuantity = items.reduce(
     (total, item) => total + Number(item.quantity),
@@ -144,8 +149,12 @@ const Cart = () => {
                 </div>
 
                 <div className="p-2 text-start flex font-medium">
-                  <FaRupeeSign className="mt-2 text-sm" />
-                  <div className="text-lg">{(item.price).toString()}</div>
+                  <div className="text-lg">{(item.price).toString()} ETH</div>
+                </div>
+                <div className="w-full mt-2 mb-2 px-5">
+                  <button className="w-full bg-[#D8F3DC] rounded-lg p-1 font-semibold" onClick={() => purchaseProduct(item)}>
+                    Buy
+                  </button>
                 </div>
               </div>
             ))}

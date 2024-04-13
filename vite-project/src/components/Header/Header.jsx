@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Section } from "../../store/scrollSlice.js";
 import Button from "../Button.jsx";
 import { useDispatch,useSelector } from "react-redux";
+import { removeAllItem } from "../../store/cartSlice.js";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ export default function Header() {
   function logout(){
     window.localStorage.removeItem("userData");
     setLocalData(null);
+    dispatch(removeAllItem());
     navigate("/");
   }
 

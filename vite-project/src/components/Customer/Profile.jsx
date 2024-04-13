@@ -24,7 +24,7 @@ const Profile = () => {
         </div>
       </div>
       <main>
-        <div className=" z-10 relative overflow-hidden font-bold pt-6 bg-[#D8F3DC]">
+        <div className="z-10 relative overflow-hidden font-bold pt-6 bg-[#D8F3DC]">
           <div className="flex justify-center py-5  px-12 items-center w-screen">
             <div className="w-full">
               <div>

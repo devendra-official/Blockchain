@@ -5,21 +5,23 @@ import { Header, Footer } from "../index.js";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
 
 function ProductList  ()  {
+
+  useEffect(() => {
+    fetchData();
+  },[]);
+
   const { fetchProducts } = FinalProduct();
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchProducts();
-        setProducts(result);
-      } catch (error) {
-        //TODO: show Error 
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  });
+  const fetchData = async () => {
+    try {
+      const result = await fetchProducts();
+      setProducts(result);
+    } catch (error) {
+      //TODO: show Error 
+      console.error('Error fetching data:', error);
+    }
+  };
 
   return (
     <>
@@ -57,9 +59,8 @@ function ProductList  ()  {
                   <div className="p-2"> {product.description}</div>
                   <div className="p-2">{(product.quantity).toString()}</div>
                   <div className="p-2 flex items-center flex-row">
-                    <FaRupeeSign className="text-sm" />
-                    <div className="text-lg"> {(product.price).toString()}</div>
-                  </div>
+                  <div className="text-lg"> {(product.price).toString()} ETH</div>
+                </div>
                 </div>
               </Link>
             </div>

@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     userContract: null,
     productContract: null,
-    address: null
+    address: null,
+    signer:null
 }
 
 const walletSlice = createSlice({
@@ -14,6 +15,7 @@ const walletSlice = createSlice({
             state.userContract = action.payload.userContract;
             state.productContract = action.payload.productContract;
             state.address = action.payload.address;
+            state.signer = action.payload.signer;
         }
     }
 })

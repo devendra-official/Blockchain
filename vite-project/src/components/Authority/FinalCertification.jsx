@@ -42,7 +42,7 @@ const FinalCertification = () => {
                 <td>{element.id}</td>
                 <td>{element.cropName}</td>
                 <td>{(element.quantity).toString()}</td>
-                <td>{(element.price).toString()}</td>
+                <td>{(element.price).toString()} ETH</td>
                 <td>{element.category}</td>
                 <td>
                   {element.isApproved ? (
