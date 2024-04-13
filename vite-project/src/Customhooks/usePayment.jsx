@@ -22,16 +22,26 @@ function usePayment() {
             const oid = generateIdentifier(identifiers);
             const time = new Date().toLocaleString();
             await userContract.orderProduct(item.id, price, item.ETHAddress, time, item.quantity, oid, { value: price });
-            userContract.once("orderProductEvent", async() => {
+            userContract.once("orderProductEvent", async () => {
                 await deleteCart(item);
                 toast.success("Payment success");
-            })
+            });
         } catch (error) {
             toast.error("An Error occured");
         }
     }
 
-    return { orderProduct };
+    async function getOrders() {
+        const orders = await userContract.getOrders();
+        return orders.orders;
+    }
+
+    async function courierslist() {
+        const courier = await userContract.courierslist();
+        return courier;
+    }
+
+    return { orderProduct, getOrders, courierslist };
 }
 
 export default usePayment;

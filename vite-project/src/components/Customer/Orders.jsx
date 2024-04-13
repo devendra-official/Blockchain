@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import { products } from "../data.js";
 import { useNavigate } from "react-router-dom";
+import usePayment from "../../Customhooks/usePayment.jsx";
 
 const Orders = () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const [orders, setOrders] = useState([]);
+  const { getOrders } = usePayment();
   const navigate = useNavigate();
+
+  const fetchData = async function () {
+    const orders = await getOrders();
+    setOrders(orders);
+  }
 
   const konsa = (data) => {
     navigate(`/OrderDetails/${data}`);
@@ -29,22 +40,22 @@ const Orders = () => {
           <thead className=" text-white text-xl bg-black border-green-800 border-2">
             <tr>
               <th>ID</th>
-              <th>Name</th>
+              <th>Seller</th>
               <th>Price</th>
               <th>Category</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
-            {products.map((product) => (
+            {orders.map((order) => (
               <tr
-                onClick={() => konsa(product.id)}
-                key={product.id}
+                onClick={() => konsa(order.orderId)}
+                key={order.id}
                 className="border-2 border-green-800 hover:bg-slate-400"
               >
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.category}</td>
+                <td>{order.productId}</td>
+                <td>{order.seller}</td>
+                <td>{Number(order.price) / 1e18} ETH</td>
+                <td>{order.timeofOrdered}</td>
               </tr>
             ))}
           </tbody>

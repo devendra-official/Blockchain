@@ -9,7 +9,7 @@ const useCreate = () => {
     async function createCustomer(role, name, email, password) {
         try {
             await userContract.createCustomer(name, email, password, role);
-            userContract.on("createCustomerEvent", (name, email, password, role) => {
+            userContract.once("createCustomerEvent", (name, email, password, role) => {
                 window.localStorage.setItem("userData", JSON.stringify({ name, email, role }));
                 toast.success(`Customer ${name} created successfully`);
                 navigate("/");
@@ -22,7 +22,7 @@ const useCreate = () => {
 
     async function createFarmer(role, name, email, password) {
         await userContract.createFarmer(name, email, password, role);
-        userContract.on("createFarmerEvent", (name, email, password, role) => {
+        userContract.once("createFarmerEvent", (name, email, password, role) => {
             window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
             toast.success(`Farmer ${name} created successfully`);
             navigate(`/${role}`);
@@ -31,14 +31,23 @@ const useCreate = () => {
 
     async function createAuthority(role, name, email, password) {
         await userContract.createAuthority(name, email, password, role)
-        userContract.on("createAuthorityEvent", (name, email, password, role) => {
+        userContract.once("createAuthorityEvent", (name, email, password, role) => {
             window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
             toast.success(`Authority ${name} created successfully`);
             navigate(`/${role}`);
         });
     }
 
-    return [createCustomer, createFarmer, createAuthority];
+    async function createcourier(role, name, email, password) {
+        // await userContract.createcourier(name, email, password, role)
+        // userContract.once("createcourierEvent", (name, email, password, role) => {
+        //     window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
+        //     toast.success(`Courier ${name} created successfully`);
+        //     navigate(`/${role}`);
+        // });
+    }
+
+    return [createCustomer, createFarmer, createAuthority,createcourier];
 }
 
 

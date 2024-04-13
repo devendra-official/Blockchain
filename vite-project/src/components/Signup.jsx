@@ -7,15 +7,15 @@ import { useSelector } from "react-redux";
 import useWallet from "../Customhooks/connectWallet.jsx";
 
 function Signup() {
-  const [createCustomer, createFarmer, createAuthority] = useCreate();
+  const [createCustomer, createFarmer, createAuthority,createcourier] = useCreate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
   const connectWallet = useWallet();
 
   const account = useSelector(state => state.addContract.address);
 
-  if(account===null){
-    window.ethereum.request({method:"eth_requestAccounts"}).then(()=>{
+  if (account === null) {
+    window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
       connectWallet();
     })
   }
@@ -25,8 +25,10 @@ function Signup() {
       await createCustomer(role, name, email, password);
     } else if (role === "farmer") {
       await createFarmer(role, name, email, password);
-    } else {
+    } else if (role === "authority") {
       await createAuthority(role, name, email, password);
+    } else {
+      await createcourier(role, name, email, password);
     }
   }
 
@@ -61,7 +63,7 @@ function Signup() {
           <form onSubmit={handleSubmit(create)}>
             <div className="space-y-5">
               <Select
-                options={["customer", "farmer", "authority"]}
+                options={["customer", "farmer", "authority","courier"]}
                 label="Role"
                 className="mb-4"
                 {...register("role", { required: true })}
