@@ -2,7 +2,7 @@ require("@nomicfoundation/hardhat-toolbox");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  defaultNetwork: "ganache",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
     },

@@ -167,7 +167,7 @@ contract ProductManager is CropManager {
                 string memory midTermApproved;
 
                 for (uint j = 0; j < crops.length; j++) {
-                    if (keccak256(abi.encodePacked(crops[j].id)) ==keccak256(abi.encodePacked(id))) {
+                    if (keccak256(abi.encodePacked(crops[j].id)) == keccak256(abi.encodePacked(id))) {
                         cropRegistered = crops[j].timeofApplied;
                         cropApproved = crops[j].timeofVerified;
                         break;
@@ -175,7 +175,7 @@ contract ProductManager is CropManager {
                 }
 
                 for (uint k = 0; k < midterm.length; k++) {
-                    if (keccak256(abi.encodePacked(midterm[k].id)) ==keccak256(abi.encodePacked(id))) {
+                    if (keccak256(abi.encodePacked(midterm[k].id)) == keccak256(abi.encodePacked(id))) {
                         midTermRegistered = midterm[k].timeofApplied;
                         midTermApproved = midterm[k].timeofVerified;
                         break;

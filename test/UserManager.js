@@ -83,49 +83,21 @@ describe("Users and Payment testing", function () {
     await UserManager.getCourier("pass");
   });
 
-  it("addCart", async function () {
-    const eventPromise = new Promise((resolve, reject) => {
-      try {
-        UserManager.once("addCartEvent", () => { })
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    })
-
-    await UserManager.addCart("PID", 23);
-    await eventPromise;
-  });
-
-  it("getCart", async function () {
-    await UserManager.getCart();
-  });
-
-  it("updateCart", async function () {
-    await UserManager.updateCart([{ id: "PID", quantity: 76 }]);
-  });
-
-  it("removeProduct", async function () {
-    const eventPromise = new Promise((resolve, reject) => {
-      try {
-        UserManager.once("removeProductEvent", () => { });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    })
-    await UserManager.removeProduct("PID");
-    await eventPromise;
-  });
+  // Payment Contract
 
   it("orderProduct", async function () {
-    await UserManager.orderProduct("PID", 5400000000000000, "0x5D0185B079BE40a7bE1698E706526a6951a45303", "time", 23, "OID", {
-      value: 5400000000000000
+    let price = 5400000000000000; // Make sure that price in wei not in ethers
+    await UserManager.orderProduct("PID", price, "time", 23, "OID", {
+      value: price
     });
   });
 
   it("getAllOrderIds", async function () {
     await UserManager.getAllOrderIds();
+  });
+
+  it("picked", async function () {
+    await UserManager.picked();
   });
 
   it("productDelivered", async function () {
@@ -137,8 +109,16 @@ describe("Users and Payment testing", function () {
         reject(error);
       }
     })
-    await UserManager.productDelivered("0x447185547f73d4b3780e28cE0B55Aaf4F0405469", "PID", "OID", "time");
+    await UserManager.productDelivered("0x447185547f73d4b3780e28cE0B55Aaf4F0405469", "OID", "time");
     await eventPromise;
+  });
+
+  it("getOrders", async function () {
+    await UserManager.getOrders();
+  });
+
+  it("courierslist", async function () {
+    await UserManager.courierslist();
   });
 
 });
