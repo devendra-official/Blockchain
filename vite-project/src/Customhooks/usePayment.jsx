@@ -1,31 +1,48 @@
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import selectId from "./generateId";
-import useCart from "./carts";
 
 function usePayment() {
     const generateIdentifier = selectId();
     const userContract = useSelector(state => state.addContract.userContract);
-    const { deleteCart } = useCart();
+    const address = useSelector(state => state.addContract.address);
 
-    async function orderProduct(item) {
+    async function orderProduct(items, totalAmount) {
         try {
             const identifiers = [];
             const data = await userContract.getAllOrderIds();
+            
             if (data.length !== 0) {
                 data.map((element) => {
                     identifiers.push(element);
                 });
             }
-            const price = BigInt(item.price * 1e18);
 
             const oid = generateIdentifier(identifiers);
             const time = new Date().toLocaleString();
-            await userContract.orderProduct(item.id, price, item.ETHAddress, time, item.quantity, oid, { value: price });
+            let orders = [];
+
+            items.map((item) => {
+                const price = BigInt(item.price * 1e18);
+                orders.push({ 
+                    status: 0, 
+                    productId: item.id, 
+                    productName: item.productName, 
+                    farmer: item.ETHAddress, 
+                    customer: address, 
+                    totalPrice: price, 
+                    totalQuantity: item.quantity, 
+                    timeofOrdered: time, 
+                    timeofPicked: time, 
+                    timeofDelivered: time 
+                });
+            });
+
+            await userContract.orderProduct(orders, oid, totalAmount, { value: totalAmount });
             userContract.once("orderProductEvent", async () => {
-                await deleteCart(item);
                 toast.success("Payment success");
             });
+
         } catch (error) {
             toast.error("An Error occured");
         }
@@ -33,15 +50,15 @@ function usePayment() {
 
     async function getOrders() {
         const orders = await userContract.getOrders();
-        return orders.orders;
+        return orders;
     }
 
-    async function courierslist() {
-        const courier = await userContract.courierslist();
-        return courier;
+    async function getOrderBySender() {
+        const myOrders = await userContract.getOrderBySender();
+        return myOrders;
     }
 
-    return { orderProduct, getOrders, courierslist };
+    return { orderProduct, getOrders, getOrderBySender };
 }
 
 export default usePayment;

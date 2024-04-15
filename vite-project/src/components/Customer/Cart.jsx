@@ -4,15 +4,17 @@ import Footer from "../Footer/Footer.jsx";
 import { MdDelete } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { adjustQuantity } from "../../store/cartSlice.js";
-import useCart from "../../Customhooks/carts.jsx";
 import usePayment from "../../Customhooks/usePayment.jsx";
+import { removeItem } from "../../store/cartSlice.js";
+
+
+// FIXME: Total Quantity
 
 const Cart = () => {
   useEffect(() => {
     fetchData();
   });
 
-  const { getCarts, updateCart, deleteCart } = useCart();
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const { orderProduct } = usePayment();
@@ -29,21 +31,9 @@ const Cart = () => {
     dispatch(adjustQuantity({ id, increment: false }));
   };
 
-  const handleUpdateCart = async () => {
-    let Data = [];
-    items.map((item) => {
-      Data.push({ id: item.id, quantity: item.quantity });
-    });
-    await updateCart(Data);
+  const handleDeleteCart =  (item) => {
+    dispatch(removeItem(item));
   };
-
-  const handleDeleteCart = async (item) => {
-    await deleteCart(item);
-  };
-
-  const purchaseProduct = async (item) => {
-    await orderProduct(item);
-  }
 
   const totalQuantity = items.reduce(
     (total, item) => total + Number(item.quantity),
@@ -54,6 +44,10 @@ const Cart = () => {
     (total, item) => total + Number(item.price) * Number(item.quantity),
     0
   );
+
+  const handleCheckout = async (items,totalAmount) => {
+    await orderProduct(items,totalAmount);
+  }
 
   if (items.length === 0)
     return (
@@ -128,7 +122,7 @@ const Cart = () => {
                       -
                     </button>
                     <div className="flex h-full font-bold w-full place-content-center py-2 border-t-2 border-b-2 border-[#D8F3DC]">
-                      {(item.quantity).toString()}
+                      {totalQuantity}
                     </div>
                     <button
                       className="bg-[#D8F3DC] p-2 h-full w-full font-bold rounded-r-sm"
@@ -150,11 +144,6 @@ const Cart = () => {
 
                 <div className="p-2 text-start flex font-medium">
                   <div className="text-lg">{(item.price).toString()} ETH</div>
-                </div>
-                <div className="w-full mt-2 mb-2 px-5">
-                  <button className="w-full bg-[#D8F3DC] rounded-lg p-1 font-semibold" onClick={() => purchaseProduct(item)}>
-                    Buy
-                  </button>
                 </div>
               </div>
             ))}
@@ -181,17 +170,11 @@ const Cart = () => {
               </div>
             </div>
             <div className="w-full mt-2 mb-2 px-5">
-              <button className="w-full bg-[#D8F3DC] rounded-lg p-1 font-semibold">
+              <button className="w-full bg-[#D8F3DC] rounded-lg p-1 font-semibold" onClick={handleCheckout}>
                 CHECKOUT
               </button>
             </div>
-            <div className="w-full mt-2 mb-2 px-5">
-              <button className="w-full bg-[#D8F3DC] rounded-lg p-1 font-semibold" onClick={handleUpdateCart}>
-                UPDATE CART
-              </button>
-            </div>
           </div>
-
         </div>
 
       </div>

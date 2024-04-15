@@ -17,9 +17,9 @@ contract PaymentContract {
         address customer;
         uint totalPrice;
         uint totalQuantity;
+        string timeofOrdered;
         string timeofPicked;
         string timeofDelivered;
-        string timeofOrdered;
     }
 
     struct Order {
@@ -35,15 +35,15 @@ contract PaymentContract {
     event productDeliveredEvent();
     event orderPickedEvent();
 
-    function orderProduct(Item[] memory items,string memory oid,uint totalPrice) public payable {
-        require(msg.value == totalPrice, "PAYMENT FAILED");
-        Order memory newOrder = Order({items: items,orderId: oid,totalPrice: totalPrice,customer: msg.sender,courier: address(0)});
-        for (uint i=0; i < items.length; i++) {
-            payable(items[i].farmer).transfer(items[i].totalPrice);
-        }
-        orders.push(newOrder);
-        emit orderProductEvent();
-    }
+    // function orderProduct(Item[] memory items,string memory oid,uint totalPrice) public payable {
+    //     require(msg.value == totalPrice, "PAYMENT FAILED");
+    //     Order memory newOrder = Order({items: items,orderId: oid,totalPrice: totalPrice,customer: msg.sender,courier: address(0)});
+    //     for (uint i=0; i < items.length; i++) {
+    //         payable(items[i].farmer).transfer(items[i].totalPrice);
+    //     }
+    //     orders.push(newOrder);
+    //     emit orderProductEvent();
+    // }
 
     function getAllOrderIds() public view returns (string[] memory) {
         string[] memory orderIds = new string[](orders.length);
@@ -88,13 +88,13 @@ contract PaymentContract {
         return orders;
     }
 
-    function getOrderBySender() public view returns (Order[] memory){
-        Order[] storage orderList;
-        for (uint i=0;i<orders.length;i++){
-            if(keccak256(abi.encodePacked(orders[i].customer)) == keccak256(abi.encodePacked(msg.sender))){
-                orderList.push(orders[i]);
-            }
-        }
-        return orderList;
-    }
+    // function getOrderBySender() public view returns (Order[] memory){
+    //     Order[] storage orderList;
+    //     for (uint i=0;i<orders.length;i++){
+    //         if(keccak256(abi.encodePacked(orders[i].customer)) == keccak256(abi.encodePacked(msg.sender))){
+    //             orderList.push(orders[i]);
+    //         }
+    //     }
+    //     return orderList;
+    // }
 }

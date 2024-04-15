@@ -4,14 +4,15 @@ import { Header, Footer, Button } from "../index.js";
 import { FaRupeeSign } from "react-icons/fa";
 import Timeline from "./Timeline.jsx";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
-import useCart from "../../Customhooks/carts.jsx";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../store/cartSlice.js";
 
 const ProductDetail = () => {
 
   const { fetchProducts } = FinalProduct();
   const [products, setProducts] = useState([]);
   const { id } = useParams();
-  const { addCart } = useCart();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,12 +20,12 @@ const ProductDetail = () => {
       setProducts(result);
     }
     fetchData();
-  },[])
+  }, [])
 
   const product = products.find(p => p.id === id);
 
-  const handleAddToCart = async (product) => {
-    await addCart(product.id);
+  const handleAddToCart = (product) => {
+    dispatch(addItem(product));
   };
 
   if (!product) {
@@ -81,7 +82,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <Timeline product={product} delicery={false}/>
+      <Timeline product={product} delicery={false} />
       <Footer />
     </div>
   );

@@ -87,17 +87,15 @@ describe("Users and Payment testing", function () {
 
   it("orderProduct", async function () {
     let price = 5400000000000000; // Make sure that price in wei not in ethers
-    await UserManager.orderProduct("PID", price, "time", 23, "OID", {
-      value: price
-    });
+    await UserManager.orderProduct([{ status: 0, productId: "PID", productName: "product", farmer: "0x447185547f73d4b3780e28cE0B55Aaf4F0405469", customer: "0x447185547f73d4b3780e28cE0B55Aaf4F0405469", totalPrice: 540000, totalQuantity: 34, timeofOrdered: "time", timeofPicked: "time", timeofDelivered: "time" }], "OID", price, { value: price });
   });
 
   it("getAllOrderIds", async function () {
     await UserManager.getAllOrderIds();
   });
 
-  it("picked", async function () {
-    await UserManager.picked();
+  it("orderPicked", async function () {
+    await UserManager.orderPicked("PID", "OID", "time");
   });
 
   it("productDelivered", async function () {
@@ -117,8 +115,8 @@ describe("Users and Payment testing", function () {
     await UserManager.getOrders();
   });
 
-  it("courierslist", async function () {
-    await UserManager.courierslist();
+  it("getOrderBySender", async function () {
+    await UserManager.getOrderBySender();
   });
 
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Input,Select } from "./index";
+import { Button, Input, Select } from "./index";
 import { useForm } from "react-hook-form";
 import useGetusers from "../Customhooks/getUsers";
 import { useSelector } from "react-redux";
@@ -8,12 +8,12 @@ import useWallet from "../Customhooks/connectWallet";
 
 function Login() {
   const { register, handleSubmit } = useForm();
-  const [getCustomer, getFarmer, getAuthority] = useGetusers();
+  const [getCustomer, getFarmer, getAuthority, getCourier] = useGetusers();
   const connectWallet = useWallet()
   const account = useSelector(state => state.addContract.address);
 
-  if(account===null){
-    window.ethereum.request({method:"eth_requestAccounts"}).then(()=>{
+  if (account === null) {
+    window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
       connectWallet();
     });
   }
@@ -23,8 +23,10 @@ function Login() {
       await getCustomer(password);
     } else if (role === "farmer") {
       await getFarmer(password);
-    } else {
+    } else if (role === "authority") {
       await getAuthority(password);
+    } else {
+      await getCourier(password);
     }
   }
 
@@ -57,7 +59,7 @@ function Login() {
           <form onSubmit={handleSubmit(getUser)} className="mt-8">
             <div className="space-y-5">
               <Select
-                options={["customer", "farmer", "authority"]}
+                options={["customer", "farmer", "authority", "courier"]}
                 label="Role"
                 className="mt-4"
                 {...register("role", { required: true })}

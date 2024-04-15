@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import useWallet from "../Customhooks/connectWallet.jsx";
 
 function Signup() {
-  const [createCustomer, createFarmer, createAuthority,createcourier] = useCreate();
+  const [createCustomer, createFarmer, createAuthority, createCourier] = useCreate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
   const connectWallet = useWallet();
@@ -28,7 +28,7 @@ function Signup() {
     } else if (role === "authority") {
       await createAuthority(role, name, email, password);
     } else {
-      await createcourier(role, name, email, password);
+      await createCourier(role, name, email, password);
     }
   }
 
@@ -63,7 +63,7 @@ function Signup() {
           <form onSubmit={handleSubmit(create)}>
             <div className="space-y-5">
               <Select
-                options={["customer", "farmer", "authority","courier"]}
+                options={["customer", "farmer", "authority", "courier"]}
                 label="Role"
                 className="mb-4"
                 {...register("role", { required: true })}
