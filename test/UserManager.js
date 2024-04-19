@@ -24,21 +24,16 @@ describe("Users and Payment testing", function () {
 
   it("fillDetails", async function () {
     const eventPromise = new Promise((resolve, reject) => {
-      UserManager.once("fillDetailsEvent", () => {});
+      UserManager.once("fillDetailsEvent", () => { });
       resolve();
     });
-    await UserManager.fillDetails({
-        ETHAddress: "0x02B9D37A7fe1140946AeAc61C123e91eE2Fa8518",
-        FullName: "Devendra B",
-        contact: 98978868,
-        House: "houseNo",
-        street: "street name",
-        pincode: 577598,
-        city: "Hiriyur",
-        state: "Karnataka"
-    });
+    await UserManager.fillDetails("Devendra B",98978868,"houseNo","street name",577598,"Hiriyur","Karnataka");
     await eventPromise;
   });
+
+  it("getDetails",async function(){
+    await UserManager.getDetails();
+  })
 
   it("createFarmer", async function () {
     const eventPromise = new Promise((resolve, reject) => {
