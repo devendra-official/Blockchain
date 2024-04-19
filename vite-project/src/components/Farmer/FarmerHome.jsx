@@ -17,7 +17,6 @@ const FarmerHome = () => {
   const navigate = useNavigate();
 
   const konsa = (data) => {
-    console.log(data.product.id);
     navigate(`/farmer/ProductDetails/${data.product.id}`);
   };
   return (

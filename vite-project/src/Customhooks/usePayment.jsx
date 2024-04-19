@@ -1,12 +1,14 @@
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import selectId from "./generateId";
 import FinalProduct from "./finalProducts";
+import { removeAllItem } from "../store/cartSlice";
 
 function usePayment() {
     const generateIdentifier = selectId();
     const userContract = useSelector(state => state.addContract.userContract);
     const { reduceQuantity } = FinalProduct();
+    const dispatch = useDispatch();
 
     async function orderProduct(items, totalAmount) {
         try {
@@ -23,7 +25,7 @@ function usePayment() {
             const time = new Date().toLocaleString();
             let orders = [];
 
-            let reduceQuantity = [];
+            let reduceItem = [];
 
             items.map((item) => {
                 const price = BigInt(item.price * 1e18);
@@ -38,16 +40,15 @@ function usePayment() {
                     timeofDelivered: time,
                 });
 
-                reduceQuantity.push({ id: item.id, reduce: item.requantity });
+                reduceItem.push({ id: item.id, reduce: item.requantity });
             });
 
             await userContract.orderProduct(orders, time, totalAmount, oid, { value: totalAmount });
             userContract.once("orderProductEvent", async () => {
+                dispatch(removeAllItem());
                 toast.success("Payment success");
             });
-
-            await reduceQuantity(reduceQuantity);
-
+            await reduceQuantity(reduceItem);
         } catch (error) {
             console.log(error);
         }

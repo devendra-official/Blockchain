@@ -39,7 +39,6 @@ const Cart = () => {
   );
 
   const handleCheckout = async () => {
-    console.log(totalAmount);
     await orderProduct(items,totalAmount);
   }
 

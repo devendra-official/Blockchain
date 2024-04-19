@@ -56,7 +56,7 @@ const SideBar = ({ className }) => {
           <div>Certification</div>
         </Link>
 
-        <Link
+        {/* <Link
           to="/farmer/orders-from"
           className={`cursor-pointer flex flex-row gap-1 p-3  hover:bg-green-600 transition ${
             location.pathname === "/farmer/orders-from" && "bg-green-600"
@@ -64,7 +64,7 @@ const SideBar = ({ className }) => {
         >
           <VscListOrdered className="mt-1" />
           <div>Orders</div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
