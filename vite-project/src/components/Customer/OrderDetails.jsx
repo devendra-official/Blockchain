@@ -1,14 +1,32 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { products } from "../data.js";
-import { Header, Footer,Button } from "../index.js";
+import React, { useEffect, useState } from "react";
+import FinalProduct from "../../Customhooks/finalProducts.jsx";
+import { Header, Footer } from "../index.js";
 import { FaRupeeSign } from "react-icons/fa";
 import Timeline from "./Timeline.jsx";
+import { useLocation } from "react-router-dom";
 
 const OrderDetails = () => {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === parseInt(id));
-  const productId = product.id;
+  const { fetchProducts } = FinalProduct();
+  const [products, setProducts] = useState([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchProducts();
+      setProducts(result);
+    };
+    fetchData();
+  }, []);
+
+  const product = products.find((p) => p.id == location.state.order.productId);
+  let delivered = false;
+  if(location.state.order.status == 2){
+    delivered=true;
+  }
+
+  if (!product) {
+    return <div>Loading...</div>; 
+  }
 
   return (
     <div>
@@ -24,7 +42,7 @@ const OrderDetails = () => {
             />
           </div>
           <div className="flex flex-col gap-2 justify-center p-4">
-            <div className="font-bold text-2xl">{product.name}</div>
+            <div className="font-bold text-2xl">{product.productName}</div>
             <div>
               <div className="font-medium">Description</div>
               <div>{product.description}</div>
@@ -36,17 +54,16 @@ const OrderDetails = () => {
             <div className="flex items-center ">
               <div className="font-medium">Price : </div>
               <FaRupeeSign className="text-sm relative top-[1px]" />
-              <div className="text-xl ">{product.price}</div>
+              <div className="text-xl ">{(product.price).toString()}</div>
             </div>
             <div className="flex gap-1">
-              <div className="font-medium">{product.quantity} </div>
+              <div className="font-medium">{(product.quantity).toString()} </div>
               <div>items</div>
             </div>
-            <Button>Add to Cart</Button>
           </div>
         </div>
       </div>
-      <Timeline id={productId} delivery={true} />
+      <Timeline product={product} order={location.state.order} delivery={delivered} />
       <Footer />
     </div>
   );

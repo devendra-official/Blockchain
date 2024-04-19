@@ -28,6 +28,9 @@ export default function Protected({
         case "authority":
           navigate("/authority");
           break;
+        case "courier":
+          navigate("/courier");
+          break;
         default:
           navigate("/");
           break;

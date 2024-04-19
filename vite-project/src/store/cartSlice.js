@@ -14,9 +14,9 @@ export const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === id);
 
       if (existingItem) {
-        // existingItem.quantity++;
+        existingItem.requantity++;
       } else {
-        state.items.push(action.payload);
+        state.items.push({ ...action.payload, requantity: 1 });
       }
     },
 
@@ -30,14 +30,12 @@ export const cartSlice = createSlice({
 
     adjustQuantity: (state, action) => {
       const { id, increment } = action.payload;
-      const item = state.items.find(item => item.id === id);
-      item.quantity = Number(item.quantity);
+      const item = state.items.find((item) => item.id === id);
 
       if (item) {
-        if (item.quantity == 1 && increment) {
-          item.quantity += 1;
-        } else if (item.quantity != 1) {
-          item.quantity += increment ? +1 : -1;
+        item.requantity += increment ? 1 : -1;
+        if (item.requantity === 0) {
+          state.items = state.items.filter((item) => item.id !== id);
         }
       }
     },

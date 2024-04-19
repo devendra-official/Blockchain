@@ -21,8 +21,8 @@ function useWallet() {
                 provider = new ethers.BrowserProvider(window.ethereum)
                 provider.getSigner().then((data) => {
                     signer = data;
-                    const userContract = new Contract("0xC8fBa8939292b2549057C6d00c188B9112dDc83c", userAbi, signer);
-                    const productContract = new Contract("0x74821d7D8f5ff14DEc63a6A381a553674B6dcE5a", productAbi, signer);
+                    const userContract = new Contract("0x8ccB35Ae18580E5D19F6703c53D3c9216459c2df", userAbi, signer);
+                    const productContract = new Contract("0xD4489e328E87618417B5c472E79D87C6C2026703", productAbi, signer);
                     const address = signer.address;
                     dispatch(setWallet({ userContract, productContract, address, signer }));
                     resolve();

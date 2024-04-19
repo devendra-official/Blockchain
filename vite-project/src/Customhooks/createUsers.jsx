@@ -34,17 +34,17 @@ const useCreate = () => {
         userContract.once("createAuthorityEvent", (name, email, password, role) => {
             window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
             toast.success(`Authority ${name} created successfully`);
-            navigate(`/${role}`);
+            navigate(`/${role}/crop-validation`);
         });
     }
 
     async function createcourier(role, name, email, password) {
-        // await userContract.createcourier(name, email, password, role)
-        // userContract.once("createcourierEvent", (name, email, password, role) => {
-        //     window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
-        //     toast.success(`Courier ${name} created successfully`);
-        //     navigate(`/${role}`);
-        // });
+        await userContract.createCourier(name, email, password, role)
+        userContract.once("createCourierEvent", (name, email, password, role) => {
+            window.localStorage.setItem("userData", JSON.stringify({ name, email, password,role }));
+            toast.success(`Courier ${name} created successfully`);
+            navigate(`/${role}`);
+        });
     }
 
     return [createCustomer, createFarmer, createAuthority,createcourier];

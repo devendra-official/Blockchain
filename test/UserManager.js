@@ -86,8 +86,22 @@ describe("Users and Payment testing", function () {
   // Payment Contract
 
   it("orderProduct", async function () {
-    let price = 5400000000000000; // Make sure that price in wei not in ethers
-    await UserManager.orderProduct([{ status: 0, productId: "PID", productName: "product", farmer: "0x447185547f73d4b3780e28cE0B55Aaf4F0405469", customer: "0x447185547f73d4b3780e28cE0B55Aaf4F0405469", totalPrice: 540000, totalQuantity: 34, timeofOrdered: "time", timeofPicked: "time", timeofDelivered: "time" }], "OID", price, { value: price });
+    const items = [
+      {
+        status: 0,
+        productId: "123",
+        productName: "Product 1",
+        farmer: "0x02B9D37A7fe1140946AeAc61C123e91eE2Fa8518",
+        totalPrice: 54000,
+        totalQuantity: 1,
+        timeofPicked: "time",
+        timeofDelivered: "time",
+      },
+    ];
+    const orderId = "ABC123";
+    const timeofOrdered = "2022-04-12";
+    const totalPrice = 5400000000000; 
+    await UserManager.orderProduct(items, timeofOrdered, totalPrice, orderId, { value: totalPrice });
   });
 
   it("getAllOrderIds", async function () {
@@ -113,10 +127,6 @@ describe("Users and Payment testing", function () {
 
   it("getOrders", async function () {
     await UserManager.getOrders();
-  });
-
-  it("getOrderBySender", async function () {
-    await UserManager.getOrderBySender();
   });
 
 });

@@ -1,66 +1,69 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract PaymentContract {
-    enum OrderStatus {
-        Ordered,
-        Picked,
-        Delivered
-    }
+    enum OrderStatus { Ordered, Picked, Delivered }
 
     struct Item{
         OrderStatus status;
         string productId;
         string productName;
         address farmer;
-        address customer;
         uint totalPrice;
         uint totalQuantity;
-        string timeofOrdered;
         string timeofPicked;
         string timeofDelivered;
     }
 
-    struct Order {
+    struct Order{
         Item[] items;
         string orderId;
-        uint totalPrice;
+        string timeofOrdered;
         address customer;
-        address courier;
+        uint totalAmount;
     }
 
-    Order[] orders;
+    mapping (address => Order) orders;
+    Order[] orderList;
     event orderProductEvent();
     event productDeliveredEvent();
     event orderPickedEvent();
 
-    // function orderProduct(Item[] memory items,string memory oid,uint totalPrice) public payable {
-    //     require(msg.value == totalPrice, "PAYMENT FAILED");
-    //     Order memory newOrder = Order({items: items,orderId: oid,totalPrice: totalPrice,customer: msg.sender,courier: address(0)});
-    //     for (uint i=0; i < items.length; i++) {
-    //         payable(items[i].farmer).transfer(items[i].totalPrice);
-    //     }
-    //     orders.push(newOrder);
-    //     emit orderProductEvent();
-    // }
+    function orderProduct(Item[] memory items,string memory time,uint totalAmount,string memory orderId) public payable {
+        require(msg.value == totalAmount,"Payment failed");
+        orders[msg.sender].timeofOrdered = time;
+        orders[msg.sender].customer = msg.sender;
+        orders[msg.sender].totalAmount = totalAmount ;
+        orders[msg.sender].orderId = orderId;
+
+         for(uint i = 0; i < items.length; i++) {
+            orders[msg.sender].items.push(items[i]);
+            orders[msg.sender].items[i].status = OrderStatus.Ordered;
+        }
+        orderList.push(orders[msg.sender]);
+
+        for (uint i=0;i<items.length;i++){
+            payable (items[i].farmer).transfer(items[i].totalPrice);
+        }
+        emit orderProductEvent();
+    }
 
     function getAllOrderIds() public view returns (string[] memory) {
-        string[] memory orderIds = new string[](orders.length);
-        for (uint256 i = 0; i < orders.length; i++) {
-            orderIds[i] = orders[i].orderId;
+        string[] memory orderIds = new string[](orderList.length);
+        for (uint256 i = 0; i < orderList.length; i++) {
+            orderIds[i] = orderList[i].orderId;
         }
         return orderIds;
     }
 
-
-    function orderPicked(string memory pid,string memory oid,string memory time) public {
-        for (uint i=0;i<orders.length;i++){
-            if(keccak256(abi.encodePacked(orders[i].orderId)) == keccak256(abi.encodePacked(oid))){
-                for(uint j=0;j<orders[i].items.length;j++){
-                    if(keccak256(abi.encodePacked(orders[i].items[j].productId)) == keccak256(abi.encodePacked(pid))){
-                        orders[i].items[j].status = OrderStatus.Picked;
-                        orders[i].items[j].timeofPicked = time;
+    function orderPicked( string memory pid, string memory oid, string memory time ) public {
+        for (uint i = 0; i < orderList.length; i++) {
+            if (keccak256(abi.encodePacked(orderList[i].orderId)) ==keccak256(abi.encodePacked(oid))) {
+                for (uint j = 0; j < orderList[i].items.length; j++) {
+                    if (keccak256(abi.encodePacked(orderList[i].items[j].productId)) == keccak256(abi.encodePacked(pid))) {
+                        orderList[i].items[j].status = OrderStatus.Picked;
+                        orderList[i].items[j].timeofPicked = time;
                         break;
                     }
                 }
@@ -70,12 +73,12 @@ contract PaymentContract {
     }
 
     function productDelivered(string memory pid,string memory oid,string memory time) public {
-        for (uint i=0;i<orders.length;i++){
-            if(keccak256(abi.encodePacked(orders[i].orderId)) == keccak256(abi.encodePacked(oid))){
-                for(uint j=0;j<orders[i].items.length;j++){
-                    if(keccak256(abi.encodePacked(orders[i].items[j].productId)) == keccak256(abi.encodePacked(pid))){
-                        orders[i].items[j].status = OrderStatus.Delivered;
-                        orders[i].items[j].timeofPicked = time;
+        for (uint i = 0; i < orderList.length; i++) {
+            if (keccak256(abi.encodePacked(orderList[i].orderId)) == keccak256(abi.encodePacked(oid))) {
+                for (uint j = 0; j < orderList[i].items.length; j++) {
+                    if (keccak256(abi.encodePacked(orderList[i].items[j].productId)) == keccak256(abi.encodePacked(pid))) {
+                        orderList[i].items[j].status = OrderStatus.Delivered;
+                        orderList[i].items[j].timeofPicked = time;
                         break;
                     }
                 }
@@ -85,16 +88,7 @@ contract PaymentContract {
     }
 
     function getOrders() public view returns (Order[] memory) {
-        return orders;
+        return orderList;
     }
 
-    // function getOrderBySender() public view returns (Order[] memory){
-    //     Order[] storage orderList;
-    //     for (uint i=0;i<orders.length;i++){
-    //         if(keccak256(abi.encodePacked(orders[i].customer)) == keccak256(abi.encodePacked(msg.sender))){
-    //             orderList.push(orders[i]);
-    //         }
-    //     }
-    //     return orderList;
-    // }
 }

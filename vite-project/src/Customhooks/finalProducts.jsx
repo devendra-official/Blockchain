@@ -24,11 +24,14 @@ function FinalProduct() {
                 certApproved: product.certApproved
             });
         })
-        console.log(Items);
         return Items;
     }
 
-    return { fetchProducts };
+    async function reduceQuantity(items) {
+        await productContract.reduceQuantity(items);
+    }
+
+    return { fetchProducts, reduceQuantity };
 }
 
 export default FinalProduct;

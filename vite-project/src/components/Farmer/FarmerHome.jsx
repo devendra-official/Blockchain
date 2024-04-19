@@ -1,7 +1,25 @@
-import React from "react";
-import { products } from "../data.js";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useCrop from "../../Customhooks/crops.jsx";
 
 const FarmerHome = () => {
+  const [products, setCrops] = useState([]);
+  const { getCrops } = useCrop();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const crops = await getCrops();
+      setCrops(crops);
+    }
+
+    fetchData();
+  }, []);
+  const navigate = useNavigate();
+
+  const konsa = (data) => {
+    console.log(data.product.id);
+    navigate(`/farmer/ProductDetails/${data.product.id}`);
+  };
   return (
     <>
       <img
@@ -16,17 +34,20 @@ const FarmerHome = () => {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
+              <th>ETH Address</th>
+              <th>Address</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
             {products.map((product) => (
-              <tr key={product.id} className="border-2 border-green-800">
+              <tr
+                onClick={() => konsa({ product: product })}
+                key={product.id}
+                className="border-2 border-green-800 hover:bg-slate-400">
                 <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.category}</td>
+                <td>{product.cropName}</td>
+                <td>{product.ETHAddress}</td>
+                <td>{product.location}</td>
               </tr>
             ))}
           </tbody>

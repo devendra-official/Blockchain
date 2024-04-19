@@ -21,7 +21,15 @@ contract ProductManager is CropManager {
     }
 
     Certificate[] certificates;
-    event reqCertificateEvent(string id,string quality,uint quantity,string category,uint price,string description,string timeofApplied);
+    event reqCertificateEvent(
+        string id,
+        string quality,
+        uint quantity,
+        string category,
+        uint price,
+        string description,
+        string timeofApplied
+    );
 
     modifier checkCertificate(string memory id) {
         bool isCropPresent = false;
@@ -30,7 +38,10 @@ contract ProductManager is CropManager {
         bool isCertificateApproved = false;
 
         for (uint i = 0; i < crops.length; i++) {
-            if (keccak256(abi.encodePacked(crops[i].id)) == keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(crops[i].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 isCropPresent = true;
             }
             if (crops[i].ETHAddress == msg.sender) {
@@ -39,7 +50,10 @@ contract ProductManager is CropManager {
         }
 
         for (uint j = 0; j < midterm.length; j++) {
-            if (keccak256(abi.encodePacked(midterm[j].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(midterm[j].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 if (midterm[j].isApproved) {
                     isMidApproved = true;
                 }
@@ -47,7 +61,10 @@ contract ProductManager is CropManager {
         }
 
         for (uint k = 0; k < certificates.length; k++) {
-            if (keccak256(abi.encodePacked(certificates[k].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(certificates[k].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 if (certificates[k].isApproved) {
                     isCertificateApproved = true;
                 }
@@ -61,10 +78,41 @@ contract ProductManager is CropManager {
         _;
     }
 
-    function reqCertificate(string memory id,string memory quality,uint quantity,string memory category,uint price,string memory description,string memory timeofApplied) public checkCertificate(id) {
+    function reqCertificate(
+        string memory id,
+        string memory quality,
+        uint quantity,
+        string memory category,
+        uint price,
+        string memory description,
+        string memory timeofApplied
+    ) public checkCertificate(id) {
         string memory name = getCropNameById(id);
-        certificates.push(Certificate(id,name,msg.sender,quality,quantity,category,price,description,timeofApplied,timeofApplied,false,false));
-        emit reqCertificateEvent(id,quality,quantity,category,price,description,timeofApplied);
+        certificates.push(
+            Certificate(
+                id,
+                name,
+                msg.sender,
+                quality,
+                quantity,
+                category,
+                price,
+                description,
+                timeofApplied,
+                timeofApplied,
+                false,
+                false
+            )
+        );
+        emit reqCertificateEvent(
+            id,
+            quality,
+            quantity,
+            category,
+            price,
+            description,
+            timeofApplied
+        );
     }
 
     function getCertificate() public view returns (Certificate[] memory) {
@@ -75,7 +123,10 @@ contract ProductManager is CropManager {
         bool isApproved = false;
 
         for (uint i = 0; i < crops.length; i++) {
-            if (keccak256(abi.encodePacked(crops[i].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(crops[i].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 isApproved = crops[i].isApproved;
                 break;
             }
@@ -89,7 +140,8 @@ contract ProductManager is CropManager {
         bool isApproved = false;
 
         for (uint i = 0; i < midterm.length; i++) {
-            if (keccak256(abi.encodePacked(midterm[i].id)) ==keccak256(abi.encodePacked(id))) {
+            if (keccak256(abi.encodePacked(midterm[i].id)) ==keccak256(abi.encodePacked(id))
+            ) {
                 isApproved = midterm[i].isApproved;
                 break;
             }
@@ -103,7 +155,10 @@ contract ProductManager is CropManager {
         bool isApproved = false;
 
         for (uint i = 0; i < certificates.length; i++) {
-            if (keccak256(abi.encodePacked(certificates[i].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(certificates[i].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 isApproved = certificates[i].isApproved;
                 break;
             }
@@ -135,9 +190,15 @@ contract ProductManager is CropManager {
     event approveMidTermEvent(string id, string time);
     event approveCertificateEvent(string id, string time);
 
-    function approveCrop(string memory id,string memory time) public cropApprovalStatus(id) {
+    function approveCrop(
+        string memory id,
+        string memory time
+    ) public cropApprovalStatus(id) {
         for (uint i = 0; i < crops.length; i++) {
-            if (keccak256(abi.encodePacked(crops[i].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(crops[i].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 crops[i].isApproved = true;
                 crops[i].timeofVerified = time;
                 emit approveCropEvent(id, time);
@@ -145,9 +206,15 @@ contract ProductManager is CropManager {
         }
     }
 
-    function approveMidTerm(string memory id,string memory time) public midtermApprovalStatus(id) {
+    function approveMidTerm(
+        string memory id,
+        string memory time
+    ) public midtermApprovalStatus(id) {
         for (uint i = 0; i < midterm.length; i++) {
-            if (keccak256(abi.encodePacked(midterm[i].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(midterm[i].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 midterm[i].isApproved = true;
                 midterm[i].timeofVerified = time;
                 emit approveMidTermEvent(id, time);
@@ -155,9 +222,15 @@ contract ProductManager is CropManager {
         }
     }
 
-    function approveCertificate(string memory id,string memory time) public certificateApprovalStatus(id) {
+    function approveCertificate(
+        string memory id,
+        string memory time
+    ) public certificateApprovalStatus(id) {
         for (uint i = 0; i < certificates.length; i++) {
-            if (keccak256(abi.encodePacked(certificates[i].id)) ==keccak256(abi.encodePacked(id))) {
+            if (
+                keccak256(abi.encodePacked(certificates[i].id)) ==
+                keccak256(abi.encodePacked(id))
+            ) {
                 certificates[i].isApproved = true;
                 certificates[i].timeofVerified = time;
 
@@ -167,7 +240,10 @@ contract ProductManager is CropManager {
                 string memory midTermApproved;
 
                 for (uint j = 0; j < crops.length; j++) {
-                    if (keccak256(abi.encodePacked(crops[j].id)) == keccak256(abi.encodePacked(id))) {
+                    if (
+                        keccak256(abi.encodePacked(crops[j].id)) ==
+                        keccak256(abi.encodePacked(id))
+                    ) {
                         cropRegistered = crops[j].timeofApplied;
                         cropApproved = crops[j].timeofVerified;
                         break;
@@ -175,13 +251,32 @@ contract ProductManager is CropManager {
                 }
 
                 for (uint k = 0; k < midterm.length; k++) {
-                    if (keccak256(abi.encodePacked(midterm[k].id)) == keccak256(abi.encodePacked(id))) {
+                    if (
+                        keccak256(abi.encodePacked(midterm[k].id)) ==
+                        keccak256(abi.encodePacked(id))
+                    ) {
                         midTermRegistered = midterm[k].timeofApplied;
                         midTermApproved = midterm[k].timeofVerified;
                         break;
                     }
                 }
-                products.push(Product(id,certificates[i].cropName,certificates[i].category,certificates[i].price,certificates[i].quantity,certificates[i].ETHAddress,certificates[i].description,cropRegistered,cropApproved,midTermRegistered,midTermApproved,certificates[i].timeofApplied,time));
+                products.push(
+                    Product(
+                        id,
+                        certificates[i].cropName,
+                        certificates[i].category,
+                        certificates[i].price,
+                        certificates[i].quantity,
+                        certificates[i].ETHAddress,
+                        certificates[i].description,
+                        cropRegistered,
+                        cropApproved,
+                        midTermRegistered,
+                        midTermApproved,
+                        certificates[i].timeofApplied,
+                        time
+                    )
+                );
                 break;
             }
         }
@@ -190,5 +285,20 @@ contract ProductManager is CropManager {
 
     function fetchProduct() public view returns (Product[] memory) {
         return products;
+    }
+
+    struct Item {
+        string id;
+        uint reduce;
+    }
+
+    function reduceQuantity(Item[] calldata items) public {
+        for (uint i = 0; i < products.length; i++) {
+            for (uint j=0;j<items.length;j++){
+                if(keccak256(abi.encodePacked(items[j].id)) == keccak256(abi.encodePacked(products[i].id))){
+                    products[i].quantity = products[i].quantity - items[j].reduce;
+                }
+            }
+        }
     }
 }

@@ -11,17 +11,10 @@ import { removeItem } from "../../store/cartSlice.js";
 // FIXME: Total Quantity
 
 const Cart = () => {
-  useEffect(() => {
-    fetchData();
-  });
 
   const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const { orderProduct } = usePayment();
-
-  const fetchData = async () => {
-    await getCarts();
-  };
 
   const handleIncrementQuantity = (id) => {
     dispatch(adjustQuantity({ id, increment: true }));
@@ -36,16 +29,17 @@ const Cart = () => {
   };
 
   const totalQuantity = items.reduce(
-    (total, item) => total + Number(item.quantity),
+    (total, item) => total + Number(item.requantity),
     0
   );
 
   const totalAmount = items.reduce(
-    (total, item) => total + Number(item.price) * Number(item.quantity),
+    (total, item) => total + Number(item.price) * Number(item.requantity),
     0
   );
 
-  const handleCheckout = async (items,totalAmount) => {
+  const handleCheckout = async () => {
+    console.log(totalAmount);
     await orderProduct(items,totalAmount);
   }
 

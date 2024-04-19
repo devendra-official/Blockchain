@@ -23,16 +23,15 @@ import {
   CropRegisteration,
   MidtermVerify,
   OrdersFrom,
-  PickUpCourier,
   RequestCertification,
+  FarmerProducts
 } from "./components/Farmer/index.js";
 import {
-  Authority,
-  AuthorityHome,
   CropValidation,
   FinalCertification,
   MidtermVerification,
 } from "./components/Authority/index.js";
+import Dash from "./components/Courier/Dash.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -132,6 +131,14 @@ const router = createBrowserRouter([
             ),
           },
           {
+            path: "/farmer/ProductDetails/:id",
+            element: (
+              <AuthLayout requiredRole="farmer" authentication={true}>
+                <FarmerProducts />
+              </AuthLayout>
+            ),
+          },
+          {
             path: "/farmer/crop-registration",
             element: (
               <AuthLayout requiredRole="farmer" authentication={true}>
@@ -164,59 +171,45 @@ const router = createBrowserRouter([
               </AuthLayout>
             ),
           },
-          {
-            path: "/farmer/pick-up-fromcourier",
-            element: (
-              <AuthLayout requiredRole="farmer" authentication={true}>
-                <PickUpCourier />
-              </AuthLayout>
-            ),
-          },
         ],
       },
 
       // here starts authority routes
+
       {
-        path: "/authority",
+        path: "/authority/crop-validation",
         element: (
           <AuthLayout requiredRole="authority" authentication={true}>
-            <Authority />
+            <CropValidation />
           </AuthLayout>
         ),
-        children: [
-          {
-            path: "/authority",
-            element: (
-              <AuthLayout requiredRole="authority" authentication={true}>
-                <AuthorityHome />
-              </AuthLayout>
-            ),
-          },
-          {
-            path: "/authority/crop-validation",
-            element: (
-              <AuthLayout requiredRole="authority" authentication={true}>
-                <CropValidation />
-              </AuthLayout>
-            ),
-          },
-          {
-            path: "/authority/midterm-verification",
-            element: (
-              <AuthLayout requiredRole="authority" authentication={true}>
-                <MidtermVerification />
-              </AuthLayout>
-            ),
-          },
-          {
-            path: "/authority/final-certification",
-            element: (
-              <AuthLayout requiredRole="authority" authentication={true}>
-                <FinalCertification />
-              </AuthLayout>
-            ),
-          },
-        ],
+      },
+      {
+        path: "/authority/midterm-verification",
+        element: (
+          <AuthLayout requiredRole="authority" authentication={true}>
+            <MidtermVerification />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/authority/final-certification",
+        element: (
+          <AuthLayout requiredRole="authority" authentication={true}>
+            <FinalCertification />
+          </AuthLayout>
+        ),
+      },
+
+      // here starts the courier routes
+
+      {
+        path: "/courier",
+        element: (
+          <AuthLayout requiredRole="courier" authentication={true}>
+            <Dash />
+          </AuthLayout>
+        ),
       },
     ],
   },

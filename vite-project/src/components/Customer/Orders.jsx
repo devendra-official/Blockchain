@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
-import { products } from "../data.js";
 import { useNavigate } from "react-router-dom";
 import usePayment from "../../Customhooks/usePayment.jsx";
+import { useSelector } from "react-redux";
 
 const Orders = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const address = useSelector(state => state.addContract.address);
   const [orders, setOrders] = useState([]);
   const { getOrders } = usePayment();
   const navigate = useNavigate();
@@ -19,8 +21,10 @@ const Orders = () => {
   }
 
   const konsa = (data) => {
-    navigate(`/OrderDetails/${data}`);
+    navigate(`/OrderDetails/${data.order.orderId}`, { state: data });
   };
+
+  const filteredOrders = orders.filter(order => order.customer === address);
 
   return (
     <>
@@ -40,22 +44,24 @@ const Orders = () => {
           <thead className=" text-white text-xl bg-black border-green-800 border-2">
             <tr>
               <th>ID</th>
-              <th>Seller</th>
+              <th>Farmer</th>
               <th>Price</th>
-              <th>Category</th>
+              <th>Time of Ordered</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
-            {orders.map((order) => (
+            {filteredOrders.map((order) => (
               <tr
-                onClick={() => konsa(order.orderId)}
+                onClick={() => konsa({ order: order })}
                 key={order.id}
                 className="border-2 border-green-800 hover:bg-slate-400"
               >
                 <td>{order.productId}</td>
-                <td>{order.seller}</td>
+                <td>{order.farmer}</td>
                 <td>{Number(order.price) / 1e18} ETH</td>
                 <td>{order.timeofOrdered}</td>
+                <td>{order.status}</td>
               </tr>
             ))}
           </tbody>

@@ -10,7 +10,7 @@ describe("Crop and Product testing", function () {
     it("cropRegister", async function () {
         const eventPromise = new Promise((resolve, reject) => {
             try {
-                ProductManager.once("cropRegisterEvent", () => {})
+                ProductManager.once("cropRegisterEvent", () => { })
                 resolve();
             } catch (error) {
                 reject(error);
@@ -24,49 +24,53 @@ describe("Crop and Product testing", function () {
         await ProductManager.getCrops();
     });
 
-    it("getCropNameById",async function(){
+    it("getCropNameById", async function () {
         await ProductManager.getAllCropIds();
     });
 
-    it("approveCrop",async function(){
-        await ProductManager.approveCrop("CID","time");
+    it("approveCrop", async function () {
+        await ProductManager.approveCrop("CID", "time");
     });
 
-    it("midTermRegister",async function(){
-        await ProductManager.midTermRegister("CID","progress",3,"time");
+    it("midTermRegister", async function () {
+        await ProductManager.midTermRegister("CID", "progress", 3, "time");
     });
 
-    it("getMidTerm",async function(){
+    it("getMidTerm", async function () {
         await ProductManager.getMidTerm();
     });
 
-    it("approveMidTerm",async function(){
-        await ProductManager.approveMidTerm("CID","time");
+    it("approveMidTerm", async function () {
+        await ProductManager.approveMidTerm("CID", "time");
     });
 
-    it("reqCertificate",async function(){
+    it("reqCertificate", async function () {
         const eventPromise = new Promise((resolve, reject) => {
             try {
-                ProductManager.once("reqCertificateEvent", () => {})
+                ProductManager.once("reqCertificateEvent", () => { })
                 resolve();
             } catch (error) {
                 reject(error);
             }
         })
-        await ProductManager.reqCertificate("CID","quality",37,"category",54,"description","timeofApplied");
+        await ProductManager.reqCertificate("CID", "quality", 37, "category", 54, "description", "timeofApplied");
         await eventPromise;
     });
 
-    it("getCertificate",async function(){
+    it("getCertificate", async function () {
         await ProductManager.getCertificate();
     });
-    
-    it("approveCertificate",async function(){
-        await ProductManager.approveCertificate("CID","time");
+
+    it("approveCertificate", async function () {
+        await ProductManager.approveCertificate("CID", "time");
     });
 
-    it("fetchProduct",async function(){
+    it("fetchProduct", async function () {
         await ProductManager.fetchProduct();
     });
-    
+
+    it("reduceQuantity", async function () {
+        await ProductManager.reduceQuantity([{id:"CID",reduce:6}]);
+    })
+
 });

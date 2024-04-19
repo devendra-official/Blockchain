@@ -1,6 +1,6 @@
 import React from "react";
 
-const Timeline = ({ product, delivery }) => {
+const Timeline = ({ product ,order, delivery}) => {
   return (
     <>
       <div className="h-auto w-full flex flex-col place-items-center bg-[#D8F3DC] p-4">
@@ -103,7 +103,7 @@ const Timeline = ({ product, delivery }) => {
             <div className="col-span-4 w-full h-full"></div>
             <div className="relative col-span-1 w-full h-full flex justify-center items-center">
               <div
-                className={`${!delivery ? "h-1/2 self-start" : "h-full"
+                className={`${!(order.status).toString() === "Ordered" ? "h-1/2 self-start" : "h-full"
                   }  w-1 bg-indigo-300`}
               ></div>
               <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
@@ -122,14 +122,14 @@ const Timeline = ({ product, delivery }) => {
               </div>
             </div>
             {/* <!-- Stack 7 --> */}
-            {delivery && (
+            {(order.status).toString() === "Ordered" || (order.status).toString() === "Picked" || (order.status).toString() === "Delivered" && (
               <>
                 <div className="col-span-4 w-full h-full ">
                   <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
                     <h1 className="text-white text-xl font-medium py-2">
                       Ordered On
                     </h1>
-                    <p className="text-gray-100 text-md">{product.ordered}</p>
+                    <p className="text-gray-100 text-md">{order.timeofOrdered}</p>
                   </div>
                 </div>
                 <div className="relative col-span-1 w-full h-full flex justify-center items-center">
@@ -144,11 +144,11 @@ const Timeline = ({ product, delivery }) => {
             )}
 
             {/* <!-- Stack 8 --> */}
-            {delivery && (
+            {(order.status).toString() === "Picked" || (order.status).toString() === "Delivered" && (
               <>
                 <div className="col-span-4 w-full h-full"></div>
                 <div className="relative col-span-1 w-full h-full flex justify-center items-center">
-                  <div className="h-1/2 self-start w-1 bg-indigo-300"></div>
+                  <div className="h-full w-1 bg-indigo-300"></div>
                   <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
                   <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
                     8
@@ -157,14 +157,37 @@ const Timeline = ({ product, delivery }) => {
                 <div className="col-span-4 w-full h-full ">
                   <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
                     <h1 className="text-white text-xl font-medium py-2">
-                      Delivered at
+                      Pick Up From Farmer
                     </h1>
-                    <p className="text-gray-100 text-md">{product.delivered}</p>
+                    <p className="text-gray-100 text-md">
+                      {order.timeofPicked}
+                    </p>
                   </div>
                 </div>
               </>
             )}
 
+            {/* <!-- Stack 9 --> */}
+            {(order.status).toString() === "Delivered" && (
+              <>
+                <div className="col-span-4 w-full h-full ">
+                  <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
+                    <h1 className="text-white text-xl font-medium py-2">
+                      Delivered at
+                    </h1>
+                    <p className="text-gray-100 text-md">{order.timeofDelivered}</p>
+                  </div>
+                </div>
+                <div className="relative col-span-1 w-full h-full flex justify-center items-center">
+                  <div className="h-1/2 self-start w-1 bg-indigo-300"></div>
+                  <div className="w-1/2 left-0  h-1 bg-indigo-300 absolute"></div>
+                  <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
+                    9
+                  </div>
+                </div>
+                <div className="col-span-4 w-full h-full"></div>
+              </>
+            )}
           </div>
         </div>
       </div>
