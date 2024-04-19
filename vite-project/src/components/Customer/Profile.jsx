@@ -1,34 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import { useForm } from "react-hook-form";
 import Input from "../Input.jsx";
 import Button from "../Button.jsx";
-import { useSelector } from "react-redux";
 import useProfile from "../../Customhooks/useProfile.jsx";
 
 const Profile = () => {
-  useEffect(() => {
-    fetchData();
-  }, [])
-
   const { register, handleSubmit } = useForm();
-  const { fillDetails, getDetails } = useProfile();
-  const [user, setUser] = useState();
-
-  const fetchData = async () => {
-    const user = await getDetails();
-    setUser(user);
-  }
-
+  const { fillDetails } = useProfile();
 
   const update = async (profileData) => {
     await fillDetails(profileData);
   };
-
-  if (!user) {
-    return <></>
-  }
 
   return (
     <>
@@ -53,7 +37,6 @@ const Profile = () => {
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="full-name">Full name</label>
                       <Input
-                        value={user.FullName || ""}
                         id="full-name"
                         placeholder="Full name"
                         {...register("full_name", {
@@ -64,7 +47,6 @@ const Profile = () => {
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="contact">Contact</label>
                       <Input
-                        value={(user.contact).toString() || ""}
                         id="contact"
                         placeholder="Enter Contact number here"
                         {...register("contact", {
@@ -81,7 +63,6 @@ const Profile = () => {
                         *House / Flat no / Building / Apartment
                       </label>
                       <Input
-                        value={user.house || ""}
                         id="house"
                         placeholder="*House / Flat no / Building / Apartment"
                         {...register("house", {
@@ -92,7 +73,6 @@ const Profile = () => {
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="street">Street or locality</label>
                       <Input
-                        value={user.street || ""}
                         id="street"
                         placeholder="Enter Street or locality"
                         {...register("street", {
@@ -103,7 +83,6 @@ const Profile = () => {
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="pincode">Pincode</label>
                       <Input
-                        value={(user.pincode).toString() || ""}
                         id="pincode"
                         placeholder="Enter Pincode"
                         {...register("pincode", {
@@ -114,7 +93,6 @@ const Profile = () => {
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="city">City</label>
                       <Input
-                        value={user.city || ""}
                         id="city"
                         placeholder="Enter City"
                         {...register("city", {
@@ -125,7 +103,6 @@ const Profile = () => {
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="city">State</label>
                       <Input
-                        value={user.state || ""}
                         id="state"
                         placeholder="Enter State"
                         {...register("state", {
