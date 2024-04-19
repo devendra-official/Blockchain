@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaRupeeSign } from "react-icons/fa";
 import { Header, Footer } from "../index.js";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
+import { toast } from "react-toastify";
 
-function ProductList  ()  {
+function ProductList() {
 
   useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
   const { fetchProducts } = FinalProduct();
   const [products, setProducts] = useState([]);
@@ -18,8 +18,7 @@ function ProductList  ()  {
       const result = await fetchProducts();
       setProducts(result);
     } catch (error) {
-      //TODO: show Error 
-      console.error('Error fetching data:', error);
+      toast.error("An error occured");
     }
   };
 
@@ -59,8 +58,8 @@ function ProductList  ()  {
                   <div className="p-2"> {product.description}</div>
                   <div className="p-2">{(product.quantity).toString()}</div>
                   <div className="p-2 flex items-center flex-row">
-                  <div className="text-lg"> {(product.price).toString()} ETH</div>
-                </div>
+                    <div className="text-lg"> {(product.price).toString()} ETH</div>
+                  </div>
                 </div>
               </Link>
             </div>

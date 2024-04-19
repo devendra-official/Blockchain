@@ -22,6 +22,24 @@ describe("Users and Payment testing", function () {
     await eventPromise;
   });
 
+  it("fillDetails", async function () {
+    const eventPromise = new Promise((resolve, reject) => {
+      UserManager.once("fillDetailsEvent", () => {});
+      resolve();
+    });
+    await UserManager.fillDetails({
+        ETHAddress: "0x02B9D37A7fe1140946AeAc61C123e91eE2Fa8518",
+        FullName: "Devendra B",
+        contact: 98978868,
+        House: "houseNo",
+        street: "street name",
+        pincode: 577598,
+        city: "Hiriyur",
+        state: "Karnataka"
+    });
+    await eventPromise;
+  });
+
   it("createFarmer", async function () {
     const eventPromise = new Promise((resolve, reject) => {
       UserManager.once("createFarmerEvent", (name, email, password, role) => {
@@ -100,7 +118,7 @@ describe("Users and Payment testing", function () {
     ];
     const orderId = "ABC123";
     const timeofOrdered = "2022-04-12";
-    const totalPrice = 5400000000000; 
+    const totalPrice = 5400000000000;
     await UserManager.orderProduct(items, timeofOrdered, totalPrice, orderId, { value: totalPrice });
   });
 

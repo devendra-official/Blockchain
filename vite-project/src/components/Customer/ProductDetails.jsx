@@ -82,7 +82,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <Timeline product={product} delicery={false} />
+      <Timeline product={product} />
       <Footer />
     </div>
   );
