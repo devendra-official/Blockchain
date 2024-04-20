@@ -168,7 +168,7 @@ const Timeline = ({ product ,order}) => {
             )}
 
             {/* <!-- Stack 9 --> */}
-            {order && (order.status === "Delivered") && (
+            {(order && (order.status === "Delivered")) && (
               <>
                 <div className="col-span-4 w-full h-full ">
                   <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">

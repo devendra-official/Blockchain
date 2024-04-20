@@ -115,7 +115,7 @@ const Cart = () => {
                       -
                     </button>
                     <div className="flex h-full font-bold w-full place-content-center py-2 border-t-2 border-b-2 border-[#D8F3DC]">
-                      {totalQuantity}
+                      {item.requantity}
                     </div>
                     <button
                       className="bg-[#D8F3DC] p-2 h-full w-full font-bold rounded-r-sm"
@@ -136,7 +136,7 @@ const Cart = () => {
                 </div>
 
                 <div className="p-2 text-start flex font-medium">
-                  <div className="text-lg">{(item.price).toString()} ETH</div>
+                  <div className="text-lg">{(item.price * item.requantity).toString()} ETH</div>
                 </div>
               </div>
             ))}
