@@ -5,6 +5,8 @@ import NewApplication from "./MidtermVerification.jsx";
 import SideBar from "./SideBar.jsx";
 import Authority from "./Authority.jsx"
 import AuthorityHome from "./AuthorityHome.jsx";
+import ListofFarmers from "./ListofFarmers.jsx";
+import ListofCustomers from "./ListofCustomers.jsx";
 
 export {
   Authority,
@@ -14,4 +16,6 @@ export {
   MidtermVerification,
   NewApplication,
   SideBar,
+  ListofCustomers,
+  ListofFarmers
 };

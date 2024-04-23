@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { GrOverview } from "react-icons/gr";
+import { GiFarmer } from "react-icons/gi";
 import { GiArchiveRegister } from "react-icons/gi";
 import { MdOutlineDomainVerification } from "react-icons/md";
 import { GrCertificate } from "react-icons/gr";
+import { BsFillPersonLinesFill } from "react-icons/bs";
 
 const SideBar = ({ className }) => {
   const location = useLocation();
@@ -43,6 +44,24 @@ const SideBar = ({ className }) => {
         >
           <GrCertificate className="mt-1" />
           <div>Certification</div>
+        </Link>
+        <Link
+          to="/authority/farmers"
+          className={`cursor-pointer flex flex-row gap-1 p-3  hover:bg-green-600 transition ${
+            location.pathname === "/authority/farmers" && "bg-green-600"
+          }`}
+        >
+          <GiFarmer className="mt-1" />
+          <div>List of Farmers</div>
+        </Link>
+        <Link
+          to="/authority/customers"
+          className={`cursor-pointer flex flex-row gap-1 p-3  hover:bg-green-600 transition ${
+            location.pathname === "/authority/customers" && "bg-green-600"
+          }`}
+        >
+          <BsFillPersonLinesFill className="mt-1" />
+          <div>List of Customers</div>
         </Link>
       </div>
     </div>

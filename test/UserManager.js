@@ -18,7 +18,7 @@ describe("Users and Payment testing", function () {
         }
       });
     });
-    await UserManager.createCustomer("Devendra", "dev@gmail.com", "pass", "customer");
+    await UserManager.createCustomer("Devendra", "dev@gmail.com", "customer", "customer");
     await eventPromise;
   });
 
@@ -46,7 +46,7 @@ describe("Users and Payment testing", function () {
         }
       });
     });
-    await UserManager.createFarmer("Devendra", "dev@gmail.com", "pass", "farmer");
+    await UserManager.createFarmer("Devendra", "dev@gmail.com", "farmer", "farmer");
     await eventPromise;
   });
 
@@ -61,7 +61,7 @@ describe("Users and Payment testing", function () {
         }
       });
     });
-    await UserManager.createAuthority("Devendra", "dev@gmail.com", "pass", "authority");
+    await UserManager.createAuthority("Devendra", "dev@gmail.com", "authority", "authority");
     await eventPromise;
   });
 
@@ -81,19 +81,27 @@ describe("Users and Payment testing", function () {
   });
 
   it("getCustomer", async function () {
-    await UserManager.getCustomer("pass");
+    await UserManager.getCustomer("customer");
   });
 
   it("getFarmer", async function () {
-    await UserManager.getFarmer("pass");
+    await UserManager.getFarmer("farmer");
   });
 
   it("getAuthority", async function () {
-    await UserManager.getAuthority("pass");
+    await UserManager.getAuthority("authority");
   });
 
   it("getCourier", async function () {
     await UserManager.getCourier("pass");
+  });
+
+  it("Farmer List",async function () {
+    await UserManager.farmerList();
+  });
+
+  it("Customer List",async function () {
+    await UserManager.customerList();
   });
 
   // Payment Contract

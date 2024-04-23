@@ -8,17 +8,33 @@ import SideBar from "./SideBar";
 
 const FinalCertification = () => {
   const [certificate, setCertificate] = useState([]);
-  const [state, setState] = useState("Approve");
   const { getCertificate } = Certificate();
+  const productContract = useSelector(state => state.addContract.productContract);
+
   useEffect(() => {
     const fetchData = async () => {
-      const certificate = await getCertificate();
-      setCertificate(certificate);
+      const certificateData = await getCertificate();
+      setCertificate(certificateData);
     }
 
     fetchData();
   }, []);
-  const productContract = useSelector(state => state.addContract.productContract);
+
+  const handleApproveCertificate = async (certificateId) => {
+    const date = new Date();
+    const time = date.toLocaleString();
+    await productContract.approveCertificate(certificateId, time);
+    productContract.once("approveCertificateEvent", () => {
+      toast.success("Certificate approved successfully");
+      // Update the approval state for the corresponding certificate entry
+      setCertificate((prevCertificate) =>
+        prevCertificate.map((element) =>
+          element.id === certificateId ? { ...element, isApproved: true } : element
+        )
+      );
+    });
+  };
+
   return (
     <>
       <Header />
@@ -32,8 +48,8 @@ const FinalCertification = () => {
           ></img>
           <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Final certificate</div>
-            <table className=" w-full mx-2  h-auto rounded-lg overflow-hidden">
-              <thead className=" text-white text-xl bg-black border-green-800 border-2">
+            <table className="w-full mx-2 h-auto rounded-lg overflow-hidden">
+              <thead className="text-white text-xl bg-black border-green-800 border-2">
                 <tr>
                   <th>ID</th>
                   <th>Crop</th>
@@ -48,27 +64,21 @@ const FinalCertification = () => {
                   <tr key={element.id} className="border-2 border-green-800">
                     <td>{element.id}</td>
                     <td>{element.cropName}</td>
-                    <td>{(element.quantity).toString()}</td>
-                    <td>{(element.price).toString()} ETH</td>
+                    <td>{element.quantity}</td>
+                    <td>{element.price} ETH</td>
                     <td>{element.category}</td>
                     <td>
                       {element.isApproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Approved</button>
+                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
+                          Approved
+                        </button>
                       ) : (
-                        <button onClick={async () => {
-                          const date = new Date();
-                          const time = date.toLocaleString();
-                          await productContract.approveCertificate(element.id, time);
-                          productContract.once("approveCertificateEvent", () => {
-                            setState("Approved")
-                            toast.success("certificate approved successfully");
-                          });
-                        }}
-                          className={`${state === "Approved"
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                            } rounded-lg my-2 p-2`}
-                        >{state}</button>
+                        <button
+                          onClick={() => handleApproveCertificate(element.id)}
+                          className="bg-red-500 rounded-lg my-2 p-2"
+                        >
+                          Approve
+                        </button>
                       )}
                     </td>
                   </tr>

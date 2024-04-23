@@ -8,7 +8,7 @@ import { Footer, Header } from "../index.js"
 const CropValidation = () => {
   const [crops, setCrops] = useState([]);
   const { getCrops } = useCrop();
-  const [state, setState] = useState("Approve");
+  const [state, setState] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,7 +18,25 @@ const CropValidation = () => {
 
     fetchData();
   }, []);
+
   const productContract = useSelector(state => state.addContract.productContract);
+
+  const handleApproveCrop = async (cropId) => {
+    const date = new Date();
+    const time = date.toLocaleString();
+    await productContract.approveCrop(cropId, time);
+    productContract.once("approveCropEvent", () => {
+      toast.success("Crop approved successfully");
+      const updatedCrops = crops.map((crop) => {
+        if (crop.id === cropId) {
+          return { ...crop, isApproved: true };
+        }
+        return crop;
+      });
+      setCrops(updatedCrops);
+    });
+  };
+
   return (
     <>
       <Header />
@@ -57,20 +75,9 @@ const CropValidation = () => {
                       {crop.isApproved ? (
                         <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Approved</button>
                       ) : (
-                        <button onClick={async () => {
-                          const date = new Date();
-                          const time = date.toLocaleString();
-                          await productContract.approveCrop(crop.id, time);
-                          productContract.once("approveCropEvent", () => {
-                            setState("Approved")
-                            toast.success("Crop approved successfully");
-                          });
-                        }}
-                          className={`${state === "Approved"
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                            } rounded-lg my-2 p-2`}
-                        >{state}</button>
+                        <button onClick={() => handleApproveCrop(crop.id)} className="bg-red-500 rounded-lg my-2 p-2">
+                          Approve
+                        </button>
                       )}
                     </td>
                   </tr>

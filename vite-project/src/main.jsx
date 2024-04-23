@@ -30,6 +30,8 @@ import {
   CropValidation,
   FinalCertification,
   MidtermVerification,
+  ListofFarmers,
+  ListofCustomers
 } from "./components/Authority/index.js";
 import Dash from "./components/Courier/Dash.jsx";
 import { ToastContainer } from "react-toastify";
@@ -197,6 +199,22 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout requiredRole="authority" authentication={true}>
             <FinalCertification />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/authority/farmers",
+        element: (
+          <AuthLayout requiredRole="authority" authentication={true}>
+            <ListofFarmers />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/authority/customers",
+        element: (
+          <AuthLayout requiredRole="authority" authentication={true}>
+            <ListofCustomers />
           </AuthLayout>
         ),
       },

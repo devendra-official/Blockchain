@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { cropRegistration } from "../data";
 import { Header, Footer } from "../index";
 import usePayment from "../../Customhooks/usePayment";
 
@@ -20,6 +19,7 @@ const Dash = () => {
 
   const handleApproval = async (product) => {
     await orderPicked(product.productId, product.orderId);
+    fetchData();
   };
 
   const handleDelivery = async (product) => {
