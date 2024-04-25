@@ -7,29 +7,44 @@ function Midterm() {
     const { getCrops } = useCrop();
 
     async function modifier(id) {
-        console.log("Midterm");
         let obj = {
             accept: true,
             msg: "No errors"
         }
 
         const crops = await getCrops();
-        const filterCrop = crops.filter((crop) => crop.id == id);
-        const midTermList = await productContract.getMidTerm();
+        let filterCrop = crops.find((crop) => crop.id == id);
+        let midTermList = await productContract.getMidTerm();
+        let filterMidterm = midTermList.find((mid) => mid.id == id);
 
-        console.log(filterCrop.length);
-        console.log("STTA",filterCrop.isDisapproved);
-        if (filterCrop.isDisapproved) {
+        if (filterCrop == undefined) {
+            obj.accept = false;
+            obj.msg = "Invalid crop Id"
+        } else if (filterCrop.isDisapproved) {
             obj.accept = false;
             obj.msg = "Your crop Rejected"
+        } else if (filterMidterm == undefined) {
+            obj.accept = true;
+            obj.msg = "You can apply"
+        } else if (filterMidterm.isDisapproved) {
+            obj.accept = false;
+            obj.msg = "MidTerm Rejected"
+        } else if (filterMidterm.isApproved) {
+            obj.accept = false;
+            obj.msg = "Already Approved"
+        } else if (filterMidterm != undefined) {
+            obj.accept = false;
+            obj.msg = "Your Application already submited"
         }
-        return obj;
 
+        return obj;
     }
 
     async function midTermRegister(id, progress, months) {
-        modifier(id).then(async (accept, msg) => {
-            if (accept) {
+        modifier(id).then(async (response) => {
+            console.log("Bool", response.accept);
+            console.log("ERROR:", response.msg);
+            if (response.accept) {
                 try {
                     const date = new Date();
                     const timeofApplied = date.toLocaleString();
@@ -41,7 +56,7 @@ function Midterm() {
                     toast.error(error);
                 }
             } else {
-                toast.error(msg);
+                toast.error(response.msg);
             }
         })
     }
