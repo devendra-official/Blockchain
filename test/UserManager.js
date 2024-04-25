@@ -18,22 +18,35 @@ describe("Users and Payment testing", function () {
         }
       });
     });
-    await UserManager.createCustomer("Devendra", "dev@gmail.com", "customer", "customer");
+    await UserManager.createCustomer(
+      "Devendra",
+      "dev@gmail.com",
+      "customer",
+      "customer"
+    );
     await eventPromise;
   });
 
   it("fillDetails", async function () {
     const eventPromise = new Promise((resolve, reject) => {
-      UserManager.once("fillDetailsEvent", () => { });
+      UserManager.once("fillDetailsEvent", () => {});
       resolve();
     });
-    await UserManager.fillDetails("Devendra B",98978868,"houseNo","street name",577598,"Hiriyur","Karnataka");
+    await UserManager.fillDetails(
+      "Devendra B",
+      98978868,
+      "houseNo",
+      "street name",
+      577598,
+      "Hiriyur",
+      "Karnataka"
+    );
     await eventPromise;
   });
 
-  it("getDetails",async function(){
+  it("getDetails", async function () {
     await UserManager.getDetails();
-  })
+  });
 
   it("createFarmer", async function () {
     const eventPromise = new Promise((resolve, reject) => {
@@ -46,22 +59,35 @@ describe("Users and Payment testing", function () {
         }
       });
     });
-    await UserManager.createFarmer("Devendra", "dev@gmail.com", "farmer", "farmer");
+    await UserManager.createFarmer(
+      "Devendra",
+      "dev@gmail.com",
+      "farmer",
+      "farmer"
+    );
     await eventPromise;
   });
 
   it("createAuthority", async function () {
     const eventPromise = new Promise((resolve, reject) => {
-      UserManager.once("createAuthorityEvent", (name, email, password, role) => {
-        try {
-          expect("authority").to.equal(role);
-          resolve();
-        } catch (error) {
-          reject(error);
+      UserManager.once(
+        "createAuthorityEvent",
+        (name, email, password, role) => {
+          try {
+            expect("authority").to.equal(role);
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
         }
-      });
+      );
     });
-    await UserManager.createAuthority("Devendra", "dev@gmail.com", "authority", "authority");
+    await UserManager.createAuthority(
+      "Devendra",
+      "dev@gmail.com",
+      "authority",
+      "authority"
+    );
     await eventPromise;
   });
 
@@ -76,12 +102,29 @@ describe("Users and Payment testing", function () {
         }
       });
     });
-    await UserManager.createCourier("Devendra", "dev@gmail.com", "pass", "courier");
+    await UserManager.createCourier(
+      "Devendra",
+      "dev@gmail.com",
+      "pass",
+      "courier"
+    );
     await eventPromise;
   });
 
   it("getCustomer", async function () {
     await UserManager.getCustomer("customer");
+  });
+
+  it("deleteFarmer", async function () {
+    await UserManager.deleteFarmer(
+      "0x02B9D37A7fe1140946AeAc61C123e91eE2Fa8518"
+    );
+  });
+
+  it("deleteCustomer", async function () {
+    await UserManager.deleteCustomer(
+      "0x02B9D37A7fe1140946AeAc61C123e91eE2Fa8518"
+    );
   });
 
   it("getFarmer", async function () {
@@ -96,11 +139,11 @@ describe("Users and Payment testing", function () {
     await UserManager.getCourier("pass");
   });
 
-  it("Farmer List",async function () {
+  it("Farmer List", async function () {
     await UserManager.farmerList();
   });
 
-  it("Customer List",async function () {
+  it("Customer List", async function () {
     await UserManager.customerList();
   });
 
@@ -122,7 +165,9 @@ describe("Users and Payment testing", function () {
     const orderId = "ABC123";
     const timeofOrdered = "2022-04-12";
     const totalPrice = 5400000000000;
-    await UserManager.orderProduct(items, timeofOrdered, totalPrice, orderId, { value: totalPrice });
+    await UserManager.orderProduct(items, timeofOrdered, totalPrice, orderId, {
+      value: totalPrice,
+    });
   });
 
   it("getAllOrderIds", async function () {
@@ -136,18 +181,21 @@ describe("Users and Payment testing", function () {
   it("productDelivered", async function () {
     const eventPromise = new Promise((resolve, reject) => {
       try {
-        UserManager.once("productDeliveredEvent", () => { });
+        UserManager.once("productDeliveredEvent", () => {});
         resolve();
       } catch (error) {
         reject(error);
       }
-    })
-    await UserManager.productDelivered("0x447185547f73d4b3780e28cE0B55Aaf4F0405469", "OID", "time");
+    });
+    await UserManager.productDelivered(
+      "0x447185547f73d4b3780e28cE0B55Aaf4F0405469",
+      "OID",
+      "time"
+    );
     await eventPromise;
   });
 
   it("getOrders", async function () {
     await UserManager.getOrders();
   });
-
 });

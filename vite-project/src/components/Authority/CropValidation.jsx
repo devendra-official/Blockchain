@@ -4,18 +4,29 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import SideBar from "./SideBar.jsx";
 import { Footer, Header } from "../index.js"
+import ManageUsers from "../../Customhooks/manageUsers.jsx";
 
 const CropValidation = () => {
   const [crops, setCrops] = useState([]);
   const { getCrops } = useCrop();
   const [state, setState] = useState(false);
+  const [farmers, setFarmers] = useState([]);
+  const { getAllFarmers } = ManageUsers();
 
   useEffect(() => {
     const fetchData = async () => {
       const crops = await getCrops();
-      setCrops(crops);
+      const farmers = await getAllFarmers();
+      let cropsList = [];
+      for (let i = 0; i < crops.length; i++) {
+        for (let j = 0; j < farmers.length; j++) {
+          if (crops[i].ETHAddress == farmers[j].ETHAddress) {
+            cropsList.push(crops[i]);
+          }
+        }
+      }
+      setCrops(cropsList);
     }
-
     fetchData();
   }, []);
 
@@ -25,11 +36,27 @@ const CropValidation = () => {
     const date = new Date();
     const time = date.toLocaleString();
     await productContract.approveCrop(cropId, time);
-    productContract.once("approveCropEvent", () => {
+    productContract.once("CropEvent", () => {
       toast.success("Crop approved successfully");
       const updatedCrops = crops.map((crop) => {
         if (crop.id === cropId) {
           return { ...crop, isApproved: true };
+        }
+        return crop;
+      });
+      setCrops(updatedCrops);
+    });
+  };
+
+  const handleRejectCrop = async (cropId) => {
+    const date = new Date();
+    const time = date.toLocaleString();
+    await productContract.rejectCrop(cropId, time);
+    productContract.once("CropEvent", () => {
+      toast.success("Crop Rejected successfully");
+      const updatedCrops = crops.map((crop) => {
+        if (crop.id === cropId) {
+          return { ...crop, isDisapproved: true };
         }
         return crop;
       });
@@ -59,7 +86,8 @@ const CropValidation = () => {
                   <th>Cultivation Area</th>
                   <th>Time Till Harvest</th>
                   <th>Expected Yield</th>
-                  <th>Status</th>
+                  <th>Approve</th>
+                  <th>Reject</th>
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
@@ -77,6 +105,15 @@ const CropValidation = () => {
                       ) : (
                         <button onClick={() => handleApproveCrop(crop.id)} className="bg-red-500 rounded-lg my-2 p-2">
                           Approve
+                        </button>
+                      )}
+                    </td>
+                    <td>
+                      {crop.isDisapproved ? (
+                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Rejected</button>
+                      ) : (
+                        <button onClick={() => handleRejectCrop(crop.id)} className="bg-red-500 rounded-lg my-2 p-2">
+                          Reject
                         </button>
                       )}
                     </td>

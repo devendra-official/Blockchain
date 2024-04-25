@@ -5,16 +5,27 @@ import { toast } from "react-toastify";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import SideBar from "./SideBar";
+import ManageUsers from "../../Customhooks/manageUsers";
 
 const FinalCertification = () => {
   const [certificate, setCertificate] = useState([]);
   const { getCertificate } = Certificate();
   const productContract = useSelector(state => state.addContract.productContract);
+  const {getAllFarmers} = ManageUsers();
 
   useEffect(() => {
     const fetchData = async () => {
       const certificateData = await getCertificate();
-      setCertificate(certificateData);
+      const farmers = await getAllFarmers();
+      let certificateList = [];
+      for (let i = 0; i < certificateData.length; i++) {
+        for (let j = 0; j < farmers.length; j++) {
+          if (certificateData[i].ETHAddress == farmers[j].ETHAddress) {
+            certificateList.push(certificateData[i]);
+          }
+        }
+      }
+      setCertificate(certificateList);
     }
 
     fetchData();
@@ -24,12 +35,25 @@ const FinalCertification = () => {
     const date = new Date();
     const time = date.toLocaleString();
     await productContract.approveCertificate(certificateId, time);
-    productContract.once("approveCertificateEvent", () => {
+    productContract.once("CertificateEvent", () => {
       toast.success("Certificate approved successfully");
-      // Update the approval state for the corresponding certificate entry
       setCertificate((prevCertificate) =>
         prevCertificate.map((element) =>
           element.id === certificateId ? { ...element, isApproved: true } : element
+        )
+      );
+    });
+  };
+
+  const handleRejectCertificate = async (certificateId) => {
+    const date = new Date();
+    const time = date.toLocaleString();
+    await productContract.rejectCertificate(certificateId, time);
+    productContract.once("CertificateEvent", () => {
+      toast.success("Certificate Rejected successfully");
+      setCertificate((prevCertificate) =>
+        prevCertificate.map((element) =>
+          element.id === certificateId ? { ...element, isDisapproved: true } : element
         )
       );
     });
@@ -78,6 +102,20 @@ const FinalCertification = () => {
                           className="bg-red-500 rounded-lg my-2 p-2"
                         >
                           Approve
+                        </button>
+                      )}
+                    </td>
+                    <td>
+                      {element.isDisapproved ? (
+                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
+                          Reject
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleRejectCertificate(element.id)}
+                          className="bg-red-500 rounded-lg my-2 p-2"
+                        >
+                          Rejected
                         </button>
                       )}
                     </td>

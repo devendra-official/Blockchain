@@ -19,9 +19,11 @@ const ListofCustomers = () => {
   }
 
   const userContract = useSelector(state => state.addContract.userContract);
+  const product = useSelector(state => state.addContract.product);
 
   const handleApproval = async (ETHAddress) => {
     await userContract.deleteFarmer(ETHAddress);
+    await product.hideProduct(ETHAddress);
     let updated = [];
     userContract.once("deleteFarmerEvent", () => {
       updated = farmers.filter((farmer) => {

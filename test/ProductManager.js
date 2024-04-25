@@ -70,4 +70,8 @@ describe("Crop and Product testing", function () {
     it("reduceQuantity", async function () {
         await ProductManager.reduceQuantity([{ id: "CID", reduce: 6 }]);
     });
+
+    it("Delete crop",async function(){
+        await ProductManager.deleteCrop("0x02B9D37A7fe1140946AeAc61C123e91eE2Fa8518");
+    })
 });

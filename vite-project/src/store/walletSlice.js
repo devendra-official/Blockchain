@@ -4,7 +4,8 @@ const initialState = {
     userContract: null,
     productContract: null,
     address: null,
-    signer:null
+    users: null,
+    product: null
 }
 
 const walletSlice = createSlice({
@@ -15,7 +16,8 @@ const walletSlice = createSlice({
             state.userContract = action.payload.userContract;
             state.productContract = action.payload.productContract;
             state.address = action.payload.address;
-            state.signer = action.payload.signer;
+            state.users = action.payload.users;
+            state.product = action.payload.product;
         }
     }
 })

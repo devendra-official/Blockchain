@@ -5,16 +5,27 @@ import { toast } from "react-toastify";
 import Header from "../Header/Header";
 import SideBar from "./SideBar";
 import Footer from "../Footer/Footer";
+import ManageUsers from "../../Customhooks/manageUsers";
 
 const MidtermVerification = () => {
   const [midTerms, setMidTerms] = useState([]);
   const { getMidTerms } = Midterm();
   const productContract = useSelector((state) => state.addContract.productContract);
+  const { getAllFarmers } = ManageUsers();
 
   useEffect(() => {
     const fetchData = async () => {
       const midTermsData = await getMidTerms();
-      setMidTerms(midTermsData);
+      const farmers = await getAllFarmers();
+      let midtermList = [];
+      for (let i = 0; i < midTermsData.length; i++) {
+        for (let j = 0; j < farmers.length; j++) {
+          if (midTermsData[i].ETHAddress == farmers[j].ETHAddress) {
+            midtermList.push(midTermsData[i]);
+          }
+        }
+      }
+      setMidTerms(midtermList);
     };
 
     fetchData();
@@ -24,11 +35,25 @@ const MidtermVerification = () => {
     const date = new Date();
     const time = date.toLocaleString();
     await productContract.approveMidTerm(midTermId, time);
-    productContract.once("approveMidTermEvent", () => {
+    productContract.once("MidTermEvent", () => {
       toast.success("MidTerm approved successfully");
       setMidTerms((prevMidTerms) =>
         prevMidTerms.map((midTerm) =>
           midTerm.id === midTermId ? { ...midTerm, isApproved: true } : midTerm
+        )
+      );
+    });
+  };
+
+  const handleRejectMidTerm = async (midTermId) => {
+    const date = new Date();
+    const time = date.toLocaleString();
+    await productContract.rejectMidTerm(midTermId, time);
+    productContract.once("MidTermEvent", () => {
+      toast.success("MidTerm Rejected successfully");
+      setMidTerms((prevMidTerms) =>
+        prevMidTerms.map((midTerm) =>
+          midTerm.id === midTermId ? { ...midTerm, isDisapproved: true } : midTerm
         )
       );
     });
@@ -71,6 +96,20 @@ const MidtermVerification = () => {
                           className="bg-red-500 rounded-lg my-2 p-2"
                         >
                           Approve
+                        </button>
+                      )}
+                    </td>
+                    <td>
+                      {midTerm.isDisapproved ? (
+                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
+                          Rejected
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleRejectMidTerm(midTerm.id)}
+                          className="bg-red-500 rounded-lg my-2 p-2"
+                        >
+                          Reject
                         </button>
                       )}
                     </td>

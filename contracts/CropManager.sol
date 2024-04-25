@@ -59,6 +59,7 @@ contract CropManager {
     struct MidTerm {
         string id;
         string cropName;
+        address ETHAddress;
         string progress;
         string months;
         string timeofApplied;
@@ -70,42 +71,9 @@ contract CropManager {
     MidTerm[] midterm;
     event midTermRegisterEvent(string id);
 
-    modifier checkMidtermRegistration(string memory id) {
-        bool isCropPresent = false;
-        bool isOwner = false;
-        bool isCropApproved = false;
-        bool isMidtermApproved = false;
-
-        for (uint i = 0; i < crops.length; i++) {
-            if (keccak256(abi.encodePacked(crops[i].id)) == keccak256(abi.encodePacked(id))) {
-                isCropPresent = true;
-                if (crops[i].isApproved) {
-                    isCropApproved = true;
-                    for(uint j=0;j<midterm.length;j++){
-                        if (keccak256(abi.encodePacked(midterm[j].id)) == keccak256(abi.encodePacked(id))) {
-                            if (midterm[j].isApproved) {
-                                isMidtermApproved = true;
-                            }
-                        }
-                    }
-                }
-                if (crops[i].ETHAddress == msg.sender) {
-                    isOwner = true;
-                }
-                break;
-            }
-        }
-        require(isCropPresent, "Crop ID not found");
-        require(isOwner, "Sender is not the owner of the crop");
-        require(isCropApproved, "Crop is not approved");
-        require(!isMidtermApproved, "Midterm is already approved");
-        _;
-    }
-
-
-    function midTermRegister(string memory id,string memory progress,string memory months,string memory timeofApplied) public checkMidtermRegistration(id) {
+    function midTermRegister(string memory id,string memory progress,string memory months,string memory timeofApplied) public  {
         string memory name = getCropNameById(id);
-        midterm.push(MidTerm(id,name,progress,months,timeofApplied,timeofApplied,false,false));
+        midterm.push(MidTerm(id,name,msg.sender,progress,months,timeofApplied,timeofApplied,false,false));
         emit midTermRegisterEvent(id);
     }
 

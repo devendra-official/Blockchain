@@ -12,21 +12,32 @@ function useWallet() {
     function connectWallet() {
         return new Promise((resolve, reject) => {
             let signer = null;
+            let fsigner = null;
             let provider;
+            let freeProvider;
             if (window.ethereum === null) {
-                toast.warn("MetaMask not installed; using read-only defaults")
+                toast.warn("MetaMask not installed; using read-only defaults");
                 provider = ethers.getDefaultProvider();
                 reject();
             } else {
-                provider = new ethers.BrowserProvider(window.ethereum)
-                provider.getSigner().then((data) => {
-                    signer = data;
-                    const userContract = new Contract("0xc3904eeD3AE2737D620343327E7C7fC02aBCb185", userAbi, signer);
-                    const productContract = new Contract("0x46792658bFADA12216D28b3463C3f14Ab7e871c1", productAbi, signer);
-                    const address = signer.address;
-                    dispatch(setWallet({ userContract, productContract, address, signer }));
-                    resolve();
-                })
+                provider = new ethers.BrowserProvider(window.ethereum);
+                freeProvider = new ethers.JsonRpcProvider("http://localhost:7545");
+                let users;
+                let product;
+                freeProvider.getSigner().then((response) => {
+                    fsigner = response;
+                    users = new Contract("0x764273129Bc1641b1Ab799b19F175b382ED7bCd0", userAbi, fsigner);
+                    product = new Contract("0x05571246934509Dd6DD40C17cF6090A1497607DC", productAbi, fsigner);
+                }).then(() => {
+                    provider.getSigner().then((data) => {
+                        signer = data;
+                        const userContract = new Contract("0x764273129Bc1641b1Ab799b19F175b382ED7bCd0", userAbi, signer);
+                        const productContract = new Contract("0x05571246934509Dd6DD40C17cF6090A1497607DC", productAbi, signer);
+                        const address = signer.address;
+                        dispatch(setWallet({ userContract, productContract, address, users, product }));
+                        resolve();
+                    });
+                });
             }
         });
     }
