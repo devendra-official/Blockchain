@@ -41,7 +41,6 @@ const FarmerProducts = () => {
     if (!crop) {
         return <>Loading...</>
     }
-
     return (
         <div>
             <div>
@@ -56,7 +55,7 @@ const FarmerProducts = () => {
                                         Crop Registered on
                                     </h1>
                                     <p className="text-gray-100 text-md">
-                                        {crop.timeofApplied}
+                                        {crop.timofApplied}
                                     </p>
                                 </div>
                             </div>

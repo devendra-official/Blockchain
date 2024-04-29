@@ -26,13 +26,13 @@ function useWallet() {
                 let product;
                 freeProvider.getSigner().then((response) => {
                     fsigner = response;
-                    users = new Contract("0x764273129Bc1641b1Ab799b19F175b382ED7bCd0", userAbi, fsigner);
-                    product = new Contract("0x05571246934509Dd6DD40C17cF6090A1497607DC", productAbi, fsigner);
+                    users = new Contract("0xfd3e388252943993fA953b8736d85Ccae7EeBC3a", userAbi, fsigner);
+                    product = new Contract("0xA1f0D58d4f6Add423A6342308264f73Ff82c257f", productAbi, fsigner);
                 }).then(() => {
                     provider.getSigner().then((data) => {
                         signer = data;
-                        const userContract = new Contract("0x764273129Bc1641b1Ab799b19F175b382ED7bCd0", userAbi, signer);
-                        const productContract = new Contract("0x05571246934509Dd6DD40C17cF6090A1497607DC", productAbi, signer);
+                        const userContract = new Contract("0xfd3e388252943993fA953b8736d85Ccae7EeBC3a", userAbi, signer);
+                        const productContract = new Contract("0xA1f0D58d4f6Add423A6342308264f73Ff82c257f", productAbi, signer);
                         const address = signer.address;
                         dispatch(setWallet({ userContract, productContract, address, users, product }));
                         resolve();

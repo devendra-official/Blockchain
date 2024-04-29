@@ -62,11 +62,12 @@ function usePayment() {
     async function getOrders() {
         const orders = await userContract.getOrders();
         let orderList = [];
+        let obj;
         let j = 0;
         for (let i = 0; i < orders.length; i++) {
             const items = orders[i].items;
             items.map((item) => {
-                let status = "NOthin";
+                let status;
                 if (item.status == 0) {
                     status = "Ordered"
                 } else if (item.status == 1) {
@@ -74,7 +75,7 @@ function usePayment() {
                 } else {
                     status = "Delivered"
                 }
-                let obj = {
+                obj = {
                     key: j++,
                     orderId: orders[i].orderId,
                     timeofOrdered: orders[i].timeofOrdered,
@@ -89,10 +90,10 @@ function usePayment() {
                     timeofPicked: item.timeofPicked,
                     timeofDelivered: item.timeofDelivered,
                 }
-                orderList.push(obj);
-            })
+            });
+            orderList.push(obj);
         }
-        return orderList;
+        return orderList.reverse();
     }
 
     async function orderPicked(productId, orderId) {

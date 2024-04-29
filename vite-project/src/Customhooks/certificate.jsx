@@ -89,7 +89,7 @@ function Certificate() {
                 isDisapproved: certificate.isDisapproved
             });
         })
-        return certList;
+        return certList.reverse();
     }
 
     return { reqCertificate, getCertificate };

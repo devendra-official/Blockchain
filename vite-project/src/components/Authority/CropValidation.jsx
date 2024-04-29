@@ -56,7 +56,7 @@ const CropValidation = () => {
       toast.success("Crop Rejected successfully");
       const updatedCrops = crops.map((crop) => {
         if (crop.id === cropId) {
-          return { ...crop, isDisapproved: true };
+          return { ...crop, isDisapproved: true, isApproved: false };
         }
         return crop;
       });
@@ -100,8 +100,8 @@ const CropValidation = () => {
                     <td>{crop.months}</td>
                     <td>{(crop.yieldperacre).toString()} /acre</td>
                     <td>
-                      {crop.isApproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Approved</button>
+                      {(crop.isApproved || crop.isDisapproved) ? (
+                        <button className="rounded-lg my-2 p-2" disabled>{crop.isApproved ? "Approved" : "Approve"}</button>
                       ) : (
                         <button onClick={() => handleApproveCrop(crop.id)} className="bg-red-500 rounded-lg my-2 p-2">
                           Approve
@@ -109,8 +109,8 @@ const CropValidation = () => {
                       )}
                     </td>
                     <td>
-                      {crop.isDisapproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>Rejected</button>
+                      {(crop.isDisapproved || crop.isApproved) ? (
+                        <button className="rounded-lg my-2 p-2" disabled>{crop.isDisapproved ? "Rejected" : "Reject"}</button>
                       ) : (
                         <button onClick={() => handleRejectCrop(crop.id)} className="bg-red-500 rounded-lg my-2 p-2">
                           Reject

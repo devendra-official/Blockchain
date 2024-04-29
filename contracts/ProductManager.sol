@@ -92,6 +92,7 @@ contract ProductManager is CropManager {
                 keccak256(abi.encodePacked(id))
             ) {
                 crops[i].isDisapproved = true;
+                crops[i].isApproved = false;
                 crops[i].timeofVerified = time;
                 emit CropEvent(id, time);
             }
@@ -124,6 +125,7 @@ contract ProductManager is CropManager {
                 keccak256(abi.encodePacked(id))
             ) {
                 midterm[i].isDisapproved = true;
+                midterm[i].isApproved = false;
                 midterm[i].timeofVerified = time;
                 emit MidTermEvent(id, time);
             }
@@ -196,6 +198,7 @@ contract ProductManager is CropManager {
         for (uint i = 0; i < certificates.length; i++) {
             if (keccak256(abi.encodePacked(certificates[i].id)) == keccak256(abi.encodePacked(id))) {
                 certificates[i].isDisapproved = true;
+                certificates[i].isApproved = false;
                 certificates[i].timeofVerified = time;
                 emit CertificateEvent(id,time);
                 break;

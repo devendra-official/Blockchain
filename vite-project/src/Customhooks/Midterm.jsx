@@ -63,6 +63,7 @@ function Midterm() {
 
     async function getMidTerms() {
         const midTermList = await productContract.getMidTerm();
+        console.log("MID",midTermList);
         return midTermList;
     }
 

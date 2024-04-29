@@ -11,7 +11,7 @@ const FinalCertification = () => {
   const [certificate, setCertificate] = useState([]);
   const { getCertificate } = Certificate();
   const productContract = useSelector(state => state.addContract.productContract);
-  const {getAllFarmers} = ManageUsers();
+  const { getAllFarmers } = ManageUsers();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +53,7 @@ const FinalCertification = () => {
       toast.success("Certificate Rejected successfully");
       setCertificate((prevCertificate) =>
         prevCertificate.map((element) =>
-          element.id === certificateId ? { ...element, isDisapproved: true } : element
+          element.id === certificateId ? { ...element, isDisapproved: true, isApproved: false } : element
         )
       );
     });
@@ -80,7 +80,8 @@ const FinalCertification = () => {
                   <th>Quantity</th>
                   <th>Price</th>
                   <th>Category</th>
-                  <th>Action</th>
+                  <th>Approve</th>
+                  <th>Reject</th>
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
@@ -88,18 +89,18 @@ const FinalCertification = () => {
                   <tr key={element.id} className="border-2 border-green-800">
                     <td>{element.id}</td>
                     <td>{element.cropName}</td>
-                    <td>{element.quantity}</td>
+                    <td>{(element.quantity).toString()}</td>
                     <td>{element.price} ETH</td>
                     <td>{element.category}</td>
                     <td>
-                      {element.isApproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
-                          Approved
+                      {(element.isApproved || element.isDisapproved) ? (
+                        <button className="rounded-lg my-2 p-2" disabled={true}>
+                          {element.isApproved ? "Approved" : "Approve"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleApproveCertificate(element.id)}
-                          className="bg-red-500 rounded-lg my-2 p-2"
+                          className="rounded-lg my-2 p-2"
                         >
                           Approve
                         </button>
@@ -107,15 +108,15 @@ const FinalCertification = () => {
                     </td>
                     <td>
                       {element.isDisapproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
-                          Reject
+                        <button className="rounded-lg my-2 p-2" disabled={true}>
+                          {element.isDisapproved ? "Rejected" : "Reject"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleRejectCertificate(element.id)}
-                          className="bg-red-500 rounded-lg my-2 p-2"
+                          className="rounded-lg my-2 p-2"
                         >
-                          Rejected
+                          Reject
                         </button>
                       )}
                     </td>

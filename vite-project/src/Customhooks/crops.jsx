@@ -39,7 +39,7 @@ const useCrop = () => {
                 acre: item.acre,
                 months: item.months,
                 yieldperacre: item.yieldperacre,
-                timofApplied: item.timofApplied,
+                timofApplied: item.timeofApplied,
                 timeofVerified: item.timeofVerified,
                 isApproved: item.isApproved,
                 isDisapproved: item.isDisapproved

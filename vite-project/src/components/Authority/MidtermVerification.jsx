@@ -53,7 +53,7 @@ const MidtermVerification = () => {
       toast.success("MidTerm Rejected successfully");
       setMidTerms((prevMidTerms) =>
         prevMidTerms.map((midTerm) =>
-          midTerm.id === midTermId ? { ...midTerm, isDisapproved: true } : midTerm
+          midTerm.id === midTermId ? { ...midTerm, isDisapproved: true ,isApproved: false} : midTerm
         )
       );
     });
@@ -75,7 +75,8 @@ const MidtermVerification = () => {
                   <th>Crop Name</th>
                   <th>Time Till Harvest</th>
                   <th>Time of Applied</th>
-                  <th>Status</th>
+                  <th>Approve</th>
+                  <th>Reject</th>
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
@@ -86,28 +87,28 @@ const MidtermVerification = () => {
                     <td>{`${midTerm.months} months`}</td>
                     <td>{midTerm.timeofApplied}</td>
                     <td>
-                      {midTerm.isApproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
-                          Approved
+                      {(midTerm.isApproved || midTerm.isDisapproved) ? (
+                        <button className="rounded-lg my-2 p-2" disabled>
+                          {midTerm.isApproved ? "Approved" : "Approve"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleApproveMidTerm(midTerm.id)}
-                          className="bg-red-500 rounded-lg my-2 p-2"
+                          className="rounded-lg my-2 p-2"
                         >
                           Approve
                         </button>
                       )}
                     </td>
                     <td>
-                      {midTerm.isDisapproved ? (
-                        <button className="bg-green-500 rounded-lg my-2 p-2" disabled>
-                          Rejected
+                      {(midTerm.isApproved || midTerm.isDisapproved) ? (
+                        <button className="rounded-lg my-2 p-2" disabled>
+                          {midTerm.isDisapproved ? "Rejected" : "Reject"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleRejectMidTerm(midTerm.id)}
-                          className="bg-red-500 rounded-lg my-2 p-2"
+                          className="rounded-lg my-2 p-2"
                         >
                           Reject
                         </button>
