@@ -16,7 +16,8 @@ function ProductList() {
   const fetchData = async () => {
     try {
       const result = await fetchProducts();
-      setProducts(result);
+      let filterProduct = result.filter((product) => product.show == true);
+      setProducts(filterProduct);
     } catch (error) {
       toast.error("An error occured");
     }

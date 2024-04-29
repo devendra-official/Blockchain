@@ -132,7 +132,7 @@ contract UserManager is PaymentContract {
                 break;
             }
         }
-        require(isExist,"Customer doesn't exist!");
+        require(isExist,"Farmer doesn't exist!");
         require(keccak256(abi.encodePacked(farmer.password)) == keccak256(abi.encodePacked(password)),"Wrong password,Please Try Again!");
         return farmer;
     }

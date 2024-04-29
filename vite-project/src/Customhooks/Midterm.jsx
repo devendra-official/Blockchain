@@ -23,6 +23,9 @@ function Midterm() {
         } else if (filterCrop.isDisapproved) {
             obj.accept = false;
             obj.msg = "Your crop Rejected"
+        } else if(!filterCrop.isApproved){
+            obj.accept = false;
+            obj.msg = "crop is not approved";
         } else if (filterMidterm == undefined) {
             obj.accept = true;
             obj.msg = "You can apply"
@@ -42,8 +45,6 @@ function Midterm() {
 
     async function midTermRegister(id, progress, months) {
         modifier(id).then(async (response) => {
-            console.log("Bool", response.accept);
-            console.log("ERROR:", response.msg);
             if (response.accept) {
                 try {
                     const date = new Date();
@@ -63,8 +64,11 @@ function Midterm() {
 
     async function getMidTerms() {
         const midTermList = await productContract.getMidTerm();
-        console.log("MID",midTermList);
-        return midTermList;
+        let listOfMid = [];
+        midTermList.map((mid)=>{
+            listOfMid.push(mid);
+        })
+        return listOfMid.reverse();
     }
 
     return { midTermRegister, getMidTerms }

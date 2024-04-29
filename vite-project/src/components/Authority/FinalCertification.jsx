@@ -107,7 +107,7 @@ const FinalCertification = () => {
                       )}
                     </td>
                     <td>
-                      {element.isDisapproved ? (
+                      {(element.isDisapproved || element.isApproved) ? (
                         <button className="rounded-lg my-2 p-2" disabled={true}>
                           {element.isDisapproved ? "Rejected" : "Reject"}
                         </button>

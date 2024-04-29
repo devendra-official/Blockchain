@@ -2,16 +2,17 @@ import Button from "../Button.jsx";
 import Input from "../Input.jsx";
 import { useForm } from "react-hook-form";
 import Certificate from "../../Customhooks/certificate.jsx";
+import Select from "../Select.jsx";
 
 const RequestCertification = () => {
-  const {reqCertificate} = Certificate();
+  const { reqCertificate } = Certificate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = async ({id,cropquality,cropquantity,category,desiredprice,description}) => {
-    await reqCertificate(id,cropquality,cropquantity,category,desiredprice,description);
+  const onSubmit = async ({ id, cropquality, cropquantity, category, desiredprice, description }) => {
+    await reqCertificate(id, cropquality, cropquantity, category, desiredprice, description);
   };
   return (
     <>
@@ -29,7 +30,7 @@ const RequestCertification = () => {
             <div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
+                  <div className="flex flex-col space-y-1.5">
                     <label htmlFor="crop ID" className="font-bold">
                       Crop ID
                     </label>
@@ -51,13 +52,19 @@ const RequestCertification = () => {
                     <label htmlFor="cropquality" className="font-bold">
                       Crop Quality
                     </label>
-                    <Input
-                      className="bg-green-100"
+                    <Select
+                      options={[
+                        "A+",
+                        "A",
+                        "B+",
+                        "B",
+                        "C+",
+                        "C",
+                        "D"
+                      ]}
                       id="cropquality"
-                      placeholder="Enter crop quality"
-                      {...register("cropquality", {
-                        required: true,
-                      })}
+                      className="mb-4"
+                      {...register("cropquality", { required: true })}
                     />
                     {errors.cropquality && (
                       <span className="text-red-500">

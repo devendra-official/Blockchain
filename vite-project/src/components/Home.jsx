@@ -18,8 +18,6 @@ import Button from "./Button.jsx";
 import Input from "./Input.jsx";
 import { useForm } from "react-hook-form";
 import FinalProduct from "../Customhooks/finalProducts.jsx";
-// import useProduct from "../Customhooks/products.jsx";
-// import { toast } from "react-toastify";
 
 const Home = () => {
   const scroll = useSelector((state) => state.scroll.Section);
@@ -39,7 +37,8 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const result = await fetchProducts();
-        setProducts(result);
+        let filterProduct = result.filter((product) => product.show == true);
+        setProducts(filterProduct);
       } catch (error) {
         //TODO: show Error 
         console.error('Error fetching data:', error);
@@ -155,7 +154,7 @@ const Home = () => {
                 iure id. Dignissimos a corrupti harum explicabo quam, expedita
                 aut distinctio eos error sint.
               </div> */}
-               <div>
+              <div>
                 Blockchain technology offers a transformative solution for
                 advancing green initiatives by enhancing transparency and
                 accountability in environmental efforts. Through decentralized
