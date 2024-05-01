@@ -97,8 +97,8 @@ const MidtermVerification = () => {
           />
           <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Midterm verification</div>
-            <table className="w-full mx-2 h-auto rounded-lg overflow-hidden">
-              <thead className="text-white text-xl bg-black border-green-800 border-2">
+            <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
+              <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
                   <th>ID</th>
                   <th>Crop Name</th>
@@ -110,20 +110,28 @@ const MidtermVerification = () => {
               </thead>
               <tbody className="text-center font-semibold bg-white">
                 {midTerms.map((midTerm) => (
-                  <tr key={midTerm.id} className="border-2 border-green-800">
+                  <tr
+                    key={midTerm.id}
+                    className="border-1 border-green-800 hover:bg-blue-100"
+                  >
                     <td>{midTerm.id}</td>
                     <td>{midTerm.cropName}</td>
                     <td>{`${midTerm.months} months`}</td>
                     <td>{midTerm.timeofApplied}</td>
                     <td>
                       {midTerm.isApproved || midTerm.isDisapproved ? (
-                        <button className="rounded-lg my-2 p-2" disabled>
+                        <button
+                          className={`${
+                            midTerm.isApproved ? "bg-green-500" : "hidden"
+                          } rounded-lg my-1 p-1`}
+                          disabled
+                        >
                           {midTerm.isApproved ? "Approved" : "Approve"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleApproveMidTerm(midTerm.id)}
-                          className="rounded-lg my-2 p-2"
+                          className="rounded-lg my-1 p-1"
                         >
                           Approve
                         </button>
@@ -131,13 +139,18 @@ const MidtermVerification = () => {
                     </td>
                     <td>
                       {midTerm.isApproved || midTerm.isDisapproved ? (
-                        <button className="rounded-lg my-2 p-2" disabled>
+                        <button
+                          className={`${
+                            midTerm.isDisapproved ? "bg-red-500" : "hidden"
+                          } rounded-lg my-1 p-1`}
+                          disabled
+                        >
                           {midTerm.isDisapproved ? "Rejected" : "Reject"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleRejectMidTerm(midTerm.id)}
-                          className="rounded-lg my-2 p-2"
+                          className="rounded-lg my-1 p-1"
                         >
                           Reject
                         </button>

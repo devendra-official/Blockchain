@@ -1,6 +1,6 @@
 import React from "react";
 
-const Timeline = ({ product ,order}) => {
+const Timeline = ({ product, order }) => {
   return (
     <>
       <div className="h-auto w-full flex flex-col place-items-center bg-[#D8F3DC] p-4">
@@ -13,7 +13,9 @@ const Timeline = ({ product ,order}) => {
                 <h1 className="text-white text-xl font-medium ">
                   Crop Registered on
                 </h1>
-                <p className="text-gray-100 text-md">{product.cropRegistered}</p>
+                <p className="text-gray-100 text-md">
+                  {product.cropRegistered}
+                </p>
               </div>
             </div>
             <div className="relative col-span-1 w-full h-full flex justify-center items-center">
@@ -49,7 +51,9 @@ const Timeline = ({ product ,order}) => {
                 <h1 className="text-white text-xl font-medium py-2">
                   Request of Midterm Verification on
                 </h1>
-                <p className="text-gray-100  text-md">{product.midTermRegistered}</p>
+                <p className="text-gray-100  text-md">
+                  {product.midTermRegistered}
+                </p>
               </div>
             </div>
             <div className="relative col-span-1 w-full h-full flex justify-center items-center">
@@ -75,7 +79,9 @@ const Timeline = ({ product ,order}) => {
                 <h1 className="text-white text-xl font-medium py-2">
                   Midterm Verification Approved By Authority on
                 </h1>
-                <p className="text-gray-100  text-md">{product.midTermApproved}</p>
+                <p className="text-gray-100  text-md">
+                  {product.midTermApproved}
+                </p>
               </div>
             </div>
 
@@ -103,8 +109,9 @@ const Timeline = ({ product ,order}) => {
             <div className="col-span-4 w-full h-full"></div>
             <div className="relative col-span-1 w-full h-full flex justify-center items-center">
               <div
-                className={`${order == undefined ? "h-1/2 self-start" : "h-full"
-                  }  w-1 bg-indigo-300`}
+                className={`${
+                  order == undefined ? "h-1/2 self-start" : "h-full"
+                }  w-1 bg-indigo-300`}
               ></div>
               <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
               <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
@@ -116,66 +123,85 @@ const Timeline = ({ product ,order}) => {
                 <h1 className="text-white text-xl font-medium py-2">
                   Certification Approved on
                 </h1>
-                <p className="text-gray-100 text-md">
-                  {product.certApproved}
-                </p>
+                <p className="text-gray-100 text-md">{product.certApproved}</p>
               </div>
             </div>
             {/* <!-- Stack 7 --> */}
-            {order && (order.status === "Ordered" || order.status === "Picked" || order.status === "Delivered") &&(
-              <>
-                <div className="col-span-4 w-full h-full ">
-                  <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
-                    <h1 className="text-white text-xl font-medium py-2">
-                      Ordered On
-                    </h1>
-                    <p className="text-gray-100 text-md">{order.timeofOrdered}</p>
+            {order &&
+              (order.status === "Ordered" ||
+                order.status === "Picked" ||
+                order.status === "Delivered") && (
+                <>
+                  <div className="col-span-4 w-full h-full ">
+                    <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
+                      <h1 className="text-white text-xl font-medium py-2">
+                        Ordered On
+                      </h1>
+                      <p className="text-gray-100 text-md">
+                        {order.timeofOrdered}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="relative col-span-1 w-full h-full flex justify-center items-center">
-                  <div className="h-full w-1 bg-indigo-300"></div>
-                  <div className="w-1/2 left-0  h-1 bg-indigo-300 absolute"></div>
-                  <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
-                    7
+                  <div className="relative col-span-1 w-full h-full flex justify-center items-center">
+                    <div
+                      className={`${
+                        order.status === "Picked" ||
+                        order.status === "Delivered"
+                          ? "h-full"
+                          : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
+                    ></div>
+                    <div className="w-1/2 left-0  h-1 bg-indigo-300 absolute"></div>
+                    <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
+                      7
+                    </div>
                   </div>
-                </div>
-                <div className="col-span-4 w-full h-full"></div>
-              </>
-            )}
+                  <div className="col-span-4 w-full h-full"></div>
+                </>
+              )}
 
             {/* <!-- Stack 8 --> */}
-            {order && (order.status === "Picked" || order.status === "Delivered") && (
-              <>
-                <div className="col-span-4 w-full h-full"></div>
-                <div className="relative col-span-1 w-full h-full flex justify-center items-center">
-                  <div className="h-full w-1 bg-indigo-300"></div>
-                  <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
-                  <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
-                    8
+            {order &&
+              (order.status === "Picked" || order.status === "Delivered") && (
+                <>
+                  <div className="col-span-4 w-full h-full"></div>
+                  <div className="relative col-span-1 w-full h-full flex justify-center items-center">
+                    <div
+                      className={`${
+                        order.status === "Delivered"
+                          ? "h-full"
+                          : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
+                    ></div>
+                    <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
+                    <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
+                      8
+                    </div>
                   </div>
-                </div>
-                <div className="col-span-4 w-full h-full ">
-                  <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
-                    <h1 className="text-white text-xl font-medium py-2">
-                      Pick Up From Farmer
-                    </h1>
-                    <p className="text-gray-100 text-md">
-                      {order.timeofPicked}
-                    </p>
+                  <div className="col-span-4 w-full h-full ">
+                    <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
+                      <h1 className="text-white text-xl font-medium py-2">
+                        Pick Up From Farmer
+                      </h1>
+                      <p className="text-gray-100 text-md">
+                        {order.timeofPicked}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </>
-            )}
+                </>
+              )}
 
             {/* <!-- Stack 9 --> */}
-            {(order && (order.status === "Delivered")) && (
+            {order && order.status === "Delivered" && (
               <>
                 <div className="col-span-4 w-full h-full ">
                   <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
                     <h1 className="text-white text-xl font-medium py-2">
                       Delivered at
                     </h1>
-                    <p className="text-gray-100 text-md">{order.timeofDelivered}</p>
+                    <p className="text-gray-100 text-md">
+                      {order.timeofDelivered}
+                    </p>
                   </div>
                 </div>
                 <div className="relative col-span-1 w-full h-full flex justify-center items-center">

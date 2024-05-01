@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Input, Logo, Select } from "./index.js";
 import { useForm } from "react-hook-form";
@@ -7,17 +7,18 @@ import { useSelector } from "react-redux";
 import useWallet from "../Customhooks/connectWallet.jsx";
 
 function Signup() {
-  const [createCustomer, createFarmer, createAuthority, createCourier] = useCreate();
+  const [createCustomer, createFarmer, createAuthority, createCourier] =
+    useCreate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState();
   const connectWallet = useWallet();
 
-  const account = useSelector(state => state.addContract.address);
+  const account = useSelector((state) => state.addContract.address);
 
   if (account === null) {
     window.ethereum.request({ method: "eth_requestAccounts" }).then(() => {
       connectWallet();
-    })
+    });
   }
 
   async function create({ role, name, email, password }) {
@@ -65,7 +66,7 @@ function Signup() {
               <Select
                 options={["customer", "farmer", "authority", "courier"]}
                 label="Role"
-                className="mb-4"
+                className="mb-1"
                 {...register("role", { required: true })}
               />
               <Input

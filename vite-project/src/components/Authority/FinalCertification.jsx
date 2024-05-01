@@ -99,8 +99,8 @@ const FinalCertification = () => {
           ></img>
           <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Final certificate</div>
-            <table className="w-full mx-2 h-auto rounded-lg overflow-hidden">
-              <thead className="text-white text-xl bg-black border-green-800 border-2">
+            <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
+              <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
                   <th>ID</th>
                   <th>Crop</th>
@@ -113,7 +113,10 @@ const FinalCertification = () => {
               </thead>
               <tbody className="text-center font-semibold bg-white">
                 {certificate.map((element) => (
-                  <tr key={element.id} className="border-2 border-green-800">
+                  <tr
+                    key={element.id}
+                    className="border-1 border-green-800 hover:bg-blue-100"
+                  >
                     <td>{element.id}</td>
                     <td>{element.cropName}</td>
                     <td>{element.quantity.toString()}</td>
@@ -121,13 +124,18 @@ const FinalCertification = () => {
                     <td>{element.category}</td>
                     <td>
                       {element.isApproved || element.isDisapproved ? (
-                        <button className="rounded-lg my-2 p-2" disabled={true}>
+                        <button
+                          className={`${
+                            element.isApproved ? "bg-green-500" : "hidden"
+                          } rounded-lg my-1 p-1`}
+                          disabled={true}
+                        >
                           {element.isApproved ? "Approved" : "Approve"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleApproveCertificate(element.id)}
-                          className="rounded-lg my-2 p-2"
+                          className="rounded-lg my-1 p-1"
                         >
                           Approve
                         </button>
@@ -135,13 +143,18 @@ const FinalCertification = () => {
                     </td>
                     <td>
                       {element.isDisapproved || element.isApproved ? (
-                        <button className="rounded-lg my-2 p-2" disabled={true}>
+                        <button
+                          className={`${
+                            element.isDisapproved ? "bg-red-500" : "hidden"
+                          } rounded-lg my-1 p-1`}
+                          disabled={true}
+                        >
                           {element.isDisapproved ? "Rejected" : "Reject"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleRejectCertificate(element.id)}
-                          className="rounded-lg my-2 p-2"
+                          className="rounded-lg my-1 p-1"
                         >
                           Reject
                         </button>

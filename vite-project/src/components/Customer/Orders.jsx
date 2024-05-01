@@ -51,15 +51,15 @@ const Orders = () => {
         <img
           src="images/Products.jpg"
           alt="BG"
-          className="z-10 absolute blur-sm"
+          className="z-10 absolute  blur-sm"
         />
         <div className="absolute z-30 font-bold text-9xl flex w-full h-full justify-center items-center text-white ">
           Orders
         </div>
       </div>
-      <div className="flex flex-col place-items-center p-8 z-10 relative ">
-        <table className=" w-full mx-2  h-auto rounded-lg overflow-hidden">
-          <thead className=" text-white text-xl bg-black border-green-800 border-2">
+      <div className="flex bg-[#D8F3DC] flex-col place-items-center p-8 z-10 relative ">
+        <table className=" gap-2 w-full mx-2  h-auto rounded-lg overflow-hidden">
+          <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
             <tr>
               <th>OID</th>
               <th>PID</th>
@@ -74,7 +74,7 @@ const Orders = () => {
               <tr
                 onClick={() => konsa({ order: order })}
                 key={order.id}
-                className="border-2 border-green-800 hover:bg-slate-400"
+                className="border-1 border-green-800 hover:bg-blue-100"
               >
                 <td>{order.orderId}</td>
                 <td>{order.productId}</td>

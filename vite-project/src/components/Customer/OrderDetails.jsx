@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
 import { Header, Footer } from "../index.js";
-import { FaRupeeSign } from "react-icons/fa";
+import { FaEthereum } from "react-icons/fa";
 import Timeline from "./Timeline.jsx";
 import { useLocation } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const OrderDetails = () => {
   const product = products.find((p) => p.id == location.state.order.productId);
 
   if (!product) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
@@ -49,11 +49,12 @@ const OrderDetails = () => {
             </div>
             <div className="flex items-center ">
               <div className="font-medium">Price : </div>
-              <FaRupeeSign className="text-sm relative top-[1px]" />
-              <div className="text-xl ">{(product.price).toString()}</div>
+
+              <div className="text-xl ">{product.price.toString()} ETH</div>
+              <FaEthereum className="text-sm relative top-[1px]" />
             </div>
             <div className="flex gap-1">
-              <div className="font-medium">{(product.quantity).toString()} </div>
+              <div className="font-medium">{product.quantity.toString()} </div>
               <div>items</div>
             </div>
           </div>

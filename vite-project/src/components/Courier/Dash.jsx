@@ -3,13 +3,8 @@ import { Header, Footer } from "../index";
 import usePayment from "../../Customhooks/usePayment";
 
 const Dash = () => {
-  const [delivery, setDelivery] = useState({});
   const [orders, setOrders] = useState([]);
   const { getOrders, orderPicked, productDelivered } = usePayment();
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async function () {
     const orders = await getOrders();
@@ -24,6 +19,10 @@ const Dash = () => {
   const handleDelivery = async (product) => {
     await productDelivered(product.productId, product.orderId);
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [handleApproval, handleDelivery]);
 
   if (!orders) {
     return <>Loading..</>;
@@ -55,8 +54,8 @@ const Dash = () => {
       ></img>
       <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
         <div className="font-bold text-6xl">Order List</div>
-        <table className="w-full mx-2 h-auto rounded-lg overflow-hidden">
-          <thead className="text-white text-md bg-black border-green-800 border-2">
+        <table className="w-full mx-2 h-auto rounded-lg overflow-hidden gap-2">
+          <thead className="text-white text-md bg-blue-800 border-green-800 border-1">
             <tr>
               <th>Order ID</th>
               <th>Farmer Name</th>
@@ -72,7 +71,7 @@ const Dash = () => {
             {orders.map((product) => (
               <tr
                 key={product.key}
-                className="border-2 border-green-800 hover:bg-slate-400"
+                className="border-1 border-green-800 hover:bg-blue-100"
               >
                 <td>{product.productId}</td>
                 <td>{product.farmer}</td>
@@ -87,8 +86,8 @@ const Dash = () => {
                       product.status.toString() === "Picked" ||
                       product.status.toString() === "Delivered"
                         ? "bg-green-500"
-                        : "bg-red-500"
-                    } rounded-lg my-2 p-2`}
+                        : "bg-orange-500"
+                    } rounded-lg my-1 p-1 text-center`}
                     disabled={
                       product.status.toString() === "Picked" ||
                       product.status.toString() === "Delivered"
@@ -106,8 +105,8 @@ const Dash = () => {
                     className={`${
                       product.status.toString() === "Delivered"
                         ? "bg-green-500"
-                        : "bg-red-500"
-                    } rounded-lg my-2 p-2`}
+                        : "bg-orange-500"
+                    } rounded-lg my-1 p-1 text-center`}
                     disabled={product.status.toString() === "Delivered"}
                   >
                     {product.status.toString() === "Delivered"

@@ -93,6 +93,7 @@ const ListofCustomers = () => {
                     <td>{customer.ETHAddress}</td>
                     <td>
                       <button
+                        className="bg-orange-500 rounded-lg my-1 p-1"
                         onClick={() => handleApproval(customer.ETHAddress)}
                       >
                         Remove

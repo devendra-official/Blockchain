@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "../src/components/Home.jsx";
 import { AuthLayout } from "./components/index.js";
 import Login from "./components/Login.jsx";
-import Signup from "./pages/Signup";
+import Signup from "./components/Signup.jsx";
 import {
   Cart,
   Orders,
@@ -24,18 +24,18 @@ import {
   MidtermVerify,
   OrdersFrom,
   RequestCertification,
-  FarmerProducts
+  FarmerProducts,
 } from "./components/Farmer/index.js";
 import {
   CropValidation,
   FinalCertification,
   MidtermVerification,
   ListofFarmers,
-  ListofCustomers
+  ListofCustomers,
 } from "./components/Authority/index.js";
 import Dash from "./components/Courier/Dash.jsx";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
