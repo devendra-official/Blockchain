@@ -60,11 +60,11 @@ const Profile = () => {
 
                     <div className="flex flex-col space-y-1.5">
                       <label htmlFor="house">
-                        *House / Flat no / Building / Apartment
+                        House / Flat no / Building / Apartment
                       </label>
                       <Input
                         id="house"
-                        placeholder="*House / Flat no / Building / Apartment"
+                        placeholder="House / Flat no / Building / Apartment"
                         {...register("house", {
                           required: true,
                         })}

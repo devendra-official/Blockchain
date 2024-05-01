@@ -1,6 +1,6 @@
 import Input from "../Input.jsx";
 import Button from "../Button.jsx";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Midterm from "../../Customhooks/Midterm.jsx";
 
 const MidtermVerify = () => {
@@ -8,12 +8,28 @@ const MidtermVerify = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm();
 
   const { midTermRegister } = Midterm();
 
-  const onSubmit = async ({id,progress,months }) => {
-    await midTermRegister(id,progress,months);
+  const onSubmit = async ({ id, progress, month }) => {
+    await midTermRegister(id, progress, month);
+  };
+
+  //date input
+  const currentMonthYear = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + 2;
+    let yearOffset = 0;
+
+    if (month > 12) {
+      month -= 12;
+      yearOffset = 1;
+    }
+
+    return `${year + yearOffset}-${month.toString().padStart(2, "0")}`;
   };
 
   return (
@@ -23,8 +39,8 @@ const MidtermVerify = () => {
         className="w-screen h-screen blur-lg opacity-60 fixed z-0"
         alt=""
       ></img>
-      <div className=" z-10 relative overflow-hidden">
-        <div className="flex justify-center py-5  px-12 items-center w-full">
+      <div className=" z-10  relative overflow-hidden">
+        <div className="flex justify-center py-5  min-h-96 px-12 items-center w-full">
           <div className="w-4/5">
             <div className="flex justify-center items-center text-xl">
               <div className="font-bold text-4xl">Midterm Verification</div>
@@ -68,26 +84,36 @@ const MidtermVerify = () => {
                       </span>
                     )}
                   </div>
+
                   <div className="flex flex-col space-y-1.5">
-                    <label htmlFor="timeforharvest" className="font-bold">
+                    <label htmlFor="month" className="font-bold">
                       Expected month of harvest
                     </label>
-                    <Input
-                      type="date"
-                      className="bg-green-100"
-                      id="months"
-                      placeholder="Enter here"
-                      {...register("months", {
-                        required: true,
-                      })}
+                    <Controller
+                      name="month"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          type="month"
+                          id="month"
+                          className="bg-green-100"
+                          min={currentMonthYear()}
+                          {...register("month", {
+                            required: true,
+                          })}
+                        />
+                      )}
                     />
-                    {errors.months && (
+                    {errors.month && (
                       <span className="text-red-500">
                         Please enter the expected month
                       </span>
                     )}
                   </div>
                 </div>
+
                 <div className="flex my-4">
                   <Button type="submit">Submit</Button>
                 </div>

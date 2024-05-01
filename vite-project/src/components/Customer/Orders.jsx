@@ -10,7 +10,7 @@ const Orders = () => {
     fetchData();
   }, []);
 
-  const address = useSelector(state => state.addContract.address);
+  const address = useSelector((state) => state.addContract.address);
   const [orders, setOrders] = useState([]);
   const { getOrders } = usePayment();
   const navigate = useNavigate();
@@ -18,13 +18,31 @@ const Orders = () => {
   const fetchData = async function () {
     const orders = await getOrders();
     setOrders(orders);
-  }
+  };
 
   const konsa = (data) => {
     navigate(`/OrderDetails/${data.order.orderId}`, { state: data });
   };
 
-  const filteredOrders = orders.filter(order => order.customer === address);
+  const filteredOrders = orders.filter((order) => order.customer === address);
+
+  if (orders.length === 0)
+    return (
+      <>
+        <Header />
+        <div className="h-3/4 overflow-y-hidden z-10 relative shadow-sm shadow-black">
+          <img
+            src="images/Products.jpg"
+            alt="BG"
+            className="z-10 absolute blur-sm"
+          />
+          <div className="absolute z-30 font-bold text-8xl flex w-full h-full justify-center items-center text-white">
+            No Orders Found
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
 
   return (
     <>
@@ -60,7 +78,10 @@ const Orders = () => {
               >
                 <td>{order.orderId}</td>
                 <td>{order.productId}</td>
-                <td>{`${order.farmer.substring(0, 7)}...${order.farmer.substring(37, 42)}`}</td>
+                <td>{`${order.farmer.substring(
+                  0,
+                  7
+                )}...${order.farmer.substring(37, 42)}`}</td>
                 <td>{Number(order.price) / 1e18} ETH</td>
                 <td>{order.timeofOrdered}</td>
                 <td>{order.status}</td>

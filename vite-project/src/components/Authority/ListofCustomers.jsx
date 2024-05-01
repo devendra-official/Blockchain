@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const ListofCustomers = () => {
   const [customers, setCustomers] = useState([]);
   const { getAllCustomers } = ManageUsers();
-  const userContract = useSelector(state => state.addContract.userContract);
+  const userContract = useSelector((state) => state.addContract.userContract);
 
   useEffect(() => {
     fetchData();
@@ -17,7 +17,7 @@ const ListofCustomers = () => {
   const fetchData = async () => {
     const customers = await getAllCustomers();
     setCustomers(customers);
-  }
+  };
 
   const handleApproval = async (ETHAddress) => {
     await userContract.deleteCustomer(ETHAddress);
@@ -30,12 +30,33 @@ const ListofCustomers = () => {
       });
       setCustomers(updated);
       toast.success("Deleted");
-    })
+    });
   };
 
   if (!customers) {
-    return <>Loading...</>
+    return <>Loading...</>;
   }
+
+  if (customers.length === 0)
+    return (
+      <>
+        <Header />
+        <main className="min-h-96 grid grid-cols-8">
+          <SideBar className="col-span-2 z-10" />
+          <div className="col-span-6">
+            <img
+              src="/images/Bg.jpg"
+              className="w-screen h-screen blur-lg opacity-60 fixed z-0"
+              alt=""
+            ></img>
+            <div className="flex flex-col h-full justify-center items-center gap-4 p-8 z-10 relative ">
+              <div className="font-bold text-6xl">No Customers Found</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
 
   return (
     <>

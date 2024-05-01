@@ -10,7 +10,9 @@ import ManageUsers from "../../Customhooks/manageUsers";
 const MidtermVerification = () => {
   const [midTerms, setMidTerms] = useState([]);
   const { getMidTerms } = Midterm();
-  const productContract = useSelector((state) => state.addContract.productContract);
+  const productContract = useSelector(
+    (state) => state.addContract.productContract
+  );
   const { getAllFarmers } = ManageUsers();
 
   useEffect(() => {
@@ -53,11 +55,34 @@ const MidtermVerification = () => {
       toast.success("MidTerm Rejected successfully");
       setMidTerms((prevMidTerms) =>
         prevMidTerms.map((midTerm) =>
-          midTerm.id === midTermId ? { ...midTerm, isDisapproved: true ,isApproved: false} : midTerm
+          midTerm.id === midTermId
+            ? { ...midTerm, isDisapproved: true, isApproved: false }
+            : midTerm
         )
       );
     });
   };
+
+  if (midTerms.length === 0)
+    return (
+      <>
+        <Header />
+        <main className="min-h-96 grid grid-cols-8">
+          <SideBar className="col-span-2 z-10" />
+          <div className="col-span-6">
+            <img
+              src="/images/Bg.jpg"
+              className="w-screen h-screen blur-lg opacity-60 fixed z-0"
+              alt=""
+            ></img>
+            <div className="flex flex-col h-full justify-center items-center gap-4 p-8 z-10 relative ">
+              <div className="font-bold text-6xl">No Crops Found</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
 
   return (
     <>
@@ -65,7 +90,11 @@ const MidtermVerification = () => {
       <main className="h-auto grid grid-cols-8">
         <SideBar className="col-span-2 z-10" />
         <div className="col-span-6">
-          <img src="/images/Bg.jpg" className="w-screen h-screen blur-lg opacity-60 fixed z-0" alt="" />
+          <img
+            src="/images/Bg.jpg"
+            className="w-screen h-screen blur-lg opacity-60 fixed z-0"
+            alt=""
+          />
           <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Midterm verification</div>
             <table className="w-full mx-2 h-auto rounded-lg overflow-hidden">
@@ -87,7 +116,7 @@ const MidtermVerification = () => {
                     <td>{`${midTerm.months} months`}</td>
                     <td>{midTerm.timeofApplied}</td>
                     <td>
-                      {(midTerm.isApproved || midTerm.isDisapproved) ? (
+                      {midTerm.isApproved || midTerm.isDisapproved ? (
                         <button className="rounded-lg my-2 p-2" disabled>
                           {midTerm.isApproved ? "Approved" : "Approve"}
                         </button>
@@ -101,7 +130,7 @@ const MidtermVerification = () => {
                       )}
                     </td>
                     <td>
-                      {(midTerm.isApproved || midTerm.isDisapproved) ? (
+                      {midTerm.isApproved || midTerm.isDisapproved ? (
                         <button className="rounded-lg my-2 p-2" disabled>
                           {midTerm.isDisapproved ? "Rejected" : "Reject"}
                         </button>

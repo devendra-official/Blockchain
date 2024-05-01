@@ -10,7 +10,9 @@ import ManageUsers from "../../Customhooks/manageUsers";
 const FinalCertification = () => {
   const [certificate, setCertificate] = useState([]);
   const { getCertificate } = Certificate();
-  const productContract = useSelector(state => state.addContract.productContract);
+  const productContract = useSelector(
+    (state) => state.addContract.productContract
+  );
   const { getAllFarmers } = ManageUsers();
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const FinalCertification = () => {
         }
       }
       setCertificate(certificateList);
-    }
+    };
 
     fetchData();
   }, []);
@@ -39,7 +41,9 @@ const FinalCertification = () => {
       toast.success("Certificate approved successfully");
       setCertificate((prevCertificate) =>
         prevCertificate.map((element) =>
-          element.id === certificateId ? { ...element, isApproved: true } : element
+          element.id === certificateId
+            ? { ...element, isApproved: true }
+            : element
         )
       );
     });
@@ -53,11 +57,34 @@ const FinalCertification = () => {
       toast.success("Certificate Rejected successfully");
       setCertificate((prevCertificate) =>
         prevCertificate.map((element) =>
-          element.id === certificateId ? { ...element, isDisapproved: true, isApproved: false } : element
+          element.id === certificateId
+            ? { ...element, isDisapproved: true, isApproved: false }
+            : element
         )
       );
     });
   };
+
+  if (certificate.length === 0)
+    return (
+      <>
+        <Header />
+        <main className="min-h-96 grid grid-cols-8">
+          <SideBar className="col-span-2 z-10" />
+          <div className="col-span-6">
+            <img
+              src="/images/Bg.jpg"
+              className="w-screen h-screen blur-lg opacity-60 fixed z-0"
+              alt=""
+            ></img>
+            <div className="flex flex-col h-full justify-center items-center gap-4 p-8 z-10 relative ">
+              <div className="font-bold text-6xl">No Crops Found</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
 
   return (
     <>
@@ -89,11 +116,11 @@ const FinalCertification = () => {
                   <tr key={element.id} className="border-2 border-green-800">
                     <td>{element.id}</td>
                     <td>{element.cropName}</td>
-                    <td>{(element.quantity).toString()}</td>
+                    <td>{element.quantity.toString()}</td>
                     <td>{element.price} ETH</td>
                     <td>{element.category}</td>
                     <td>
-                      {(element.isApproved || element.isDisapproved) ? (
+                      {element.isApproved || element.isDisapproved ? (
                         <button className="rounded-lg my-2 p-2" disabled={true}>
                           {element.isApproved ? "Approved" : "Approve"}
                         </button>
@@ -107,7 +134,7 @@ const FinalCertification = () => {
                       )}
                     </td>
                     <td>
-                      {(element.isDisapproved || element.isApproved) ? (
+                      {element.isDisapproved || element.isApproved ? (
                         <button className="rounded-lg my-2 p-2" disabled={true}>
                           {element.isDisapproved ? "Rejected" : "Reject"}
                         </button>

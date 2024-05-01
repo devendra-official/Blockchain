@@ -14,8 +14,7 @@ const Dash = () => {
   const fetchData = async function () {
     const orders = await getOrders();
     setOrders(orders);
-  }
-
+  };
 
   const handleApproval = async (product) => {
     await orderPicked(product.productId, product.orderId);
@@ -27,10 +26,24 @@ const Dash = () => {
   };
 
   if (!orders) {
-    return <>
-      Loading..
-    </>
+    return <>Loading..</>;
   }
+
+  if (orders.length === 0)
+    return (
+      <>
+        <Header />
+        <img
+          src="/images/Bg.jpg"
+          className="w-full h-full blur-lg opacity-60 fixed z-0"
+          alt=""
+        ></img>
+        <div className="min-h-96 flex flex-col justify-center items-center gap-4 p-8 z-10 relative ">
+          <div className="font-bold text-6xl">No Orders List</div>
+        </div>
+        <Footer />
+      </>
+    );
 
   return (
     <>
@@ -41,7 +54,7 @@ const Dash = () => {
         alt=""
       ></img>
       <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
-        <div className="font-bold text-6xl">Crop Validation</div>
+        <div className="font-bold text-6xl">Order List</div>
         <table className="w-full mx-2 h-auto rounded-lg overflow-hidden">
           <thead className="text-white text-md bg-black border-green-800 border-2">
             <tr>
@@ -66,29 +79,38 @@ const Dash = () => {
                 <td>{product.productName}</td>
                 <td>{product.timeofOrdered}</td>
                 <td>{(Number(product.price) / 1e18).toString()} ETH</td>
-                <td>{(product.quantity).toString()} KG</td>
+                <td>{product.quantity.toString()} KG</td>
                 <td className="gap-2 flex">
                   <button
                     onClick={() => handleApproval(product)}
-                    className={`${(product.status).toString() === "Picked" || (product.status).toString() === "Delivered"
-                      ? "bg-green-500"
-                      : "bg-red-500"
-                      } rounded-lg my-2 p-2`}
-                    disabled={(product.status).toString() === "Picked" || (product.status).toString() === "Delivered"}
+                    className={`${
+                      product.status.toString() === "Picked" ||
+                      product.status.toString() === "Delivered"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                    } rounded-lg my-2 p-2`}
+                    disabled={
+                      product.status.toString() === "Picked" ||
+                      product.status.toString() === "Delivered"
+                    }
                   >
-                    {(product.status).toString() === "Picked" || (product.status).toString() === "Delivered" ? "PickedUp" : "PickUp"}
+                    {product.status.toString() === "Picked" ||
+                    product.status.toString() === "Delivered"
+                      ? "PickedUp"
+                      : "PickUp"}
                   </button>
                 </td>
                 <td>
                   <button
                     onClick={() => handleDelivery(product)}
-                    className={`${(product.status).toString() === "Delivered"
-                      ? "bg-green-500"
-                      : "bg-red-500"
-                      } rounded-lg my-2 p-2`}
-                    disabled={(product.status).toString() === "Delivered"}
+                    className={`${
+                      product.status.toString() === "Delivered"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                    } rounded-lg my-2 p-2`}
+                    disabled={product.status.toString() === "Delivered"}
                   >
-                    {(product.status).toString() === "Delivered"
+                    {product.status.toString() === "Delivered"
                       ? "Delivered"
                       : "Delivery"}
                   </button>

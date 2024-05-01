@@ -1,22 +1,49 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Input from "../Input.jsx";
 import Button from "../Button.jsx";
 import useCrop from "../../Customhooks/crops.jsx";
 import Select from "../Select.jsx";
 
 const CropRegisteration = () => {
-
   const { cropRegister } = useCrop();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm();
 
-  const onSubmit = async ({ cropname, area, cultivation, timeforharvest, yieldperacre }) => {
-    await cropRegister(cropname, area, cultivation, timeforharvest, yieldperacre);
+  //date input
+  const currentMonthYear = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + 3; // Adding 3 to select the month +2
+    let yearOffset = 0;
+
+    if (month > 12) {
+      month -= 12;
+      yearOffset = 1;
+    }
+
+    return `${year + yearOffset}-${month.toString().padStart(2, "0")}`;
+  };
+
+  const onSubmit = async ({
+    cropname,
+    area,
+    cultivation,
+    timeforharvest,
+    yieldperacre,
+  }) => {
+    await cropRegister(
+      cropname,
+      area,
+      cultivation,
+      timeforharvest,
+      yieldperacre
+    );
   };
 
   return (
@@ -26,7 +53,7 @@ const CropRegisteration = () => {
         className="w-full h-full blur-lg opacity-60 fixed z-0"
         alt=""
       ></img>
-      <div className=" z-10 relative overflow-hidden">
+      <div className=" z-10 relative  overflow-hidden">
         <div className="flex justify-center py-5  px-12 items-center w-full">
           <div className="w-4/5">
             <div className="flex justify-center items-center text-xl">
@@ -57,7 +84,6 @@ const CropRegisteration = () => {
                         "Quinoa",
                       ]}
                       id="cropname"
-                      className="mb-4"
                       {...register("cropname", { required: true })}
                     />
                     {errors.cropname && (
@@ -107,14 +133,22 @@ const CropRegisteration = () => {
                     <label htmlFor="timeforharvest" className="font-bold">
                       Expected month of harvest
                     </label>
-                    <Input
-                      type="date"
-                      className="bg-green-100"
-                      id="timeforharvest"
-                      placeholder="Enter here"
-                      {...register("timeforharvest", {
-                        required: true,
-                      })}
+                    <Controller
+                      name="timeforharvest"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <Input
+                          {...field}
+                          type="month"
+                          id="timeforharvest"
+                          className="bg-green-100"
+                          min={currentMonthYear()}
+                          {...register("timeforharvest", {
+                            required: true,
+                          })}
+                        />
+                      )}
                     />
                     {errors.timeforharvest && (
                       <span className="text-red-500">
