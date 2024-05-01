@@ -5,7 +5,6 @@ import FinalProduct from "../../Customhooks/finalProducts.jsx";
 import { toast } from "react-toastify";
 
 function ProductList() {
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -17,7 +16,7 @@ function ProductList() {
     try {
       const result = await fetchProducts();
       let filterProduct = result.filter((product) => product.show == true);
-      setProducts(filterProduct);
+      setProducts(result); ///changed something.....
     } catch (error) {
       toast.error("An error occured");
     }
@@ -57,9 +56,11 @@ function ProductList() {
                 <div className=" h-fit w-full flex flex-col m-2">
                   <div className="font-bold p-2">{product.productName}</div>
                   <div className="p-2"> {product.description}</div>
-                  <div className="p-2">{(product.quantity).toString()}</div>
+                  <div className="p-2">{product.quantity.toString()}</div>
                   <div className="p-2 flex items-center flex-row">
-                    <div className="text-lg"> {(product.price).toString()} ETH</div>
+                    <div className="text-lg">
+                      {product.price.toString()} ETH
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -70,6 +71,6 @@ function ProductList() {
       </div>
     </>
   );
-};
+}
 
 export default ProductList;

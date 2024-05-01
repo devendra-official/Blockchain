@@ -40,21 +40,20 @@ const Home = () => {
         let filterProduct = result.filter((product) => product.show == true);
         setProducts(filterProduct);
       } catch (error) {
-        //TODO: show Error 
-        console.error('Error fetching data:', error);
+        //TODO: show Error
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
 
-    return () => { };
+    return () => {};
   }, []);
 
   const scrollsubmit = () => {
     dispatch(Section("home"));
   };
 
-  const onSubmit = async (data) => {
-  };
+  const onSubmit = async (data) => {};
 
   useEffect(() => {
     if (scroll) {
@@ -86,41 +85,6 @@ const Home = () => {
             </div>
           </div>
         </Element>
-
-        {/* products list */}
-        {authRole === "customer" && (
-          <Element name="products">
-            <div className="flex flex-col mx-8 gap-4">
-              <div className="text-4xl font-bold">PRODUCTS</div>
-              <div className="columns-4 gap-5 mb-5">
-                {products.map((product) => (
-                  <div
-                    key={product.id}
-                    className="bg-white break-inside-avoid h-fit hover:shadow-xl hover:shadow-green-400 flex flex-col border-2 border-black rounded-3xl my-4"
-                  >
-                    <Link to={`/productDetails/${product.id}`}>
-                      <div className="h-1/2 w-full overflow-hidden">
-                        <img
-                          src={`/crops/${product.productName}.jpg`}
-                          alt="image"
-                          className="bg-cover hover:scale-125 transition duration-500"
-                        />
-                      </div>
-
-                      <div className=" h-fit w-full flex flex-col m-2">
-                        <div className="font-bold p-2">{product.productName}</div>
-                        <div className="p-2"> {product.description}</div>
-                        <div className="p-2 flex items-center">
-                          <div className="text-lg"> {(product.price).toString()} ETH</div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Element>
-        )}
 
         {/* About Us*/}
         <Element name="about-us">

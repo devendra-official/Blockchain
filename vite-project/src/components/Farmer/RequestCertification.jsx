@@ -11,8 +11,22 @@ const RequestCertification = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = async ({ id, cropquality, cropquantity, category, desiredprice, description }) => {
-    await reqCertificate(id, cropquality, cropquantity, category, desiredprice, description);
+  const onSubmit = async ({
+    id,
+    cropquality,
+    cropquantity,
+    category,
+    desiredprice,
+    description,
+  }) => {
+    await reqCertificate(
+      id,
+      cropquality,
+      cropquantity,
+      category,
+      desiredprice,
+      description
+    );
   };
   return (
     <>
@@ -53,17 +67,8 @@ const RequestCertification = () => {
                       Crop Quality
                     </label>
                     <Select
-                      options={[
-                        "A+",
-                        "A",
-                        "B+",
-                        "B",
-                        "C+",
-                        "C",
-                        "D"
-                      ]}
+                      options={["A", "B", "C"]}
                       id="cropquality"
-                      className="mb-4"
                       {...register("cropquality", { required: true })}
                     />
                     {errors.cropquality && (
@@ -79,7 +84,7 @@ const RequestCertification = () => {
                     <Input
                       className="bg-green-100"
                       id="cropquantity"
-                      placeholder=" Enter crop quantity"
+                      placeholder="Enter crop quantity"
                       {...register("cropquantity", {
                         required: true,
                       })}
@@ -90,24 +95,7 @@ const RequestCertification = () => {
                       </span>
                     )}
                   </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <label htmlFor="Category" className="font-bold">
-                      Category
-                    </label>
-                    <Input
-                      className="bg-green-100"
-                      id="category"
-                      placeholder=" Enter Category"
-                      {...register("category", {
-                        required: true,
-                      })}
-                    />
-                    {errors.category && (
-                      <span className="text-red-500">
-                        Pls enter all details
-                      </span>
-                    )}
-                  </div>
+
                   <div className="flex flex-col space-y-1.5">
                     <label htmlFor="desiredprice" className="font-bold">
                       Desired Price
