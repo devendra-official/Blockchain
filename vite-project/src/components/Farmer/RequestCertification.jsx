@@ -97,6 +97,25 @@ const RequestCertification = () => {
                   </div>
 
                   <div className="flex flex-col space-y-1.5">
+                    <label htmlFor="Category" className="font-bold">
+                      Category
+                    </label>
+                    <Input
+                      className="bg-green-100"
+                      id="category"
+                      placeholder=" Enter Category"
+                      {...register("category", {
+                        required: true,
+                      })}
+                    />
+                    {errors.category && (
+                      <span className="text-red-500">
+                        Pls enter all details
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col space-y-1.5">
                     <label htmlFor="desiredprice" className="font-bold">
                       Desired Price
                     </label>
