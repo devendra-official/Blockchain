@@ -33,6 +33,7 @@ const CropRegisteration = () => {
   const onSubmit = async ({
     cropname,
     area,
+    category,
     cultivation,
     timeforharvest,
     yieldperacre,
@@ -40,6 +41,7 @@ const CropRegisteration = () => {
     await cropRegister(
       cropname,
       area,
+      category,
       cultivation,
       timeforharvest,
       yieldperacre
@@ -107,6 +109,24 @@ const CropRegisteration = () => {
                     {errors.area && (
                       <span className="text-red-500">
                         Please provide your address
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <label htmlFor="category" className="font-bold">
+                      Category
+                    </label>
+                    <Input
+                      className="bg-green-100"
+                      id="category"
+                      placeholder="Enter your address"
+                      {...register("category", {
+                        required: true,
+                      })}
+                    />
+                    {errors.area && (
+                      <span className="text-red-500">
+                        Please Category
                       </span>
                     )}
                   </div>

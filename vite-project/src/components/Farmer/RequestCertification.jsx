@@ -15,7 +15,6 @@ const RequestCertification = () => {
     id,
     cropquality,
     cropquantity,
-    category,
     desiredprice,
     description,
   }) => {
@@ -23,7 +22,6 @@ const RequestCertification = () => {
       id,
       cropquality,
       cropquantity,
-      category,
       desiredprice,
       description
     );
@@ -51,7 +49,7 @@ const RequestCertification = () => {
                     <Input
                       className="bg-green-100"
                       id="id"
-                      placeholder="Enter crop quantity"
+                      placeholder="Enter crop ID"
                       {...register("id", {
                         required: true,
                       })}

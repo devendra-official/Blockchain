@@ -18,7 +18,6 @@ const Dash = () => {
 
   const handleApproval = async (product) => {
     await orderPicked(product.productId, product.orderId);
-    fetchData();
   };
 
   const handleDelivery = async (product) => {
@@ -74,7 +73,7 @@ const Dash = () => {
                 key={product.key}
                 className="border-2 border-green-800 hover:bg-slate-400"
               >
-                <td>{product.productId}</td>
+                <td>{product.orderId}</td>
                 <td>{product.farmer}</td>
                 <td>{product.productName}</td>
                 <td>{product.timeofOrdered}</td>

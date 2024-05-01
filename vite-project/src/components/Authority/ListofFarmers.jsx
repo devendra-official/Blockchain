@@ -22,8 +22,12 @@ const ListofCustomers = () => {
   const product = useSelector((state) => state.addContract.product);
 
   const handleApproval = async (ETHAddress) => {
+    let time = new Date().toLocaleString();
     await userContract.deleteFarmer(ETHAddress);
     await product.hideProduct(ETHAddress);
+    await product.rejectFarmerCrop(ETHAddress,time);
+    await product.rejectFarmerMidTerm(ETHAddress,time);
+    await product.rejectFarmerCertificate(ETHAddress,time);
     let updated = [];
     userContract.once("deleteFarmerEvent", () => {
       updated = farmers.filter((farmer) => {

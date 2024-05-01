@@ -6,7 +6,7 @@ const useCrop = () => {
     const productContract = useSelector(state => state.addContract.productContract);
     const generateIdentifier = selecctId();
 
-    async function cropRegister(cropname, area, cultivation, timeforharvest, yieldperacre) {
+    async function cropRegister(cropname, area, category, cultivation, timeforharvest, yieldperacre) {
         try {
             const identifiers = [];
             const data = await productContract.getAllCropIds();
@@ -18,7 +18,7 @@ const useCrop = () => {
             const id = generateIdentifier(identifiers);
             const date = new Date();
             const applied = date.toLocaleString();
-            await productContract.cropRegister(id, cropname, area, cultivation, timeforharvest, yieldperacre, applied);
+            await productContract.cropRegister(id, cropname, category, area, cultivation, timeforharvest, yieldperacre, applied);
             productContract.once("cropRegisterEvent", (id) => {
                 toast.success(`Your crop registered successfully of Crop ID ${id}`);
             });
@@ -34,6 +34,7 @@ const useCrop = () => {
             let obj = {
                 id: item.id,
                 cropName: item.cropName,
+                category: item.category,
                 ETHAddress: item.ETHAddress,
                 location: item.location,
                 acre: item.acre,

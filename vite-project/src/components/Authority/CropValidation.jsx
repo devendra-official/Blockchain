@@ -109,6 +109,7 @@ const CropValidation = () => {
                   <th>Cultivation Area</th>
                   <th>Time Till Harvest</th>
                   <th>Expected Yield</th>
+                  <th>Category</th>
                   <th>Approve</th>
                   <th>Reject</th>
                 </tr>
@@ -125,6 +126,7 @@ const CropValidation = () => {
                     <td>{crop.acre.toString()} acre</td>
                     <td>{crop.months}</td>
                     <td>{crop.yieldperacre.toString()} /acre</td>
+                    <td>{crop.category}</td>
                     <td>
                       {crop.isApproved || crop.isDisapproved ? (
                         <button className="rounded-lg my-2 p-2" disabled>

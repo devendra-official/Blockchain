@@ -12,7 +12,6 @@ function FinalProduct() {
             Items.push({
                 id: product.id,
                 productName: product.productName,
-                category: product.category,
                 price: Number(product.price) / 1e18,
                 quantity: product.quantity,
                 ETHAddress: product.ETHAddress,
@@ -22,7 +21,8 @@ function FinalProduct() {
                 midTermRegistered: product.midTermRegistered,
                 midTermApproved: product.midTermApproved,
                 certRegistered: product.certRegistered,
-                certApproved: product.certApproved
+                certApproved: product.certApproved,
+                show:product.show
             });
         })
         return Items;

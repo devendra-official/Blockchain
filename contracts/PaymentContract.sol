@@ -37,11 +37,12 @@ contract PaymentContract {
         orders[msg.sender].totalAmount = totalAmount ;
         orders[msg.sender].orderId = orderId;
 
-         for(uint i = 0; i < items.length; i++) {
+        for(uint i = 0; i < items.length; i++) {
             orders[msg.sender].items.push(items[i]);
             orders[msg.sender].items[i].status = OrderStatus.Ordered;
         }
         orderList.push(orders[msg.sender]);
+        delete orders[msg.sender];
 
         for (uint i=0;i<items.length;i++){
             payable (items[i].farmer).transfer(items[i].totalPrice);
@@ -57,19 +58,18 @@ contract PaymentContract {
         return orderIds;
     }
 
-    function orderPicked( string memory pid, string memory oid, string memory time ) public {
+    function orderPicked( string memory pid, string memory oid, string memory time ) public{
         for (uint i = 0; i < orderList.length; i++) {
-            if (keccak256(abi.encodePacked(orderList[i].orderId)) ==keccak256(abi.encodePacked(oid))) {
+            if (keccak256(abi.encodePacked(orderList[i].orderId)) == keccak256(abi.encodePacked(oid))) {
                 for (uint j = 0; j < orderList[i].items.length; j++) {
                     if (keccak256(abi.encodePacked(orderList[i].items[j].productId)) == keccak256(abi.encodePacked(pid))) {
                         orderList[i].items[j].status = OrderStatus.Picked;
                         orderList[i].items[j].timeofPicked = time;
-                        break;
+                        emit orderPickedEvent();
                     }
                 }
             }
         }
-        emit orderPickedEvent();
     }
 
     function productDelivered(string memory pid,string memory oid,string memory time) public {
@@ -79,12 +79,12 @@ contract PaymentContract {
                     if (keccak256(abi.encodePacked(orderList[i].items[j].productId)) == keccak256(abi.encodePacked(pid))) {
                         orderList[i].items[j].status = OrderStatus.Delivered;
                         orderList[i].items[j].timeofDelivered = time;
+                        emit productDeliveredEvent();
                         break;
                     }
                 }
             }
         }
-        emit productDeliveredEvent();
     }
 
     function getOrders() public view returns (Order[] memory) {

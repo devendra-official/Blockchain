@@ -16,7 +16,7 @@ function ProductList() {
     try {
       const result = await fetchProducts();
       let filterProduct = result.filter((product) => product.show == true);
-      setProducts(result); ///changed something.....
+      setProducts(filterProduct); 
     } catch (error) {
       toast.error("An error occured");
     }

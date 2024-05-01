@@ -23,7 +23,7 @@ function Midterm() {
         } else if (filterCrop.isDisapproved) {
             obj.accept = false;
             obj.msg = "Your crop Rejected"
-        } else if(!filterCrop.isApproved){
+        } else if (!filterCrop.isApproved) {
             obj.accept = false;
             obj.msg = "crop is not approved";
         } else if (filterMidterm == undefined) {
@@ -65,9 +65,21 @@ function Midterm() {
     async function getMidTerms() {
         const midTermList = await productContract.getMidTerm();
         let listOfMid = [];
-        midTermList.map((mid)=>{
-            listOfMid.push(mid);
+        let obj;
+        midTermList.map((mid) => {
+            obj = {
+                id: mid.id,
+                cropName: mid.cropName,
+                ETHAddress: mid.ETHAddress,
+                progress: mid.progress,
+                months: mid.months,
+                timeofApplied: mid.timeofApplied,
+                timeofVerified: mid.timeofVerified,
+                isApproved: mid.isApproved,
+                isDisapproved: mid.isDisapproved
+            }
         })
+        listOfMid.push(obj);
         return listOfMid.reverse();
     }
 
