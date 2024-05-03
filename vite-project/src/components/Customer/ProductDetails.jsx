@@ -6,9 +6,9 @@ import Timeline from "./Timeline.jsx";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../store/cartSlice.js";
+import { FaEthereum } from "react-icons/fa";
 
 const ProductDetail = () => {
-
   const { fetchProducts } = FinalProduct();
   const [products, setProducts] = useState([]);
   const { id } = useParams();
@@ -18,11 +18,11 @@ const ProductDetail = () => {
     const fetchData = async () => {
       const result = await fetchProducts();
       setProducts(result);
-    }
+    };
     fetchData();
-  }, [])
+  }, []);
 
-  const product = products.find(p => p.id === id);
+  const product = products.find((p) => p.id === id);
 
   const handleAddToCart = (product) => {
     if (product.quantity == 0) {
@@ -71,10 +71,12 @@ const ProductDetail = () => {
             </div>
             <div className="flex items-center ">
               <div className="font-medium">Price : </div>
-              <div className="text-xl ">{(product.price).toString()} ETH</div>
+              <div className="text-xl ">{product.price.toString()} </div>
+              <FaEthereum className="text-sm relative top-[1px]" />
+              <span className="text-lg">ETH</span>
             </div>
             <div className="flex gap-1">
-              <div className="font-medium">{(product.quantity).toString()} </div>
+              <div className="font-medium">{product.quantity.toString()} </div>
               <div>items available</div>
             </div>
             <Button

@@ -41,8 +41,8 @@ const OrdersFrom = () => {
       ></img>
       <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
         <div className="font-bold text-6xl">Order From</div>
-        <table className=" w-full mx-2  h-auto rounded-lg overflow-hidden">
-          <thead className=" text-white text-xl bg-black border-green-800 border-2">
+        <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
+          <thead className=" text-white text-md bg-blue-800 border-green-800 border-1">
             <tr>
               <th>OID</th>
               <th>PID</th>
@@ -54,7 +54,10 @@ const OrdersFrom = () => {
           </thead>
           <tbody className="text-center font-semibold bg-white">
             {filterOrder.map((order) => (
-              <tr key={order.key} className="border-2 border-green-800">
+              <tr
+                key={order.key}
+                className="border-1 border-green-800 hover:bg-blue-100"
+              >
                 <td>{order.orderId}</td>
                 <td>{order.productId}</td>
                 <td>{order.productName}</td>

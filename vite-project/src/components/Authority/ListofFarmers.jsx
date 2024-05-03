@@ -99,7 +99,10 @@ const ListofCustomers = () => {
                     <td>{farmer.email}</td>
                     <td>{farmer.ETHAddress}</td>
                     <td>
-                      <button onClick={() => handleApproval(farmer.ETHAddress)}>
+                      <button
+                        className="bg-orange-500 rounded-lg my-1 p-1"
+                        onClick={() => handleApproval(farmer.ETHAddress)}
+                      >
                         Remove
                       </button>
                     </td>

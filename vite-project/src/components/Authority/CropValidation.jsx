@@ -100,8 +100,8 @@ const CropValidation = () => {
           ></img>
           <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Crop Validation</div>
-            <table className=" w-full mx-2  h-auto rounded-lg overflow-hidden">
-              <thead className=" text-white text-xl bg-black border-green-800 border-2">
+            <table className=" w-full h-auto rounded-lg overflow-hidden gap-2">
+              <thead className=" text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
                   <th>PID</th>
                   <th>Crop Name</th>
@@ -116,7 +116,10 @@ const CropValidation = () => {
               </thead>
               <tbody className="text-center font-semibold bg-white">
                 {crops.map((crop) => (
-                  <tr key={crop.id} className="border-2 border-green-800">
+                  <tr
+                    key={crop.id}
+                    className="border-1 border-green-800 hover:bg-blue-100"
+                  >
                     <td>{crop.id}</td>
                     <td>{crop.cropName}</td>
                     <td>{`${crop.ETHAddress.substring(
@@ -129,13 +132,18 @@ const CropValidation = () => {
                     <td>{crop.category}</td>
                     <td>
                       {crop.isApproved || crop.isDisapproved ? (
-                        <button className="rounded-lg my-2 p-2" disabled>
+                        <button
+                          className={`${
+                            crop.isApproved ? "bg-green-500" : "hidden"
+                          } rounded-lg my-1 p-1`}
+                          disabled
+                        >
                           {crop.isApproved ? "Approved" : "Approve"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleApproveCrop(crop.id)}
-                          className="bg-red-500 rounded-lg my-2 p-2"
+                          className="bg-orange-500 rounded-lg my-1 p-1"
                         >
                           Approve
                         </button>
@@ -143,13 +151,18 @@ const CropValidation = () => {
                     </td>
                     <td>
                       {crop.isDisapproved || crop.isApproved ? (
-                        <button className="rounded-lg my-2 p-2" disabled>
+                        <button
+                          className={`${
+                            crop.isDisapproved ? "bg-red-500" : "hidden"
+                          } rounded-lg my-1 p-1`}
+                          disabled
+                        >
                           {crop.isDisapproved ? "Rejected" : "Reject"}
                         </button>
                       ) : (
                         <button
                           onClick={() => handleRejectCrop(crop.id)}
-                          className="bg-red-500 rounded-lg my-2 p-2"
+                          className="bg-orange-500 rounded-lg my-1 p-1"
                         >
                           Reject
                         </button>

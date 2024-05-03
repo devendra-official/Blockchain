@@ -5,7 +5,6 @@ import { GiArchiveRegister } from "react-icons/gi";
 import { MdOutlineDomainVerification } from "react-icons/md";
 import { GrCertificate } from "react-icons/gr";
 import { VscListOrdered } from "react-icons/vsc";
-import { MdOutlineLocalShipping } from "react-icons/md";
 
 const SideBar = ({ className }) => {
   const location = useLocation();

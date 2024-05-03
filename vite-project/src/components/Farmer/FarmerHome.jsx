@@ -45,13 +45,13 @@ const FarmerHome = () => {
         className="w-screen h-screen blur-lg opacity-60 fixed z-0"
         alt=""
       ></img>
-      <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
-        <div className="font-bold text-6xl">Farmer Home</div>
+      <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
+        <div className="font-bold text-6xl">Overview</div>
         <table className=" w-full mx-2  h-auto rounded-lg overflow-hidden">
-          <thead className=" text-white text-xl bg-black border-green-800 border-2">
+          <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
             <tr>
               <th>ID</th>
-              <th>Name</th>
+              <th>Crop Name</th>
               <th>ETH Address</th>
               <th>Address</th>
             </tr>
@@ -61,7 +61,7 @@ const FarmerHome = () => {
               <tr
                 onClick={() => konsa({ product: product })}
                 key={product.id}
-                className="border-2 border-green-800 hover:bg-slate-400"
+                className="border-1 border-green-800 hover:bg-blue-100"
               >
                 <td>{product.id}</td>
                 <td>{product.cropName}</td>
