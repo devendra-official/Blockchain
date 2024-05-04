@@ -65,21 +65,21 @@ function Midterm() {
     async function getMidTerms() {
         const midTermList = await productContract.getMidTerm();
         let listOfMid = [];
-        let obj;
         midTermList.map((mid) => {
-            obj = {
-                id: mid.id,
-                cropName: mid.cropName,
-                ETHAddress: mid.ETHAddress,
-                progress: mid.progress,
-                months: mid.months,
-                timeofApplied: mid.timeofApplied,
-                timeofVerified: mid.timeofVerified,
-                isApproved: mid.isApproved,
-                isDisapproved: mid.isDisapproved
-            }
+            listOfMid.push(
+                {
+                    id: mid.id,
+                    cropName: mid.cropName,
+                    ETHAddress: mid.ETHAddress,
+                    progress: mid.progress,
+                    months: mid.months,
+                    timeofApplied: mid.timeofApplied,
+                    timeofVerified: mid.timeofVerified,
+                    isApproved: mid.isApproved,
+                    isDisapproved: mid.isDisapproved
+                }
+            )
         })
-        listOfMid.push(obj);
         return listOfMid.reverse();
     }
 

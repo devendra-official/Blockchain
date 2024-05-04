@@ -4,11 +4,6 @@ require("@nomicfoundation/hardhat-toolbox");
 module.exports = {
   defaultNetwork: "ganache",
   networks: {
-    hardhat: {},
-    // sepolia: {
-    //   url: "https://sepolia.infura.io/v3/<key>",
-    //   accounts: ["privateKey1, privateKey2, ..."]
-    // },
     ganache: {
       url: "http://127.0.0.1:7545",
       accounts: [

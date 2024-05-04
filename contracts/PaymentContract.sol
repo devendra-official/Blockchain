@@ -32,10 +32,10 @@ contract PaymentContract {
 
     function orderProduct(Item[] memory items,string memory time,uint totalAmount,string memory orderId) public payable {
         require(msg.value == totalAmount,"Payment failed");
+        orders[msg.sender].orderId = orderId;
         orders[msg.sender].timeofOrdered = time;
         orders[msg.sender].customer = msg.sender;
         orders[msg.sender].totalAmount = totalAmount ;
-        orders[msg.sender].orderId = orderId;
 
         for(uint i = 0; i < items.length; i++) {
             orders[msg.sender].items.push(items[i]);
