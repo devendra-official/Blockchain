@@ -8,6 +8,7 @@ contract CropManager {
         string id;
         string cropName;
         address ETHAddress;
+        string category;
         string location;
         string acre;
         string months;
@@ -21,8 +22,8 @@ contract CropManager {
     Crop[] crops;
     event cropRegisterEvent(string id);
 
-    function cropRegister(string memory id,string memory cropName,string memory location,string memory acre,string memory months,uint yieldperacre,string memory timeofApplied) public {
-        crops.push(Crop(id,cropName,msg.sender,location,acre,months,yieldperacre,timeofApplied,timeofApplied,false,false));
+    function cropRegister(string memory id,string memory cropName,string memory category,string memory location,string memory acre,string memory months,uint yieldperacre,string memory timeofApplied) public {
+        crops.push(Crop(id,cropName,msg.sender,category,location,acre,months,yieldperacre,timeofApplied,timeofApplied,false,false));
         emit cropRegisterEvent(id);
     }
 

@@ -106,7 +106,6 @@ const FinalCertification = () => {
                   <th>Crop</th>
                   <th>Quantity</th>
                   <th>Price</th>
-                  <th>Category</th>
                   <th>Approve</th>
                   <th>Reject</th>
                 </tr>
@@ -121,7 +120,6 @@ const FinalCertification = () => {
                     <td>{element.cropName}</td>
                     <td>{element.quantity.toString()}</td>
                     <td>{element.price} ETH</td>
-                    <td>{element.category}</td>
                     <td>
                       {element.isApproved || element.isDisapproved ? (
                         <button

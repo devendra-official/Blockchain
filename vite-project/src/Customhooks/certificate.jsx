@@ -43,7 +43,7 @@ function Certificate() {
         return obj;
     }
 
-    async function reqCertificate(id, quality, quantity, category, price, description) {
+    async function reqCertificate(id, quality, quantity, price, description) {
 
         modifier(id).then(async (response) => {
             if (response.accept) {
@@ -56,7 +56,7 @@ function Certificate() {
                     const ETHPRICE = BigInt(parsedPrice * 1e18);
                     const date = new Date();
                     const timeofApplied = date.toLocaleString();
-                    await productContract.reqCertificate(id, quality, quantity, category, ETHPRICE, description, timeofApplied);
+                    await productContract.reqCertificate(id, quality, quantity, ETHPRICE, description, timeofApplied);
                     productContract.once("reqCertificateEvent", () => {
                         toast.success(`Your request of issue for Certificate has submitted successfully`);
                     });
@@ -80,7 +80,6 @@ function Certificate() {
                 ETHAddress: certificate.ETHAddress,
                 quality: certificate.quality,
                 quantity: certificate.quantity,
-                category: certificate.category,
                 price: Number(certificate.price) / 1e18,
                 description: certificate.description,
                 timeofApplied: certificate.timeofApplied,
