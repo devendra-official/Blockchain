@@ -14,7 +14,7 @@ describe("Crop and Product testing", function () {
                 reject(error);
             }
         })
-        await ProductManager.cropRegister("CID", "cropName", "cityName", "acre", "months remaining", 5, "timeofApplied");
+        await ProductManager.cropRegister("CID", "cropName", "category", "cityName", "acre", "months remaining", 5, "timeofApplied");
         await eventPromise;
     });
 
