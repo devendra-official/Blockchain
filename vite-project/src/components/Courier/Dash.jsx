@@ -57,7 +57,7 @@ const Dash = () => {
           <thead className="text-white text-md bg-blue-800 border-green-800 border-1">
             <tr>
               <th>Order ID</th>
-              <th>Farmer Name</th>
+              <th>Customer</th>
               <th>Crop Name</th>
               <th>Ordered</th>
               <th>Price</th>
@@ -73,7 +73,7 @@ const Dash = () => {
                 className="border-1 border-green-800 hover:bg-blue-100"
               >
                 <td>{product.orderId}</td>
-                <td>{product.farmer}</td>
+                <td>{product.customer}</td>
                 <td>{product.productName}</td>
                 <td>{product.timeofOrdered}</td>
                 <td>{(Number(product.price) / 1e18).toString()} ETH</td>

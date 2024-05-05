@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Input from "../Input.jsx";
 import Button from "../Button.jsx";
@@ -13,7 +13,38 @@ const CropRegisteration = () => {
     handleSubmit,
     formState: { errors },
     control,
+    watch, // new thing
   } = useForm();
+
+  const [secondSelectOptions, setSecondSelectOptions] = useState([]); //new thing
+
+  const firstSelectValue = watch("category"); // new thing
+
+  const updateSecondSelectOptions = (firstSelectValue) => {
+    if (firstSelectValue === "grains") {
+      setSecondSelectOptions([
+        "Rice",
+        "Wheat",
+        "Maize",
+        "Barley",
+        "Millet",
+        "Oats",
+        "Quinoa",
+      ]);
+    } else if (firstSelectValue === "legumes") {
+      setSecondSelectOptions([
+        "Lentils",
+        "Chickpeas",
+        "Kidneybeans",
+        "Mungbeans",
+        "Blackgram",
+        "Soybeans",
+        "Peas",
+      ]);
+    } else {
+      setSecondSelectOptions([]);
+    }
+  }; // new thing
 
   //date input
   const currentMonthYear = () => {
@@ -33,12 +64,14 @@ const CropRegisteration = () => {
   const onSubmit = async ({
     cropname,
     area,
+    category,
     cultivation,
     timeforharvest,
     yieldperacre,
   }) => {
     await cropRegister(
       cropname,
+      category,
       area,
       cultivation,
       timeforharvest,
@@ -63,32 +96,62 @@ const CropRegisteration = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
+                    <label htmlFor="category" className="font-bold">
+                      Category
+                    </label>
+                    <Controller
+                      name="category"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: "Please select an option" }}
+                      render={({ field }) => (
+                        <select
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            updateSecondSelectOptions(e.target.value);
+                          }}
+                        >
+                          <option value="">Please select Category</option>
+                          <option value="grains">Grains</option>
+                          <option value="legumes">Legumes</option>
+                        </select>
+                      )}
+                      {...register("category", {
+                        required: true,
+                      })}
+                    />
+                    {errors.category && (
+                      <span className="text-red-500">
+                        Please enter the category
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col space-y-1.5">
                     <label htmlFor="cropname" className="font-bold">
                       Crop Name
                     </label>
-                    <Select
-                      options={[
-                        "Rice",
-                        "Wheat",
-                        "Maize",
-                        "Barley",
-                        "Millet",
-                        "Oats",
-                        "Lentils",
-                        "Chickpeas",
-                        "Kidneybeans",
-                        "Mungbeans",
-                        "Blackgram",
-                        "Soybeans",
-                        "Peas",
-                        "Quinoa",
-                      ]}
-                      id="cropname"
-                      {...register("cropname", { required: true })}
+                    <Controller
+                      name="cropname"
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <select {...field}>
+                          {secondSelectOptions.map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                      {...register("cropname", {
+                        required: true,
+                      })}
                     />
                     {errors.cropname && (
                       <span className="text-red-500">
-                        Please enter the crop name
+                        Please select category then crop
                       </span>
                     )}
                   </div>
@@ -111,6 +174,22 @@ const CropRegisteration = () => {
                     )}
                   </div>
                   <div className="flex flex-col space-y-1.5">
+                    <label htmlFor="category" className="font-bold">
+                      Category
+                    </label>
+                    <Input
+                      className="bg-green-100"
+                      id="category"
+                      placeholder="Enter your address"
+                      {...register("category", {
+                        required: true,
+                      })}
+                    />
+                    {errors.area && (
+                      <span className="text-red-500">Please Category</span>
+                    )}
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
                     <label htmlFor="cultivation" className="font-bold">
                       Specify the area of cultivation in acres
                     </label>
@@ -128,7 +207,6 @@ const CropRegisteration = () => {
                       </span>
                     )}
                   </div>
-
                   <div className="flex flex-col space-y-1.5">
                     <label htmlFor="timeforharvest" className="font-bold">
                       Expected month of harvest
@@ -156,7 +234,6 @@ const CropRegisteration = () => {
                       </span>
                     )}
                   </div>
-
                   <div className="flex flex-col space-y-1.5">
                     <label htmlFor="yieldperacre" className="font-bold">
                       Expected yield per acre

@@ -7,6 +7,7 @@ contract CropManager {
     struct Crop {
         string id;
         string cropName;
+        string category;
         address ETHAddress;
         string location;
         string acre;
@@ -21,8 +22,8 @@ contract CropManager {
     Crop[] crops;
     event cropRegisterEvent(string id);
 
-    function cropRegister(string memory id,string memory cropName,string memory location,string memory acre,string memory months,uint yieldperacre,string memory timeofApplied) public {
-        crops.push(Crop(id,cropName,msg.sender,location,acre,months,yieldperacre,timeofApplied,timeofApplied,false,false));
+    function cropRegister(string memory id,string memory cropName,string memory category,string memory location,string memory acre,string memory months,uint yieldperacre,string memory timeofApplied) public {
+        crops.push(Crop(id,cropName,category,msg.sender,location,acre,months,yieldperacre,timeofApplied,timeofApplied,false,false));
         emit cropRegisterEvent(id);
     }
 

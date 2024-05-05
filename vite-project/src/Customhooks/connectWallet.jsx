@@ -29,12 +29,12 @@ function useWallet() {
           .then((response) => {
             fsigner = response;
             users = new Contract(
-              "0xFDF907721389dbb1B61c421f335c8ef41502c4F3",
+              "0x0Fc4E88b0F46Ee1eF6C7AE535993Dad2E7e48222",
               userAbi,
               fsigner
             );
             product = new Contract(
-              "0x1B7e15bFa59fEE104f6929e2ed262952257194A3",
+              "0x1aa837DaEe5B23e8715795096a79cb34254feaf8",
               productAbi,
               fsigner
             );
@@ -43,12 +43,12 @@ function useWallet() {
             provider.getSigner().then((data) => {
               signer = data;
               const userContract = new Contract(
-                "0xFDF907721389dbb1B61c421f335c8ef41502c4F3",
+                "0x0Fc4E88b0F46Ee1eF6C7AE535993Dad2E7e48222",
                 userAbi,
                 signer
               );
               const productContract = new Contract(
-                "0x1B7e15bFa59fEE104f6929e2ed262952257194A3",
+                "0x1aa837DaEe5B23e8715795096a79cb34254feaf8",
                 productAbi,
                 signer
               );

@@ -116,7 +116,7 @@ const MidtermVerification = () => {
                   >
                     <td>{midTerm.id}</td>
                     <td>{midTerm.cropName}</td>
-                    <td>{`${midTerm.months} months`}</td>
+                    <td>{midTerm.months}</td>
                     <td>{midTerm.timeofApplied}</td>
                     <td>
                       {midTerm.isApproved || midTerm.isDisapproved ? (
