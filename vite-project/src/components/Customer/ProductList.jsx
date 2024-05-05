@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Header, Footer } from "../index.js";
 import FinalProduct from "../../Customhooks/finalProducts.jsx";
 import { toast } from "react-toastify";
+import { FaEthereum } from "react-icons/fa";
 
 function ProductList() {
   useEffect(() => {
@@ -56,10 +57,13 @@ function ProductList() {
                 <div className=" h-fit w-full flex flex-col m-1">
                   <div className="font-bold p-1">{product.productName}</div>
                   <div className="p-1"> {product.description}</div>
-                  <div className="p-1">{product.quantity.toString()}</div>
+                  <div className="p-1">
+                    Quantity left: {product.quantity.toString()} KG
+                  </div>
                   <div className="p-1 flex items-center flex-row">
-                    <div className="text-lg">
-                      {product.price.toString()} ETH
+                    <div className="text-lg flex flex-row">
+                      Price: {product.price.toString()} ETH
+                      <FaEthereum className="text-sm relative top-2" />
                     </div>
                   </div>
                 </div>
