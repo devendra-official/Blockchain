@@ -33,8 +33,14 @@ const FarmerProducts = () => {
 
   const { id } = useParams();
   const crop = crops.find((p) => p.id == id);
-  const midterm = midterms.find((p) => p.id == id) == undefined ? false : midterms.find((p) => p.id == id);
-  const certificate = certificates.find((p) => p.id == id) == undefined ? false : certificates.find((p) => p.id == id);
+  const midterm =
+    midterms.find((p) => p.id == id) == undefined
+      ? false
+      : midterms.find((p) => p.id == id);
+  const certificate =
+    certificates.find((p) => p.id == id) == undefined
+      ? false
+      : certificates.find((p) => p.id == id);
   const Product = Products.find((p) => p.id == id);
 
   if (!crop) {
@@ -43,7 +49,7 @@ const FarmerProducts = () => {
   return (
     <div>
       <div>
-        <div className="h-auto py-4 w-full flex flex-col place-items-center bg-[#D8F3DC] p-4">
+        <div className="min-h-96 py-4 w-full flex flex-col place-items-center bg-[#D8F3DC] p-4">
           <div className="text-center text-5xl font-bold p-6">TIMELINE</div>
           <div className="p-5 w-3/4 flex justify-center items-center">
             <div className="max-w-7xl mx-auto w-full grid grid-cols-9 px-2">
@@ -58,10 +64,11 @@ const FarmerProducts = () => {
               </div>
               <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                 <div
-                  className={`${(crop.isApproved || crop.isDisapproved)
-                    ? "h-1/2 self-end w-1 bg-indigo-300"
-                    : ""
-                    } `}
+                  className={`${
+                    crop.isApproved || crop.isDisapproved
+                      ? "h-1/2 self-end w-1 bg-indigo-300"
+                      : ""
+                  } `}
                 ></div>
                 <div className="w-1/2 left-0  h-1 bg-indigo-300 absolute"></div>
                 <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10  text-white text-center">
@@ -76,8 +83,9 @@ const FarmerProducts = () => {
                   <div className="col-span-4 w-full h-full"></div>
                   <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                     <div
-                      className={`${midterm ? "h-full" : "h-1/2 self-start"
-                        }  w-1 bg-indigo-300`}
+                      className={`${
+                        midterm ? "h-full" : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
                     ></div>
                     <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
                     <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
@@ -102,16 +110,17 @@ const FarmerProducts = () => {
                   <div className="col-span-4 w-full h-full"></div>
                   <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                     <div
-                      className={`${midterm ? "h-full" : "h-1/2 self-start"
-                        }  w-1 bg-indigo-300`}
+                      className={`${
+                        midterm ? "h-full" : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
                     ></div>
-                    <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
-                    <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
+                    <div className="w-1/2 right-0  h-1 bg-red-300 absolute"></div>
+                    <div className="absolute w-6 h-6 rounded-full bg-red-400 z-10 text-white text-center">
                       2
                     </div>
                   </div>
                   <div className="col-span-4 w-full h-full ">
-                    <div className="w-full h-full bg-indigo-400 rounded-md p-2 md:pl-4">
+                    <div className="w-full h-full bg-red-400 rounded-md p-2 md:pl-4">
                       <h1 className="text-white text-xl font-medium py-2">
                         Crop Disapproved By Authority on
                       </h1>
@@ -138,10 +147,11 @@ const FarmerProducts = () => {
                   </div>
                   <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                     <div
-                      className={`${midterm.isApproved || midterm.isDisapproved
-                        ? "h-full"
-                        : "h-1/2 self-start"
-                        }  w-1 bg-indigo-300`}
+                      className={`${
+                        midterm.isApproved || midterm.isDisapproved
+                          ? "h-full"
+                          : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
                     ></div>
                     <div className="w-1/2 left-0  h-1 bg-indigo-300 absolute"></div>
                     <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
@@ -158,8 +168,9 @@ const FarmerProducts = () => {
                   <div className="col-span-4 w-full h-full"></div>
                   <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                     <div
-                      className={`${certificate ? "h-full" : "h-1/2 self-start"
-                        }  w-1 bg-indigo-300`}
+                      className={`${
+                        certificate ? "h-full" : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
                     ></div>
                     <div className="w-1/2 right-0  h-1 bg-indigo-300 absolute"></div>
                     <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">
@@ -184,8 +195,9 @@ const FarmerProducts = () => {
                   <div className="col-span-4 w-full h-full"></div>
                   <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                     <div
-                      className={`${certificate ? "h-full" : "h-1/2 self-start"
-                        }  w-1 bg-indigo-300`}
+                      className={`${
+                        certificate ? "h-full" : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
                     ></div>
                     <div className="w-1/2 right-0  h-1 bg-red-300 absolute"></div>
                     <div className="absolute w-6 h-6 rounded-full bg-red-400 z-10 text-white text-center">
@@ -220,10 +232,11 @@ const FarmerProducts = () => {
                   </div>
                   <div className="relative col-span-1 w-full h-full flex justify-center items-center">
                     <div
-                      className={`${certificate.isApproved || certificate.isDisapproved
-                        ? "h-full"
-                        : "h-1/2 self-start"
-                        }  w-1 bg-indigo-300`}
+                      className={`${
+                        certificate.isApproved || certificate.isDisapproved
+                          ? "h-full"
+                          : "h-1/2 self-start"
+                      }  w-1 bg-indigo-300`}
                     ></div>
                     <div className="w-1/2 left-0  h-1 bg-indigo-300 absolute"></div>
                     <div className="absolute w-6 h-6 rounded-full bg-indigo-400 z-10 text-white text-center">

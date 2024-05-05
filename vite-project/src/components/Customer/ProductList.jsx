@@ -16,7 +16,7 @@ function ProductList() {
     try {
       const result = await fetchProducts();
       let filterProduct = result.filter((product) => product.show == true);
-      setProducts(filterProduct); 
+      setProducts(filterProduct);
     } catch (error) {
       toast.error("An error occured");
     }
@@ -42,22 +42,22 @@ function ProductList() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white break-inside-avoid h-fit hover:shadow-xl hover:shadow-green-400 flex flex-col border-2 border-black rounded-3xl my-4"
+              className="bg-white overflow-hidden break-inside-avoid h-fit hover:shadow-xl hover:shadow-green-400 flex flex-col border-2 border-black rounded-3xl my-4"
             >
               <Link to={`/productDetails/${product.id}`}>
                 <div className="h-1/2 w-full overflow-hidden">
                   <img
                     src={`/crops/${product.productName}.jpg`}
                     alt="image"
-                    className="bg-cover hover:scale-110 transition"
+                    className="bg-cover hover:scale-110 transition "
                   />
                 </div>
 
-                <div className=" h-fit w-full flex flex-col m-2">
-                  <div className="font-bold p-2">{product.productName}</div>
-                  <div className="p-2"> {product.description}</div>
-                  <div className="p-2">{product.quantity.toString()}</div>
-                  <div className="p-2 flex items-center flex-row">
+                <div className=" h-fit w-full flex flex-col m-1">
+                  <div className="font-bold p-1">{product.productName}</div>
+                  <div className="p-1"> {product.description}</div>
+                  <div className="p-1">{product.quantity.toString()}</div>
+                  <div className="p-1 flex items-center flex-row">
                     <div className="text-lg">
                       {product.price.toString()} ETH
                     </div>

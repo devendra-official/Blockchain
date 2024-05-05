@@ -95,11 +95,12 @@ const MidtermVerification = () => {
             className="w-screen h-screen blur-lg opacity-60 fixed z-0"
             alt=""
           />
-          <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
+          <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Midterm verification</div>
             <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
               <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
+                  <th>Index</th>
                   <th>ID</th>
                   <th>Crop Name</th>
                   <th>Time Till Harvest</th>
@@ -109,11 +110,16 @@ const MidtermVerification = () => {
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
-                {midTerms.map((midTerm) => (
+                {midTerms.map((midTerm, index) => (
                   <tr
                     key={midTerm.id}
-                    className="border-1 border-green-800 hover:bg-blue-100"
+                    className={`hover:bg-blue-100  ${
+                      index === midTerms.length - 1
+                        ? " "
+                        : "border-b-2 border-blue-500"
+                    } `}
                   >
+                    <td>{index}</td>
                     <td>{midTerm.id}</td>
                     <td>{midTerm.cropName}</td>
                     <td>{midTerm.months}</td>
@@ -131,7 +137,7 @@ const MidtermVerification = () => {
                       ) : (
                         <button
                           onClick={() => handleApproveMidTerm(midTerm.id)}
-                          className="rounded-lg my-1 p-1"
+                          className="bg-orange-500 rounded-lg my-1 p-1"
                         >
                           Approve
                         </button>
@@ -150,7 +156,7 @@ const MidtermVerification = () => {
                       ) : (
                         <button
                           onClick={() => handleRejectMidTerm(midTerm.id)}
-                          className="rounded-lg my-1 p-1"
+                          className="bg-orange-500 rounded-lg my-1 p-1"
                         >
                           Reject
                         </button>

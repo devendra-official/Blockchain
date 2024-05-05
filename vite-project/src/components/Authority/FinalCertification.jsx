@@ -102,6 +102,7 @@ const FinalCertification = () => {
             <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
               <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
+                  <th>Index</th>
                   <th>ID</th>
                   <th>Crop</th>
                   <th>Quantity</th>
@@ -111,11 +112,16 @@ const FinalCertification = () => {
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
-                {certificate.map((element) => (
+                {certificate.map((element, index) => (
                   <tr
                     key={element.id}
-                    className="border-1 border-green-800 hover:bg-blue-100"
+                    className={`hover:bg-blue-100  ${
+                      index === certificate.length - 1
+                        ? " "
+                        : "border-b-2 border-blue-500"
+                    } `}
                   >
+                    <td>{index}</td>
                     <td>{element.id}</td>
                     <td>{element.cropName}</td>
                     <td>{element.quantity.toString()}</td>
@@ -133,7 +139,7 @@ const FinalCertification = () => {
                       ) : (
                         <button
                           onClick={() => handleApproveCertificate(element.id)}
-                          className="rounded-lg my-1 p-1"
+                          className="bg-orange-500 rounded-lg my-1 p-1"
                         >
                           Approve
                         </button>
@@ -152,7 +158,7 @@ const FinalCertification = () => {
                       ) : (
                         <button
                           onClick={() => handleRejectCertificate(element.id)}
-                          className="rounded-lg my-1 p-1"
+                          className="bg-orange-500 rounded-lg my-1 p-1"
                         >
                           Reject
                         </button>

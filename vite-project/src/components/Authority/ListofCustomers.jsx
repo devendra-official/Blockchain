@@ -69,12 +69,12 @@ const ListofCustomers = () => {
             className="w-full h-full blur-lg opacity-60 fixed z-0"
             alt=""
           ></img>
-          <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
+          <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Customers</div>
             <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
               <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
-                  <th>SL No</th>
+                  <th>Index</th>
                   <th>Customer Name</th>
                   <th>Email</th>
                   <th>ETH Address</th>

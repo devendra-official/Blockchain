@@ -82,7 +82,7 @@ const RequestCertification = () => {
                     <Input
                       className="bg-green-100"
                       id="cropquantity"
-                      placeholder="Enter crop quantity"
+                      placeholder="Enter crop quantity in Kilograms"
                       {...register("cropquantity", {
                         required: true,
                       })}

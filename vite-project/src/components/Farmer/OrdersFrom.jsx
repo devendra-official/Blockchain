@@ -18,7 +18,7 @@ const OrdersFrom = () => {
 
   const filterOrder = orders.filter((order) => order.farmer == address);
 
-  if (orders.length === 0)
+  if (filterOrder.length === 0)
     return (
       <>
         <img
@@ -44,26 +44,35 @@ const OrdersFrom = () => {
         <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
           <thead className=" text-white text-md bg-blue-800 border-green-800 border-1">
             <tr>
+              <th>Index</th>
               <th>OID</th>
               <th>PID</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Ordered</th>
-              <th>customer</th>
+              <th>Ordered on</th>
+              <th>Customer</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
-            {filterOrder.map((order) => (
+            {filterOrder.map((order, index) => (
               <tr
                 key={order.key}
-                className="border-1 border-green-800 hover:bg-blue-100"
+                className={`hover:bg-blue-100  ${
+                  index === filterOrder.length - 1
+                    ? " "
+                    : "border-b-2 border-blue-500"
+                } `}
               >
+                <td>{index + 1}</td>
                 <td>{order.orderId}</td>
                 <td>{order.productId}</td>
                 <td>{order.productName}</td>
                 <td>{(Number(order.price) / 1e18).toString()} ETH</td>
                 <td>{order.timeofOrdered}</td>
-                <td>{order.customer}</td>
+                <td>{`${order.customer.substring(
+                  0,
+                  7
+                )}...${order.customer.substring(37, 42)}`}</td>
               </tr>
             ))}
           </tbody>
