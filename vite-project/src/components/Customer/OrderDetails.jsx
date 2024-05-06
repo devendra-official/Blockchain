@@ -43,10 +43,10 @@ const OrderDetails = () => {
               <div className="font-medium">Description</div>
               <div>{product.description}</div>
             </div>
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <div className="font-medium">Category :</div>
               <div>{product.category}</div>
-            </div>
+            </div> */}
             <div className="flex items-center ">
               <div className="font-medium">Price : </div>
 

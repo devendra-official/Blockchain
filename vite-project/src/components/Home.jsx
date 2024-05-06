@@ -147,16 +147,21 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="px-6 pb-6">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis quasi ad ratione quisquam. Praesentium enim quis
-                  placeat aliquam in ratione, incidunt consequuntur esse. Alias,
-                  fuga.
+                  Discover the future of farming at AgroChain. Our innovative
+                  techniques include precision farming, vertical farming, and
+                  hydroponics. With smart solutions and sustainable practices,
+                  we're cultivating a greener, more abundant tomorrow. Join us
+                  in shaping the future of agriculture.
                 </div>
               </div>
               <div className=" w-full h-full grid place-items-center p-6 bg-[#D8F3DC]">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam
-                suscipit corporis eveniet architecto magnam sit ab in
-                consequatur adipisci quod.
+                Discover how blockchain technology is transforming agriculture
+                supply chain management. Our solution ensures transparency,
+                traceability, and trust from farm to fork, enhancing food
+                safety, reducing fraud, and increasing efficiency. Explore
+                real-world use cases, see our features in action, and learn how
+                we help businesses comply with regulations. Join us in
+                revolutionizing agriculture with blockchain technology.
               </div>
               <div className="bg-[#52B788] w-full h-full grid place-items-center">
                 <div className="flex flex-row gap-2">
@@ -166,10 +171,13 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="px-6 pb-6">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis quasi ad ratione quisquam. Praesentium enim quis
-                  placeat aliquam in ratione, incidunt consequuntur esse. Alias,
-                  fuga.
+                  we understand that farming doesn't adhere to regular business
+                  hours. That's why we offer 24/7 assistance to support you
+                  whenever you need it. Whether you have questions about crop
+                  management, equipment troubleshooting, or need immediate
+                  assistance, our team is here to help, day or night. With our
+                  round-the-clock support, you can farm with confidence, knowing
+                  that help is always just a call away.
                 </div>
               </div>
               <div className="bg-[#52B788] w-full h-full grid place-items-center">
@@ -180,10 +188,13 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="px-6 pb-6  ">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis quasi ad ratione quisquam. Praesentium enim quis
-                  placeat aliquam in ratione, incidunt consequuntur esse. Alias,
-                  fuga.
+                  we're committed to delivering nothing but the best nature has
+                  to offer. That's why all our products are 100% organic. From
+                  seed to harvest, we prioritize natural methods and sustainable
+                  practices. No synthetic pesticides, no GMOs—just pure,
+                  wholesome goodness straight from the earth. Trust us to
+                  provide you with the highest quality organic produce for a
+                  healthier, happier lifestyle.
                 </div>
               </div>
               <div className="relative w-full h-full grid place-items-center">
@@ -202,10 +213,14 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="px-6 pb-6 ">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Perferendis quasi ad ratione quisquam. Praesentium enim quis
-                  placeat aliquam in ratione, incidunt consequuntur esse. Alias,
-                  fuga.
+                  we're proud to be green pioneers in the agricultural industry.
+                  Our commitment to sustainability runs deep, from minimizing
+                  carbon footprints to maximizing environmental stewardship.
+                  Through renewable energy, water conservation, and eco-friendly
+                  practices, we're cultivating a greener tomorrow, one harvest
+                  at a time. Join us in our mission to preserve the planet for
+                  future generations while enjoying the freshest, most
+                  responsibly grown produce available.
                 </div>
               </div>
             </div>
