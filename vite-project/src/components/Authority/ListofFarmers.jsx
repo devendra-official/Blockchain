@@ -89,15 +89,22 @@ const ListofCustomers = () => {
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
-                {farmers.map((farmer) => (
+                {farmers.map((farmer, index) => (
                   <tr
                     key={farmer.key}
-                    className="border-1 border-green-800 hover:bg-blue-100"
+                    className={`hover:bg-blue-100  ${
+                      index === farmers.length - 1
+                        ? " "
+                        : "border-b-2 border-blue-500"
+                    } `}
                   >
                     <td>{farmer.key + 1}</td>
                     <td>{farmer.name}</td>
                     <td>{farmer.email}</td>
-                    <td>{farmer.ETHAddress}</td>
+                    <td>{`${farmer.ETHAddress.substring(
+                      0,
+                      7
+                    )}...${farmer.ETHAddress.substring(37, 42)}`}</td>
                     <td>
                       <button
                         className="bg-orange-500 rounded-lg my-1 p-1"
