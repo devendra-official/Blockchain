@@ -65,10 +65,10 @@ const ProductDetail = () => {
               <div className="font-medium">Description</div>
               <div>{product.description}</div>
             </div>
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               <div className="font-medium">Category :</div>
               <div>{product.category}</div>
-            </div>
+            </div> */}
             <div className="flex items-center ">
               <div className="font-medium">Price : </div>
               <div className="text-xl ">{product.price.toString()} </div>
@@ -77,7 +77,7 @@ const ProductDetail = () => {
             </div>
             <div className="flex gap-1">
               <div className="font-medium">{product.quantity.toString()} </div>
-              <div>items available</div>
+              <div>kgs available</div>
             </div>
             <Button
               className="hover:bg-blue-400"

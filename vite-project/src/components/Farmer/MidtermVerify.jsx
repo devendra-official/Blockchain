@@ -2,6 +2,7 @@ import Input from "../Input.jsx";
 import Button from "../Button.jsx";
 import { useForm, Controller } from "react-hook-form";
 import Midterm from "../../Customhooks/Midterm.jsx";
+import Select from "../Select.jsx";
 
 const MidtermVerify = () => {
   const {
@@ -70,14 +71,19 @@ const MidtermVerify = () => {
                     <label htmlFor="Progress" className="font-bold">
                       Progress
                     </label>
-                    <Input
+                    <Select
+                      options={["20%", "50%", "80%", "100%"]}
+                      id="progress"
+                      {...register("progress", { required: true })}
+                    />
+                    {/* <Input
                       className="bg-green-100"
                       id="progress"
                       placeholder="Enter Progress of your Crop"
                       {...register("progress", {
                         required: true,
                       })}
-                    />
+                    /> */}
                     {errors.progress && (
                       <span className="text-red-500">
                         Please enter the area in acres

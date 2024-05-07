@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#D8F3DC] border-y z-20 relative">
+    <footer className="bg-[#D8F3DC] shadow-black shadow-2xl z-20 relative">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -18,12 +18,12 @@ export default function Footer() {
               </h2>
               <ul className="text-gray-500 font-medium">
                 <li className="mb-4">
-                  <Link to="/" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     About
                   </Link>
                 </li>
@@ -35,17 +35,12 @@ export default function Footer() {
               </h2>
               <ul className="text-gray-500 font-medium">
                 <li className="mb-4">
-                  <a
-                    href="https://github.com"
-                    className="hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <Link to="#" className="hover:underline">
                     Github
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/" className="hover:underline">
+                  <Link to="#" className="hover:underline">
                     Discord
                   </Link>
                 </li>
@@ -72,12 +67,8 @@ export default function Footer() {
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center">
-            © 2023
-            <a href="https://google.com/" className="hover:underline">
-              google
-            </a>
-            . All Rights Reserved.
+          <span className="text-sm text-gray-500 sm:text-center hover:underline">
+            ©2024 Agrochain. All Rights Reserved.
           </span>
           <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
             <Link to="#" className="text-gray-500 hover:text-gray-900">

@@ -98,11 +98,12 @@ const CropValidation = () => {
             className="w-screen h-screen blur-lg opacity-60 fixed z-0"
             alt=""
           ></img>
-          <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
+          <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Crop Validation</div>
             <table className=" w-full h-auto rounded-lg overflow-hidden gap-2">
               <thead className=" text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
+                  <th>Index</th>
                   <th>PID</th>
                   <th>Crop Name</th>
                   <th>Wallet</th>
@@ -114,11 +115,16 @@ const CropValidation = () => {
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
-                {crops.map((crop) => (
+                {crops.map((crop, index) => (
                   <tr
                     key={crop.id}
-                    className="border-1 border-green-800 hover:bg-blue-100"
+                    className={`hover:bg-blue-100  ${
+                      index === crops.length - 1
+                        ? " "
+                        : "border-b-2 border-blue-500"
+                    } `}
                   >
+                    <td>{index}</td>
                     <td>{crop.id}</td>
                     <td>{crop.cropName}</td>
                     <td>{`${crop.ETHAddress.substring(

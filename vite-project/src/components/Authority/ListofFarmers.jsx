@@ -25,9 +25,9 @@ const ListofCustomers = () => {
     let time = new Date().toLocaleString();
     await userContract.deleteFarmer(ETHAddress);
     await product.hideProduct(ETHAddress);
-    await product.rejectFarmerCrop(ETHAddress,time);
-    await product.rejectFarmerMidTerm(ETHAddress,time);
-    await product.rejectFarmerCertificate(ETHAddress,time);
+    await product.rejectFarmerCrop(ETHAddress, time);
+    await product.rejectFarmerMidTerm(ETHAddress, time);
+    await product.rejectFarmerCertificate(ETHAddress, time);
     let updated = [];
     userContract.once("deleteFarmerEvent", () => {
       updated = farmers.filter((farmer) => {
@@ -76,7 +76,7 @@ const ListofCustomers = () => {
             className="w-full h-full blur-lg opacity-60 fixed z-0"
             alt=""
           ></img>
-          <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
+          <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Farmers</div>
             <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
               <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
@@ -89,15 +89,22 @@ const ListofCustomers = () => {
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
-                {farmers.map((farmer) => (
+                {farmers.map((farmer, index) => (
                   <tr
                     key={farmer.key}
-                    className="border-1 border-green-800 hover:bg-blue-100"
+                    className={`hover:bg-blue-100  ${
+                      index === farmers.length - 1
+                        ? " "
+                        : "border-b-2 border-blue-500"
+                    } `}
                   >
                     <td>{farmer.key + 1}</td>
                     <td>{farmer.name}</td>
                     <td>{farmer.email}</td>
-                    <td>{farmer.ETHAddress}</td>
+                    <td>{`${farmer.ETHAddress.substring(
+                      0,
+                      7
+                    )}...${farmer.ETHAddress.substring(37, 42)}`}</td>
                     <td>
                       <button
                         className="bg-orange-500 rounded-lg my-1 p-1"

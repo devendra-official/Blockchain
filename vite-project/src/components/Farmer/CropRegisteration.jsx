@@ -3,7 +3,6 @@ import { useForm, Controller } from "react-hook-form";
 import Input from "../Input.jsx";
 import Button from "../Button.jsx";
 import useCrop from "../../Customhooks/crops.jsx";
-import Select from "../Select.jsx";
 
 const CropRegisteration = () => {
   const { cropRegister } = useCrop();
@@ -16,9 +15,9 @@ const CropRegisteration = () => {
     watch, // new thing
   } = useForm();
 
-  const [secondSelectOptions, setSecondSelectOptions] = useState([]); //new thing
+  const [secondSelectOptions, setSecondSelectOptions] = useState([]);
 
-  const firstSelectValue = watch("category"); // new thing
+  const firstSelectValue = watch("category");
 
   const updateSecondSelectOptions = (firstSelectValue) => {
     if (firstSelectValue === "grains") {
@@ -44,7 +43,7 @@ const CropRegisteration = () => {
     } else {
       setSecondSelectOptions([]);
     }
-  }; // new thing
+  };
 
   //date input
   const currentMonthYear = () => {
@@ -111,6 +110,7 @@ const CropRegisteration = () => {
                             field.onChange(e);
                             updateSecondSelectOptions(e.target.value);
                           }}
+                          className="px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full"
                         >
                           <option value="">Please select Category</option>
                           <option value="grains">Grains</option>
@@ -137,7 +137,10 @@ const CropRegisteration = () => {
                       control={control}
                       defaultValue=""
                       render={({ field }) => (
-                        <select {...field}>
+                        <select
+                          {...field}
+                          className="px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full"
+                        >
                           {secondSelectOptions.map((option) => (
                             <option key={option} value={option}>
                               {option}
@@ -173,7 +176,7 @@ const CropRegisteration = () => {
                       </span>
                     )}
                   </div>
-                  <div className="flex flex-col space-y-1.5">
+                  {/* <div className="flex flex-col space-y-1.5">
                     <label htmlFor="category" className="font-bold">
                       Category
                     </label>
@@ -188,7 +191,7 @@ const CropRegisteration = () => {
                     {errors.area && (
                       <span className="text-red-500">Please Category</span>
                     )}
-                  </div>
+                  </div> */}
                   <div className="flex flex-col space-y-1.5">
                     <label htmlFor="cultivation" className="font-bold">
                       Specify the area of cultivation in acres

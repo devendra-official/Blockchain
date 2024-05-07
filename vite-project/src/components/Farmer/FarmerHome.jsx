@@ -24,7 +24,7 @@ const FarmerHome = () => {
     navigate(`/farmer/ProductDetails/${data.product.id}`);
   };
 
-  if (products.length === 0)
+  if (filterFarmer.length === 0)
     return (
       <>
         <img
@@ -50,6 +50,7 @@ const FarmerHome = () => {
         <table className=" w-full mx-2  h-auto rounded-lg overflow-hidden">
           <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
             <tr>
+              <th>Index</th>
               <th>ID</th>
               <th>Crop Name</th>
               <th>ETH Address</th>
@@ -57,12 +58,17 @@ const FarmerHome = () => {
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
-            {filterFarmer.map((product) => (
+            {filterFarmer.map((product, index) => (
               <tr
                 onClick={() => konsa({ product: product })}
                 key={product.id}
-                className="border-1 border-green-800 hover:bg-blue-100"
+                className={`hover:bg-blue-100  ${
+                  index === filterFarmer.length - 1
+                    ? " "
+                    : "border-b-2 border-blue-500"
+                } `}
               >
+                <td>{index + 1}</td>
                 <td>{product.id}</td>
                 <td>{product.cropName}</td>
                 <td>{`${product.ETHAddress.substring(

@@ -69,12 +69,12 @@ const ListofCustomers = () => {
             className="w-full h-full blur-lg opacity-60 fixed z-0"
             alt=""
           ></img>
-          <div className="flex flex-col place-items-center gap-4 p-8 z-10 relative ">
+          <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
             <div className="font-bold text-6xl">Customers</div>
             <table className="w-full h-auto rounded-lg overflow-hidden gap-2">
               <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
                 <tr>
-                  <th>SL No</th>
+                  <th>Index</th>
                   <th>Customer Name</th>
                   <th>Email</th>
                   <th>ETH Address</th>
@@ -82,15 +82,23 @@ const ListofCustomers = () => {
                 </tr>
               </thead>
               <tbody className="text-center font-semibold bg-white">
-                {customers.map((customer) => (
+                {customers.map((customer, index) => (
                   <tr
                     key={customer.key}
-                    className="border-1 border-green-800 hover:bg-blue-100"
+                    className={`hover:bg-blue-100  ${
+                      index === customers.length - 1
+                        ? " "
+                        : "border-b-2 border-blue-500"
+                    } `}
                   >
                     <td>{customer.key + 1}</td>
                     <td>{customer.name}</td>
                     <td>{customer.email}</td>
-                    <td>{customer.ETHAddress}</td>
+
+                    <td>{`${customer.ETHAddress.substring(
+                      0,
+                      7
+                    )}...${customer.ETHAddress.substring(37, 42)}`}</td>
                     <td>
                       <button
                         className="bg-orange-500 rounded-lg my-1 p-1"

@@ -26,7 +26,7 @@ const Orders = () => {
 
   const filteredOrders = orders.filter((order) => order.customer === address);
 
-  if (orders.length === 0)
+  if (filteredOrders.length === 0)
     return (
       <>
         <Header />
@@ -61,6 +61,7 @@ const Orders = () => {
         <table className=" gap-2 w-full mx-2  h-auto rounded-lg overflow-hidden">
           <thead className="text-white text-md bg-blue-800 border-green-800 border-1 ">
             <tr>
+              <th>Index</th>
               <th>OID</th>
               <th>PID</th>
               <th>Farmer</th>
@@ -70,12 +71,17 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
-            {filteredOrders.map((order) => (
+            {filteredOrders.map((order, index) => (
               <tr
                 onClick={() => konsa({ order: order })}
                 key={order.id}
-                className="border-1 border-green-800 hover:bg-blue-100"
+                className={`hover:bg-blue-100  ${
+                  index === filteredOrders.length - 1
+                    ? " "
+                    : "border-b-2 border-blue-500"
+                } `}
               >
+                <td>{index}</td>
                 <td>{order.orderId}</td>
                 <td>{order.productId}</td>
                 <td>{`${order.farmer.substring(
