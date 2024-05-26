@@ -121,7 +121,7 @@ const FinalCertification = () => {
                         : "border-b-2 border-blue-500"
                     } `}
                   >
-                    <td>{index}</td>
+                    <td>{index+1}</td>
                     <td>{element.id}</td>
                     <td>{element.cropName}</td>
                     <td>{element.quantity.toString()}</td>

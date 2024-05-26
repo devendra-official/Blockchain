@@ -46,7 +46,10 @@ function usePayment() {
                 });
 
                 const user = await userContract.getDetails();
-                await userContract.orderProduct(orders, time, totalAmount, oid,user.city, { value: totalAmount });
+                console.log(user.FullName);
+                console.log(user.contact);
+                const userDta = user.FullName +", "+ user.city;
+                await userContract.orderProduct(orders, time, totalAmount, oid,userDta, user.contact,{ value: totalAmount });
                 userContract.once("orderProductEvent", async () => {
                     dispatch(removeAllItem());
                     toast.success("Payment success");
@@ -84,6 +87,7 @@ function usePayment() {
                     customer: orders[i].customer,
                     totalAmount: orders[i].totalAmount,
                     deliver: orders[i].location,
+                    phone: orders[i].phone,
                     status: status,
                     productId: item.productId,
                     productName: item.productName,

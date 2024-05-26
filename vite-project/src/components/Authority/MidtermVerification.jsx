@@ -119,7 +119,7 @@ const MidtermVerification = () => {
                         : "border-b-2 border-blue-500"
                     } `}
                   >
-                    <td>{index}</td>
+                    <td>{index+1}</td>
                     <td>{midTerm.id}</td>
                     <td>{midTerm.cropName}</td>
                     <td>{midTerm.months}</td>

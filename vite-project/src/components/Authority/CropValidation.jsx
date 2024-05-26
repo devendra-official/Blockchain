@@ -124,7 +124,7 @@ const CropValidation = () => {
                         : "border-b-2 border-blue-500"
                     } `}
                   >
-                    <td>{index}</td>
+                    <td>{index+1}</td>
                     <td>{crop.id}</td>
                     <td>{crop.cropName}</td>
                     <td>{`${crop.ETHAddress.substring(
