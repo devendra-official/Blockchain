@@ -76,7 +76,7 @@ const CourierDrop = () => {
               >
                 <td>{index + 1}</td>
                 <td>{product.orderId}</td>
-                <td>{product.key}</td>
+                <td>{product.productId}</td>
                 <td>{product.customer}</td>
                 <td>{product.productName}</td>
                 <td>{product.quantity.toString()} KG</td>

@@ -58,7 +58,7 @@ const CourierPickup = () => {
               <th>Index</th>
               <th>Order ID</th>
               <th>Product ID</th>
-              <th>Farmer & Address</th>
+              <th>Farmer Address</th>
               <th>Crop Name</th>
               <th>Quantity</th>
               <th>Price</th>
@@ -78,8 +78,8 @@ const CourierPickup = () => {
               >
                 <td>{index + 1}</td>
                 <td>{product.orderId}</td>
-                <td>{product.key}</td>
-                <td>{product.customer}</td>
+                <td>{product.productId}</td>
+                <td>{product.location}</td>
                 <td>{product.productName}</td>
                 <td>{product.quantity.toString()} KG</td>
                 <td>{(Number(product.price) / 1e18).toString()} ETH</td>

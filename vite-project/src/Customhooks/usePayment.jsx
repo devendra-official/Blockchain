@@ -3,10 +3,12 @@ import { toast } from "react-toastify";
 import selectId from "./generateId";
 import FinalProduct from "./finalProducts";
 import { removeAllItem } from "../store/cartSlice";
+import useCrop from "./crops";
 
 function usePayment() {
     const generateIdentifier = selectId();
     const userContract = useSelector(state => state.addContract.userContract);
+    const [getCrops] = useCrop();
     const { reduceQuantity } = FinalProduct();
     const dispatch = useDispatch();
 
@@ -61,6 +63,8 @@ function usePayment() {
 
     async function getOrders() {
         const orders = await userContract.getOrders();
+        let cropList = [];
+        cropList = await getCrops();
         let orderList = [];
         let obj;
         let j = 0;
@@ -75,10 +79,12 @@ function usePayment() {
                 } else {
                     status = "Delivered"
                 }
+                let crop = cropList.filter((crop) => crop.id == item.productId);
                 obj = {
                     key: j++,
                     orderId: orders[i].orderId,
                     timeofOrdered: orders[i].timeofOrdered,
+                    location: crop.location,
                     customer: orders[i].customer,
                     totalAmount: orders[i].totalAmount,
                     status: status,
