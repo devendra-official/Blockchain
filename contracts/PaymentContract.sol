@@ -18,6 +18,7 @@ contract PaymentContract {
 
     struct Order{
         Item[] items;
+        string location;
         string orderId;
         string timeofOrdered;
         address customer;
@@ -30,8 +31,9 @@ contract PaymentContract {
     event productDeliveredEvent();
     event orderPickedEvent();
 
-    function orderProduct(Item[] memory items,string memory time,uint totalAmount,string memory orderId) public payable {
+    function orderProduct(Item[] memory items,string memory time,uint totalAmount,string memory orderId,string memory location) public payable {
         require(msg.value == totalAmount,"Payment failed");
+        orders[msg.sender].location = location;
         orders[msg.sender].orderId = orderId;
         orders[msg.sender].timeofOrdered = time;
         orders[msg.sender].customer = msg.sender;

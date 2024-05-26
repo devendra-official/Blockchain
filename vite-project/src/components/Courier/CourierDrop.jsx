@@ -77,7 +77,7 @@ const CourierDrop = () => {
                 <td>{index + 1}</td>
                 <td>{product.orderId}</td>
                 <td>{product.productId}</td>
-                <td>{product.customer}</td>
+                <td>{product.location}</td>
                 <td>{product.productName}</td>
                 <td>{product.quantity.toString()} KG</td>
                 <td>{(Number(product.price) / 1e18).toString()} ETH</td>

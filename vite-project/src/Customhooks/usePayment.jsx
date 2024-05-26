@@ -47,7 +47,7 @@ function usePayment() {
                     reduceItem.push({ id: item.id, reduce: item.requantity });
                 });
 
-                await userContract.orderProduct(orders, time, totalAmount, oid, { value: totalAmount });
+                await userContract.orderProduct(orders, time, totalAmount, oid, userProfile.city, { value: totalAmount });
                 userContract.once("orderProductEvent", async () => {
                     dispatch(removeAllItem());
                     toast.success("Payment success");
@@ -87,6 +87,7 @@ function usePayment() {
                     location: crop.location,
                     customer: orders[i].customer,
                     totalAmount: orders[i].totalAmount,
+                    location: orders[i].location,
                     status: status,
                     productId: item.productId,
                     productName: item.productName,
