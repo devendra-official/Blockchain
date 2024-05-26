@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Header, Footer } from "../index";
 import usePayment from "../../Customhooks/usePayment";
+import useCrop from "../../Customhooks/crops";
 
 const CourierPickup = () => {
   const [orders, setOrders] = useState([]);
+  const [crops,setCrops] = useState([]);
+  const { getCrops } = useCrop();
   const { getOrders, orderPicked, productDelivered } = usePayment();
 
   const fetchData = async function () {
     const orders = await getOrders();
+    const crops = await getCrops();
+    setCrops(crops);
     setOrders(orders);
   };
 
@@ -22,6 +27,7 @@ const CourierPickup = () => {
   useEffect(() => {
     fetchData();
   }, [handleApproval, handleDelivery]);
+
 
   if (!orders) {
     return <>Loading..</>;
@@ -58,7 +64,7 @@ const CourierPickup = () => {
               <th>Index</th>
               <th>Order ID</th>
               <th>Product ID</th>
-              <th>Farmer Address</th>
+              {/* <th>Farmer Address</th> */}
               <th>Crop Name</th>
               <th>Quantity</th>
               <th>Price</th>
@@ -68,18 +74,17 @@ const CourierPickup = () => {
           </thead>
           <tbody className="text-center font-semibold bg-white">
             {orders.map((product, index) => (
-              <tr
+              < tr
                 key={product.key}
-                className={`hover:bg-blue-100  ${
-                  index === orders.length - 1
-                    ? " "
-                    : "border-b-2 border-blue-500"
-                } `}
+                className={`hover:bg-blue-100  ${index === orders.length - 1
+                  ? " "
+                  : "border-b-2 border-blue-500"
+                  } `}
               >
                 <td>{index + 1}</td>
                 <td>{product.orderId}</td>
                 <td>{product.productId}</td>
-                <td>{product.location}</td>
+                {/* <td>{crops.filter((crop) => crop.id == product.productId)}</td> */}
                 <td>{product.productName}</td>
                 <td>{product.quantity.toString()} KG</td>
                 <td>{(Number(product.price) / 1e18).toString()} ETH</td>
@@ -87,19 +92,18 @@ const CourierPickup = () => {
                 <td className="gap-2 flex">
                   <button
                     onClick={() => handleApproval(product)}
-                    className={`${
-                      product.status.toString() === "Picked" ||
+                    className={`${product.status.toString() === "Picked" ||
                       product.status.toString() === "Delivered"
-                        ? "bg-green-500"
-                        : "bg-orange-500"
-                    } rounded-lg my-1 p-1 text-center`}
+                      ? "bg-green-500"
+                      : "bg-orange-500"
+                      } rounded-lg my-1 p-1 text-center`}
                     disabled={
                       product.status.toString() === "Picked" ||
                       product.status.toString() === "Delivered"
                     }
                   >
                     {product.status.toString() === "Picked" ||
-                    product.status.toString() === "Delivered"
+                      product.status.toString() === "Delivered"
                       ? "PickedUp"
                       : "PickUp"}
                   </button>
@@ -108,7 +112,7 @@ const CourierPickup = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div >
     </>
   );
 };

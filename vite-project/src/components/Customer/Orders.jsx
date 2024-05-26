@@ -18,6 +18,7 @@ const Orders = () => {
   const fetchData = async function () {
     const orders = await getOrders();
     setOrders(orders);
+    console.log(orders);
   };
 
   const konsa = (data) => {

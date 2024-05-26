@@ -165,7 +165,7 @@ describe("Users and Payment testing", function () {
     const orderId = "ABC123";
     const timeofOrdered = "2022-04-12";
     const totalPrice = 5400000000000;
-    await UserManager.orderProduct(items, timeofOrdered, totalPrice, orderId, {
+    await UserManager.orderProduct(items, timeofOrdered, totalPrice, orderId, "address",{
       value: totalPrice,
     });
   });
@@ -190,7 +190,7 @@ describe("Users and Payment testing", function () {
     await UserManager.productDelivered(
       "0x447185547f73d4b3780e28cE0B55Aaf4F0405469",
       "OID",
-      "time"
+      "time",
     );
     await eventPromise;
   });
