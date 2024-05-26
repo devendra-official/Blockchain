@@ -33,7 +33,11 @@ import {
   ListofFarmers,
   ListofCustomers,
 } from "./components/Authority/index.js";
-import Dash from "./components/Courier/Dash.jsx";
+import {
+  Courier,
+  CourierPickup,
+  CourierDrop,
+} from "./components/Courier/index.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -119,7 +123,7 @@ const router = createBrowserRouter([
       {
         path: "/farmer",
         element: (
-          <AuthLayout requiredRole="farmer" authentication={false}>
+          <AuthLayout requiredRole="farmer" authentication={true}>
             <Farmer />
           </AuthLayout>
         ),
@@ -225,9 +229,27 @@ const router = createBrowserRouter([
         path: "/courier",
         element: (
           <AuthLayout requiredRole="courier" authentication={true}>
-            <Dash />
+            <Courier />
           </AuthLayout>
         ),
+        children: [
+          {
+            path: "/courier",
+            element: (
+              <AuthLayout requiredRole="courier" authentication={true}>
+                <CourierPickup />
+              </AuthLayout>
+            ),
+          },
+          {
+            path: "/courier/delivery",
+            element: (
+              <AuthLayout requiredRole="courier" authentication={true}>
+                <CourierDrop />
+              </AuthLayout>
+            ),
+          },
+        ],
       },
     ],
   },

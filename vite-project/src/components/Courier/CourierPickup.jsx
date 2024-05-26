@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Header, Footer } from "../index";
 import usePayment from "../../Customhooks/usePayment";
 
-const Dash = () => {
+const CourierPickup = () => {
   const [orders, setOrders] = useState([]);
   const { getOrders, orderPicked, productDelivered } = usePayment();
 
@@ -37,7 +37,7 @@ const Dash = () => {
           alt=""
         ></img>
         <div className="min-h-96 flex flex-col justify-center items-center gap-4 p-8 z-10 relative ">
-          <div className="font-bold text-6xl">No Orders List</div>
+          <div className="font-bold text-6xl">Nothing to show here</div>
         </div>
         <Footer />
       </>
@@ -45,26 +45,25 @@ const Dash = () => {
 
   return (
     <>
-      <Header />
       <img
         src="/images/Bg.jpg"
         className="w-full h-full blur-lg opacity-60 fixed z-0"
         alt=""
       ></img>
       <div className="min-h-96 flex flex-col place-items-center gap-4 p-8 z-10 relative ">
-        <div className="font-bold text-6xl">Order List</div>
+        <div className="font-bold text-6xl">Pick Up</div>
         <table className="w-full mx-2 h-auto rounded-lg overflow-hidden gap-2">
           <thead className="text-white text-md bg-blue-800 border-green-800 border-1">
             <tr>
               <th>Index</th>
               <th>Order ID</th>
-              <th>Customer</th>
+              <th>Product ID</th>
+              <th>Farmer & Address</th>
               <th>Crop Name</th>
-              <th>Ordered</th>
-              <th>Price</th>
               <th>Quantity</th>
-              <th>Pick Up</th>
-              <th>Delivery</th>
+              <th>Price</th>
+              <th>Ordered On</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody className="text-center font-semibold bg-white">
@@ -77,13 +76,14 @@ const Dash = () => {
                     : "border-b-2 border-blue-500"
                 } `}
               >
-                <td>{index}</td>
+                <td>{index + 1}</td>
                 <td>{product.orderId}</td>
+                <td>{product.key}</td>
                 <td>{product.customer}</td>
                 <td>{product.productName}</td>
-                <td>{product.timeofOrdered}</td>
-                <td>{(Number(product.price) / 1e18).toString()} ETH</td>
                 <td>{product.quantity.toString()} KG</td>
+                <td>{(Number(product.price) / 1e18).toString()} ETH</td>
+                <td>{product.timeofOrdered}</td>
                 <td className="gap-2 flex">
                   <button
                     onClick={() => handleApproval(product)}
@@ -104,29 +104,13 @@ const Dash = () => {
                       : "PickUp"}
                   </button>
                 </td>
-                <td>
-                  <button
-                    onClick={() => handleDelivery(product)}
-                    className={`${
-                      product.status.toString() === "Delivered"
-                        ? "bg-green-500"
-                        : "bg-orange-500"
-                    } rounded-lg my-1 p-1 text-center`}
-                    disabled={product.status.toString() === "Delivered"}
-                  >
-                    {product.status.toString() === "Delivered"
-                      ? "Delivered"
-                      : "Delivery"}
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <Footer />
     </>
   );
 };
 
-export default Dash;
+export default CourierPickup;
